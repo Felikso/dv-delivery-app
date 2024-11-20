@@ -80,59 +80,14 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
 function App() {
 	const { isCheckingAuth, checkAuth, user, isAuthenticated } = useAuthStore();
-	
-	const mergeCartItems = useCartStore((state) => state.cartItems);
+/* 	useEffect(() => {
+		checkAuth();
+	}, []); */
 	const getCartData = useCartStore();
 	useEffect(() => {
 		checkAuth();
 
 
-		getCartData.execute()
-		let fechedData = getCartData.execute()
-		console.log(fechedData);
-
-		if(fechedData.cartData){
-			const userCartDataArr = fechedData.data?.cartData
-			let inCartItems = '';
-			userCartDataArr.map((item) => {
-				inCartItems += item.name + ' x ' + item.quantity + '\n ';
-			});
-			if (
-				window.confirm(
-					'Przed zalogowaniem w koszyku już coś się znajdowało: \n\n' +
-						inCartItems +
-						'\nCzy chcesz zaktualizować koszyk?'
-				)
-			) {
-				if (getCartData.data?.cartData) {
-					const mergedArray = [
-						...userCartDataArr,
-						...getCartData.cartItems,
-					].reduce((acc, obj) => {
-						const existing = acc.find((item) => item._id === obj._id);
-						if (existing) {
-							existing.quantity += obj.quantity;
-						} else {
-							acc.push({ ...obj });
-						}
-						return acc;
-					}, []);
-	
-					console.log(mergedArray);
-					let mergedCart = '';
-					mergedArray.map((item) => {
-						mergedCart += item.name + ' x ' + item.quantity + '\n ';
-					});
-					if (
-						window.confirm(
-							'Czy potwierdzasz zaktualizowany stan koszyka? \n\n' + mergedCart
-						)
-					) {
-						mergeCartItems(mergedArray);
-					}
-				}
-			}
-		}
 		
 	}, [checkAuth]);
 

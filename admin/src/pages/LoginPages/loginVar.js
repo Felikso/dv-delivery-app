@@ -15,6 +15,7 @@ export const loginPagesLinks = {
     forgotPass: '/forgot-password',
     resetPass: '/reset-password',
     verifyEmail: '/verify-email',
+    urlCartGet: '/api/cart/get'
 }
 
 
