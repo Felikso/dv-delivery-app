@@ -6,12 +6,6 @@ const beUrl = import.meta.env.VITE_BACKEND_URL;
 
 const API_URL = import.meta.env.MODE === "development" ? beUrl+"/api/auth" : "/api/auth";
 
-const API_ITEMS_URL = import.meta.env.MODE === "development" ? beUrl+"/api/items" : "/api/items";
-
-const API_USERS_URL = import.meta.env.MODE === "development" ? beUrl+"/api/user" : "/api/user";
-
-const API_RABATS_URL = import.meta.env.MODE === "development" ? beUrl+"/api/rabat" : "/api/rabat";
-
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({

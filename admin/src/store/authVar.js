@@ -30,4 +30,6 @@ export const urlImg = '/images/';
 export const urlRemove = '/api/items/remove';
 export const urlUpdate = '/api/items/update';
 export const urlRemoveOrder = '/api/order/remove';
-export const errorMessage = 'Wystąpił błąd, spróbuj ponownie później. :('
+export const urlCart = '/api/cart';
+export const get = '/get';
+export const errorMessage = 'Wystąpił błąd, spróbuj ponownie później. :(';

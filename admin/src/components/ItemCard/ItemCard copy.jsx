@@ -33,13 +33,9 @@ const ItemCard = ({postData}) => {
 
   }
 
-/*   useEffect(()=>{
-    
-    console.log(data)
-  },[data]) */
+
 
   const onSubmitHandler = async (e) => {
-console.log('halo')
     e.preventDefault();
 
     if (window.confirm('czy na pewno chcesz edytować ten przedmiot?')) {
@@ -57,9 +53,7 @@ console.log('halo')
         o['image'] = img;
     }
     o['id'] = _id
-    
-    console.log(o)
-    console.log(formData)
+ 
     const response = await axios.post(`${url}${urlEdit}`, o);
 
     if(response.data.success){

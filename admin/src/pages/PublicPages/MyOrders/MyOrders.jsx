@@ -30,7 +30,6 @@ const MyOrders = () => {
 			 },
 	/* 		{ headers: { token } } */
 		);
-		console.log(response);
 		
 		setData(response.data.data);
 
@@ -70,11 +69,6 @@ const MyOrders = () => {
 	}, [codeId]);
 	let btn = 0;
 	let countBtn = 2; // the number by which the button will change color
-
-	//const pageLocation = useLocation();
-
-console.log(data);
-
 
 
 	return (

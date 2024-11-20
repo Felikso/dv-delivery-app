@@ -1,14 +1,37 @@
 import { create } from "zustand";
 import axios from "axios";
 import { persist } from "zustand/middleware";
+import { urlCart, get } from "./authVar";
 
 axios.defaults.withCredentials = true;
+
+const beUrl = import.meta.env.VITE_BACKEND_URL;
+
+const API_CART_URL = import.meta.env.MODE === "development" ? beUrl+urlCart+get : urlCart+get;
+
+const initialState = {
+	loading: false,
+	success: false,
+	error: false,
+	data: null,
+	errorData: null,
+  };
 
 export const useCartStore = create(
 persist(
 	(set,get) => ({
 	cartItems: [],
-
+	...initialState,
+	execute: async () => {
+		set({ ...initialState, loading: true });
+		try {
+		  const res = await axios.post(API_CART_URL);
+		  set({ ...initialState, success: true, data: res.data });
+		} catch (err) {
+		  console.error("Error in data fetch:", err);
+		  set({ ...initialState, error: true, errorData: err.message });
+		}
+	  },
 	addItemToCart: (item) => {
 		const itemExists = get().cartItems.find(
 		  (cartItem) => cartItem._id === item._id

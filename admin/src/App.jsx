@@ -27,6 +27,7 @@ import AddPage from './pages/AuthPages/AddPage.jsx';
 import OrdersPage from './pages/AuthPages/OrdersPage.jsx'; */
 
 import { pagesLinks } from './utils/variables.jsx';
+import { useCartStore } from './store/cartStore';
 //import { replacePolishLetters } from './utils/functions.js'
 //import NotAdminPage from './pages/NotAdminPage.jsx';
 
@@ -86,6 +87,45 @@ function App() {
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
+
+	const getCartData = useCartStore();
+
+	useEffect(() => {
+	  getCartData.execute();
+	}, []);
+
+	//console.log(getCartData.cartItems);
+	if(getCartData.data?.cartData){
+		const userCartDataArr = getCartData.data.cartData;
+
+		Object.keys(userCartDataArr).forEach(function(key, index) {
+			getCartData.cartItems.map((item,i)=>{
+	
+				if(key==item._id){
+					/* console.log(item._id);
+					
+					console.log(userCartDataArr[key]+item.quantity); */ //sum of qinatity to set in localstorage
+					//console.log(item.quantity)
+				}
+				
+				
+				//console.log(item._id)
+				}
+		)
+			
+			//console.log(userCartDataArr[key])
+		  });
+
+
+		
+
+
+
+		//console.log(getCartData.cartItems);
+	}
+
+	
+  
 
 	if (isCheckingAuth) return <LoadSpinner />;
 
