@@ -22,17 +22,13 @@ import LoadSpinner from './components/LoadSpinner/LoadSpinner.jsx';
 
 import { Toaster } from 'react-hot-toast';
 
-
 /* import ListPage from './pages/AuthPages/ListPage';
 import AddPage from './pages/AuthPages/AddPage.jsx';
 import OrdersPage from './pages/AuthPages/OrdersPage.jsx'; */
 
-
-import { pagesLinks} from './utils/variables.jsx';
+import { pagesLinks } from './utils/variables.jsx';
 //import { replacePolishLetters } from './utils/functions.js'
 //import NotAdminPage from './pages/NotAdminPage.jsx';
-
-
 
 /* import LoginPopup from './components/LoginPopup/LoginPopup'; */
 /* import { pagesLinks, footerLinks } from './utils/variables'; */
@@ -70,11 +66,9 @@ import { pagesLinks} from './utils/variables.jsx';
 		</>);
 }; */
 
-
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
 	const { isAuthenticated, user } = useAuthStore();
-	
 
 	if (isAuthenticated && user.isVerified) {
 		return <Navigate to='/' replace />;
@@ -97,20 +91,18 @@ function App() {
 
 	return (
 		<div className='background'>
-		{/* 	<BackgroundAnimation count={30} /> */}
-	{/* 	<AdminNavbar /> */}
-	<Navbar />
+			{/* 	<BackgroundAnimation count={30} /> */}
+			{/* 	<AdminNavbar /> */}
+			<Navbar />
 			<Routes>
+				<Route path='/' element={<Home />} />
+				<Route path={`/${pagesLinks.cart}`} element={<Cart />} />
+				<Route path={`/${pagesLinks.order}`} element={<PlaceOrder />} />
+				{/*        <Route path={`/${pagesLinks.verify}`} element={<Verify />} /> */}
+				<Route path={`/${pagesLinks.myorders}`} element={<MyOrders />} />
+				{/*   <Route path={`/${pagesLinks.verifyOrder}/:_id`} element={<VerifyOrder />} /> */}
 
-
-			<Route path='/' element={<Home />} />
-          <Route path={`/${pagesLinks.cart}`} element={<Cart />} />
-          <Route path={`/${pagesLinks.order}`} element={<PlaceOrder />} />
-   {/*        <Route path={`/${pagesLinks.verify}`} element={<Verify />} /> */}
-          <Route path={`/${pagesLinks.myorders}`} element={<MyOrders />} />
-		{/*   <Route path={`/${pagesLinks.verifyOrder}/:_id`} element={<VerifyOrder />} /> */}
-		
-{/* 				<Route
+				{/* 				<Route
 					path='/'
 					element={
 						<ProtectedRoute>
@@ -129,7 +121,7 @@ function App() {
 					}
 				/> */}
 
-{/* 				{Object.entries(authList).map(([item, i]) => (
+				{/* 				{Object.entries(authList).map(([item, i]) => (
 					<Route
 					path={`${replacePolishLetters(authList[item])}`}
 					element={
@@ -166,7 +158,6 @@ function App() {
 					}
 				/>
  */}
-
 
 				<Route
 					path={pagesLinks.signup}

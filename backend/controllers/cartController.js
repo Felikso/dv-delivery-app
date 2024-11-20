@@ -6,21 +6,40 @@ const addToCart = async (req,res) => {
     try {
        //let userData = await userModel.findById(req.body.userId)
       
+       console.log(req);
        
        let userData = await userModel.findOne({_id:req.body.userId})
 
-        let cartData = await userData.cartData;
+       let cartData = await userData.cartData;
+
+/*        const itemExists = userData.find(
+        (cartItem) => cartItem._id === item._id
+      ); */
+      //console.log(userData);
+      //console.log(cartData);
+  console.log(req.body);
+  
+      
+      //console.log(itemExists);
+      
+
+       if(!cartData[req.body.itemId]){
+           cartData[req.body.itemId] = 1;
+       }else{
+           cartData[req.body.itemId] += 1;
+       }
+
+/*         let cartData = await userData.cartData;
         if(!cartData[req.body.itemId]){
             cartData[req.body.itemId] = 1;
         }else{
             cartData[req.body.itemId] += 1;
-        }
+        } */
         await userModel.findByIdAndUpdate(req.body.userId,{cartData});
 
         res.json({success:true,message:addedMessage})
     } catch (error) {
         console.log(error);
-        console.log('addToCart');
         
         res.json({success:false,message:errorMessage})
     }

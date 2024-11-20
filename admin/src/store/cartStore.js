@@ -14,7 +14,9 @@ persist(
 		  (cartItem) => cartItem._id === item._id
 		);
 		delete item.description;
-		  delete item.category; 
+		delete item.category; 
+		delete item.img;
+		delete item.image;
 		if (itemExists) {
 		  if (typeof itemExists.quantity === "number") {
 			itemExists.quantity++;

@@ -5,8 +5,8 @@ import { verifyToken } from '../middleware/verifyToken.js'
 
 const cartRoute = express.Router();
 
-cartRoute.post('/add',authMiddleware,addToCart)
-cartRoute.post('/remove',authMiddleware,removeFromCart)
-cartRoute.post('/get',authMiddleware,getCart)
+cartRoute.post('/add',verifyToken,addToCart)
+cartRoute.post('/remove',verifyToken,removeFromCart)
+cartRoute.post('/get',verifyToken,getCart)
 
 export default cartRoute;

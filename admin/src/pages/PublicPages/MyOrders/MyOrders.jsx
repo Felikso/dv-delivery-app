@@ -30,7 +30,8 @@ const MyOrders = () => {
 			 },
 	/* 		{ headers: { token } } */
 		);
-
+		console.log(response);
+		
 		setData(response.data.data);
 
 		toast.success(myOrdersData.refreshInfo);
@@ -72,6 +73,7 @@ const MyOrders = () => {
 
 	//const pageLocation = useLocation();
 
+console.log(data);
 
 
 

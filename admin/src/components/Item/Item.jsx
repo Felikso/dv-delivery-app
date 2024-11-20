@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import './Item.css';
 import { assets } from '@/assets/assets';
-
-import { currency } from '@/utils/variables';
+import { currency, addCartUrl, removeFromCartUrl } from '@/utils/variables';
 import toast from 'react-hot-toast';
 import { useCartStore } from '../../store/cartStore';
+import { useAuthStore } from '../../store/authStore';
+import axios from 'axios';
 const Item = ({ item }) => {
 	const [itemQuantity, setItemQuantity] = useState(0);
 	const { _id, name, image, description, price } = item; //destructuring of props
 
 	const token = localStorage.getItem('token')
-	console.log(token);
-	
 
-	const { addItemToCart } = useCartStore();
 
-	const { cartItems } = useCartStore();
+	const { addItemToCart, cartItems, decreaseQuantity } = useCartStore();
+	const { beUrl } = useAuthStore();
 
-	const { decreaseQuantity } = useCartStore();
-
-	const onDecreaseQuantity = () => {
+	const onDecreaseQuantity = async (itemId,userId) => {
+		const idItem = item._id;
 		decreaseQuantity(item._id);
 		if(token){
-			console.log('token');
-			
+			await axios.post(beUrl+removeFromCartUrl,{idItem,userId},{headers:{token}})
+			toast.error(customInfo.itemRemoved);
 		}
 	};
-
-	const onAddToCart = () => {
+	const idItem = item._id;
+	const onAddToCart = async (itemId, userId) => {
+		console.log(token);
+		
+	
 		addItemToCart(item);
 		toast.success(`${item.name} już w koszyku!`);
+		
 		if(token){
-			console.log('token');
-			
+			const res = await axios.post(beUrl+addCartUrl,{itemid:idItem,userId},{headers:{token}})
+			console.log(res);
+			 
 		}
 	};
 
@@ -78,14 +81,6 @@ const Item = ({ item }) => {
 						/>
 					</div>
 				)}
-				{/*                             {!itemCount
-                    ?<img className='add' onClick={()=>setItemCount(prev=>prev+1)} src={assets.add_icon_white} alt="" />
-                    :<div className='itemCounter'>
-                        <img onClick={()=>setItemCount(prev=>prev-1)} src={assets.remove_icon_red} alt='usuń' />
-                        <p>{itemCount}</p>
-                        <img onClick={()=>setItemCount(prev=>prev+1)} src={assets.add_icon_green} alt='dodaj' />
-                    </div>
-                } */}
 			</div>
 			<div className='itemInfo'>
 				<div className='itemNameRating'>

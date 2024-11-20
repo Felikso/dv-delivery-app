@@ -252,13 +252,39 @@ const verifyOrder = async (req,res) => {
 
 //user orders for frontend
 const userOrders = async (req,res) => {
-
-    console.log(req.body.userId);
+ 
     
-    let orderId = req.body.userId ? req.body.userId :  '67385502a37065268f5ebfbc';
+    let orderId = req.body.userId ? req.body.userId :  '';
+    let codeId = req.body.codeId
+
+    console.log(codeId);
+    console.log(orderId)
+    console.log(req.body);
+    ;
+    
+    
+    
     try {
-        const orders = await orderModel.find({userId:orderId})
-        res.json({success:true,data:orders})
+        if(req.body.userId){
+            const orders = await orderModel.find({userId:orderId})
+            if(orders){
+                console.log(orders);
+                
+               return res.json({success:true,data:orders}) 
+            } }
+        if(codeId){
+            const order = await orderModel.find({verificationCode:codeId})
+            console.log(order);
+           return res.json({success:true,data:order})
+        }
+
+        if(orderId){
+            const orders = await orderModel.find({userId:orderId})
+            if(orders){
+               return res.json({success:true,data:orders}) 
+            } 
+        }
+
     } catch (error) {
         console.log(error);
         
