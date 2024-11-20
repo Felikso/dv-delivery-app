@@ -46,10 +46,10 @@ const Navbar = () => {
 	const handleLogout = () => {
 		if (window.confirm('wylogowujesz się?')) {
 			logout();
-			//localStorage.removeItem('token')
+			localStorage.removeItem('cartData')
 			setOpenMenu(!openMenu);
 			navigate('/');
-			//window.location.reload();
+			window.location.reload();
 		}
 	};
 

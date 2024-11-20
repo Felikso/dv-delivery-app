@@ -86,37 +86,6 @@ function App() {
 	const getCartData = useCartStore();
 	useEffect(() => {
 		checkAuth();
-
-
-		console.log('user')
-		getCartData.execute();
-		if(isAuthenticated){
-		console.log('checkUserCart');
-		//getCartData.execute();
-		if(getCartData.data?.cartData){
-			const userCartDataArr = getCartData.data.cartData;
-			
-		}
-		if(getCartData.cartItems){
-			console.log(getCartData.cartItems)
-			let inCartItems = ''
-			getCartData.cartItems.map((item,i)=>{
-				inCartItems += item.name+' x '+item.quantity+'\n '
-			})
-			console.log(inCartItems);
-
-			if(getCartData.data?.cartData){
-				const userCartDataArr = getCartData.data.cartData;
-				console.log(userCartDataArr);
-			}
-			
-			/* if (window.confirm('Przed zalogowaniem w koszyku już coś się znajdowało: \n\n'+inCartItems+'\nCzy chcesz zaktualizować koszyk?')) {
-			
-			} */
-		
-		}
-
-		}
 	}, [checkAuth]);
 
 

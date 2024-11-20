@@ -15,6 +15,7 @@ import {
 	loginPagesLinks,
 } from './loginVar.js';
 import Button from '@/components/Button/Button.jsx';
+import { useCartStore } from '../../store/cartStore.js';
 
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
@@ -23,11 +24,54 @@ const LoginPage = () => {
 
 	const { login, isLoading, error } = useAuthStore();
 
+	const getCartData = useCartStore();
+	const mergeCartItems = useCartStore((state) => state.cartItems);
+
 	const handleLogin = async (e) => {
 		e.preventDefault();
-		console.log(email);
-		console.log(password);
+
 		await login(email, password, checkAdmin);
+		
+		const userCartDataArr = getCartData.execute().data.cartData;
+		let inCartItems = '';
+		userCartDataArr.map((item) => {
+			inCartItems += item.name + ' x ' + item.quantity + '\n ';
+		});
+		if (
+			window.confirm(
+				'Przed zalogowaniem w koszyku już coś się znajdowało: \n\n' +
+					inCartItems +
+					'\nCzy chcesz zaktualizować koszyk?'
+			)
+		) {
+			if (getCartData.data?.cartData) {
+				const mergedArray = [
+					...userCartDataArr,
+					...getCartData.cartItems,
+				].reduce((acc, obj) => {
+					const existing = acc.find((item) => item._id === obj._id);
+					if (existing) {
+						existing.quantity += obj.quantity;
+					} else {
+						acc.push({ ...obj });
+					}
+					return acc;
+				}, []);
+
+				console.log(mergedArray);
+				let mergedCart = '';
+				mergedArray.map((item) => {
+					mergedCart += item.name + ' x ' + item.quantity + '\n ';
+				});
+				if (
+					window.confirm(
+						'Czy potwierdzasz zaktualizowany stan koszyka? \n\n' + mergedCart
+					)
+				) {
+					mergeCartItems(mergedArray);
+				}
+			}
+		}
 	};
 
 	return (
@@ -36,7 +80,6 @@ const LoginPage = () => {
 				<h2 className='title textTogradient'>{welcomeTitle}</h2>
 
 				<form onSubmit={handleLogin}>
-					
 					<Input
 						icon={Mail}
 						type='email'

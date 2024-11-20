@@ -17,12 +17,8 @@ const Item = ({ item }) => {
 	const { beUrl } = useAuthStore();
 
 	const onDecreaseQuantity = async (itemId,userId) => {
-		const idItem = item._id;
 		decreaseQuantity(item._id);
-		//if(token){
-			//await axios.post(beUrl+removeFromCartUrl,{idItem,userId})
 			toast.error(customInfo.itemRemoved);
-		//}
 	};
 	const idItem = item._id;
 	const onAddToCart = async (itemId, userId) => {

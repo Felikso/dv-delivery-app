@@ -21,11 +21,14 @@ export const useCartStore = create(
 persist(
 	(set,get) => ({
 	cartItems: [],
+	mergeCartItems: (cartItems) =>set(()=> ({ cartItems: cartItems })),
 	...initialState,
 	execute: async () => {
 		set({ ...initialState, loading: true });
 		try {
 		  const res = await axios.post(API_CART_URL+api.get);
+		  console.log(res.data);
+		  
 		  set({ ...initialState, success: true, data: res.data });
 		} catch (err) {
 		  console.error("Error in data fetch:", err);
@@ -40,7 +43,6 @@ persist(
 		delete item.category; 
 		delete item.img;
 		delete item.image;
-		console.log(get().cartItems);
 		if (itemExists) {
 		  if (typeof itemExists.quantity === "number") {
 			itemExists.quantity++;
@@ -49,18 +51,14 @@ persist(
 		} else {
 		  set({ cartItems: [...get().cartItems, { ...item, quantity: 1 }] });
 		}
-		console.log(get().cartItems);
-		console.log(item._id);
-		
-		const res = await axios.post(API_CART_URL+api.update,{itemId,cartItems:get().cartItems})
-		
+
+		await axios.post(API_CART_URL+api.update,{itemId,cartItems:get().cartItems})
 		
 	  },
-	  decreaseQuantity: (productId) => {
+	  decreaseQuantity: async (productId,itemId) => {
 		const itemExists = get().cartItems.find(
 		  (cartItem) => cartItem._id === productId
 		);
-		console.log(get().cartItems);
 		if (itemExists) {
 		  if (typeof itemExists.quantity === "number") {
 			if (itemExists.quantity === 1) {
@@ -74,7 +72,8 @@ persist(
 			}
 		  }
 		}
-		console.log(get().cartItems);
+
+		await axios.post(API_CART_URL+api.update,{itemId,cartItems:get().cartItems})
 	  },
 	  cartValues: 0,
 	  totalPrice: () =>

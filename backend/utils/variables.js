@@ -1,6 +1,7 @@
 export const succesMessage = 'Przedmiot został dodany'
 export const errorMessage = 'Wystąpił błąd, spróbuj ponownie później'
 export const removedMessage = 'Przedmiot został usunięty'
+export const updateMessage = 'koszyk został zaktualizowany'
 export const userExistsMess = 'Użytkownik o tej nazwie już istnieje'
 export const badEmailMess = 'Niepoprawny adres email'
 export const shortPassMess = 'Wprowadź dłuższe hasło (min 8 znaków)'

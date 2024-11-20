@@ -1,5 +1,5 @@
 import userModel from '../models/userModel.js'
-import { addedMessage, errorMessage, removedMessage } from '../variables.js'
+import { addedMessage, errorMessage, removedMessage, updateMessage } from '../variables.js'
 
 
 //add items to user cart
@@ -89,14 +89,8 @@ const getCart = async (req,res) => {
 //pdate items from user cart
 const updateCart = async (req,res) => {
     try {
-        
-  
         let userData = await userModel.findById(req.body.userId);
-        let cartData = await userData.cartData;
-/*         if(cartData[req.body.itemId]>0){
-            cartData[req.body.itemId] -= 1;
-        } */
-        if(req.body.cartItems){
+        if(userData&&req.body.cartItems){
             await userModel.findByIdAndUpdate(req.body.userId,{cartData:req.body.cartItems});
         }
         res.json({success:true,message:removedMessage})
