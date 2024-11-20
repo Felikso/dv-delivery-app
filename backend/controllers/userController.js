@@ -1,6 +1,5 @@
 import bcryptjs from "bcryptjs";
 import crypto from "crypto";
-import dotenv from 'dotenv';
 
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 /* import {
@@ -63,9 +62,6 @@ var transporter = nodemailer.createTransport({
 
 		await user.save();
 	generateTokenAndSetCookie(res, user._id);
-
-/* 		user.token =  generateTokenAndSetCookie(res, user._id);
-		await user.save(); */
 
 		// jwt
 		
@@ -229,6 +225,8 @@ var transporter = nodemailer.createTransport({
 
  const logout = async (req, res) => {
 	res.clearCookie("token");
+	req.body.userId = '';
+	req.userId = '';
 	res.status(200).json({ success: true, message: customInfo.loggedSuccessfully });
 };
 

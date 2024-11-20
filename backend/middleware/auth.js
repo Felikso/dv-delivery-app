@@ -7,6 +7,7 @@ const authMiddleware = async (req,res,next) => {
     //const {token} = req.headers;
     const token = req.cookies.token;
 
+
     if(!token){
         console.log('bad login')
         return res.json({success:false,message:badLoginAgain})

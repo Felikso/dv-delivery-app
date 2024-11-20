@@ -1,8 +1,4 @@
-import bcryptjs from 'bcryptjs';
-import crypto from 'crypto';
-import dotenv from 'dotenv';
 
-import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
 /* import {
 	sendPasswordResetEmail,
 	sendResetSuccessEmail,

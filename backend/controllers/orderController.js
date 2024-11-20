@@ -20,7 +20,7 @@ import {
 	PASSWORD_RESET_SUCCESS_TEMPLATE,
 	VERIFICATION_EMAIL_TEMPLATE,
 } from '../utils/emailTemplates.js';
-import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
+
 
 /* const stripe = Stripe(process.env.STRIPE_SECRET_KEY); */
 
@@ -29,8 +29,6 @@ const placeOrder = async (req, res) => {
 	const verificationCode = Math.floor(
 		100000 + Math.random() * 900000
 	).toString();
-	var anonimId = new mongoose.Types.ObjectId();
-	//const anonimCode = generateTokenAndSetCookie(res, anonimId);
 
 	try {
 		let rabatValue = 0;
@@ -53,6 +51,21 @@ const placeOrder = async (req, res) => {
 
 		await newOrder.save();
 
+		
+
+		//clean cart
+		await userModel.findByIdAndUpdate(req.body.userId, {
+			cartData: {},
+			rabat: {},
+		});
+
+		//if save accept send addres data
+		if (req.body.address) {
+			await userModel.findByIdAndUpdate(req.body.userId, {
+				address: req.body.address,
+			});
+		}
+
 		var mailOptions = {
 			from: process.env.EMAIL,
 			to: req.body.address.email,
@@ -72,19 +85,6 @@ const placeOrder = async (req, res) => {
 				return res.json({success:true,message:'shortPassMess'})
 			}
 		});
-
-		//clean cart
-		await userModel.findByIdAndUpdate(req.body.userId, {
-			cartData: {},
-			rabat: {},
-		});
-
-		//if save accept send addres data
-		if (req.body.address) {
-			await userModel.findByIdAndUpdate(req.body.userId, {
-				address: req.body.address,
-			});
-		}
 
 /* 		const line_items = req.body.items.map((item) => ({
 			price_data: {

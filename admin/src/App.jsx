@@ -79,50 +79,101 @@ const RedirectAuthenticatedUser = ({ children }) => {
 };
 
 function App() {
-	const { isCheckingAuth, checkAuth } = useAuthStore();
+	const { isCheckingAuth, checkAuth, user, isAuthenticated } = useAuthStore();
+/* 	useEffect(() => {
+		checkAuth();
+	}, []); */
+	const getCartData = useCartStore();
 	useEffect(() => {
 		checkAuth();
-	}, []);
 
-	useEffect(() => {
-		checkAuth();
+
+		console.log('user')
+		getCartData.execute();
+		if(isAuthenticated){
+		console.log('checkUserCart');
+		//getCartData.execute();
+		if(getCartData.data?.cartData){
+			const userCartDataArr = getCartData.data.cartData;
+			
+		}
+		if(getCartData.cartItems){
+			console.log(getCartData.cartItems)
+			let inCartItems = ''
+			getCartData.cartItems.map((item,i)=>{
+				inCartItems += item.name+' x '+item.quantity+'\n '
+			})
+			console.log(inCartItems);
+
+			if(getCartData.data?.cartData){
+				const userCartDataArr = getCartData.data.cartData;
+				console.log(userCartDataArr);
+			}
+			
+			/* if (window.confirm('Przed zalogowaniem w koszyku już coś się znajdowało: \n\n'+inCartItems+'\nCzy chcesz zaktualizować koszyk?')) {
+			
+			} */
+		
+		}
+
+		}
 	}, [checkAuth]);
 
-	const getCartData = useCartStore();
 
-	useEffect(() => {
-	  getCartData.execute();
-	}, []);
 
-	//console.log(getCartData.cartItems);
-	if(getCartData.data?.cartData){
-		const userCartDataArr = getCartData.data.cartData;
 
-		Object.keys(userCartDataArr).forEach(function(key, index) {
-			getCartData.cartItems.map((item,i)=>{
+
+
+	if(false){
+		
+		if(getCartData.cartItems){
+			//if (window.confirm('Przed zalogowaniem w koszyku znajdowały się już inne przedmioty. Czy chcesz je dodać do swojego koszyka?')) {
+			if(false){
+				useEffect(() => {
+					getCartData.execute();
+						//console.log(getCartData.cartItems);
+				  if(getCartData.data?.cartData){
+					  const userCartDataArr = getCartData.data.cartData;
+			  
+		/* 			  Object.keys(userCartDataArr).forEach(function(key, index) {
+						if(getCartData.cartItems){
+							getCartData.cartItems.map((item,i)=>{
+				  
+								if(key==item._id){
+									console.log(item._id);
+									
+									console.log(userCartDataArr[key]+item.quantity); //sum of qinatity to set in localstorage
+									//console.log(item.quantity)
+								}
+								
+								
+								//console.log(item._id)
+								}
+						)
+						}
+		
+						  
+						  //console.log(userCartDataArr[key])
+						}); */
+			  
+			  
+					  
+			  
+			  
+						console.log(userCartDataArr)
+						console.log(user._id)
+					  console.log(getCartData.cartItems);
+				  }
+				  }, []);
+			}
+		
+			}
+		}
 	
-				if(key==item._id){
-					/* console.log(item._id);
-					
-					console.log(userCartDataArr[key]+item.quantity); */ //sum of qinatity to set in localstorage
-					//console.log(item.quantity)
-				}
-				
-				
-				//console.log(item._id)
-				}
-		)
-			
-			//console.log(userCartDataArr[key])
-		  });
-
-
+		
 		
 
 
-
-		//console.log(getCartData.cartItems);
-	}
 
 	
   

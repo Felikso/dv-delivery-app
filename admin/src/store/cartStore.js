@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import axios from "axios";
 import { persist } from "zustand/middleware";
-import { urlCart, get } from "./authVar";
+import { urlCart, api } from "./authVar";
 
 axios.defaults.withCredentials = true;
 
 const beUrl = import.meta.env.VITE_BACKEND_URL;
 
-const API_CART_URL = import.meta.env.MODE === "development" ? beUrl+urlCart+get : urlCart+get;
+const API_CART_URL = import.meta.env.MODE === "development" ? beUrl+urlCart : urlCart;
 
 const initialState = {
 	loading: false,
@@ -25,14 +25,14 @@ persist(
 	execute: async () => {
 		set({ ...initialState, loading: true });
 		try {
-		  const res = await axios.post(API_CART_URL);
+		  const res = await axios.post(API_CART_URL+api.get);
 		  set({ ...initialState, success: true, data: res.data });
 		} catch (err) {
 		  console.error("Error in data fetch:", err);
 		  set({ ...initialState, error: true, errorData: err.message });
 		}
 	  },
-	addItemToCart: (item) => {
+	addItemToCart: async (item,itemId) => {
 		const itemExists = get().cartItems.find(
 		  (cartItem) => cartItem._id === item._id
 		);
@@ -40,6 +40,7 @@ persist(
 		delete item.category; 
 		delete item.img;
 		delete item.image;
+		console.log(get().cartItems);
 		if (itemExists) {
 		  if (typeof itemExists.quantity === "number") {
 			itemExists.quantity++;
@@ -48,12 +49,18 @@ persist(
 		} else {
 		  set({ cartItems: [...get().cartItems, { ...item, quantity: 1 }] });
 		}
+		console.log(get().cartItems);
+		console.log(item._id);
+		
+		const res = await axios.post(API_CART_URL+api.update,{itemId,cartItems:get().cartItems})
+		
+		
 	  },
 	  decreaseQuantity: (productId) => {
 		const itemExists = get().cartItems.find(
 		  (cartItem) => cartItem._id === productId
 		);
-	
+		console.log(get().cartItems);
 		if (itemExists) {
 		  if (typeof itemExists.quantity === "number") {
 			if (itemExists.quantity === 1) {
@@ -67,6 +74,7 @@ persist(
 			}
 		  }
 		}
+		console.log(get().cartItems);
 	  },
 	  cartValues: 0,
 	  totalPrice: () =>
@@ -81,5 +89,5 @@ persist(
 	
 }),
 {
-  name: "cartItems",
+  name: "cartData",
 }));

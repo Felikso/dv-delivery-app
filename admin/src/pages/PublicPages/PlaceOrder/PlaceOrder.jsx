@@ -20,10 +20,11 @@ import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText'
 
 const PlaceOrder = () => {
 
-	const token = '7437735'
+	const token = localStorage.getItem('token')
+
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
-	const { cartItems, decreaseQuantity } = useCartStore();
+	const { cartItems } = useCartStore();
 
 	const sumPrice = useCartStore((state) => state.totalPrice());
 

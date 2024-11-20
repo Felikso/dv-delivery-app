@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Item.css';
 import { assets } from '@/assets/assets';
-import { currency, addCartUrl, removeFromCartUrl } from '@/utils/variables';
+import { currency, addCartUrl, removeFromCartUrl, customInfo } from '@/utils/variables';
 import toast from 'react-hot-toast';
 import { useCartStore } from '../../store/cartStore';
 import { useAuthStore } from '../../store/authStore';
@@ -10,7 +10,7 @@ const Item = ({ item }) => {
 	const [itemQuantity, setItemQuantity] = useState(0);
 	const { _id, name, image, description, price } = item; //destructuring of props
 
-	const token = localStorage.getItem('token')
+	//const token = localStorage.getItem('token')
 
 
 	const { addItemToCart, cartItems, decreaseQuantity } = useCartStore();
@@ -19,24 +19,24 @@ const Item = ({ item }) => {
 	const onDecreaseQuantity = async (itemId,userId) => {
 		const idItem = item._id;
 		decreaseQuantity(item._id);
-		if(token){
-			await axios.post(beUrl+removeFromCartUrl,{idItem,userId},{headers:{token}})
+		//if(token){
+			//await axios.post(beUrl+removeFromCartUrl,{idItem,userId})
 			toast.error(customInfo.itemRemoved);
-		}
+		//}
 	};
 	const idItem = item._id;
 	const onAddToCart = async (itemId, userId) => {
-		console.log(token);
+	//	console.log(token);
 		
 	
 		addItemToCart(item);
 		toast.success(`${item.name} już w koszyku!`);
 		
-		if(token){
-			const res = await axios.post(beUrl+addCartUrl,{itemid:idItem,userId},{headers:{token}})
-			console.log(res);
+		//if(token){
+			//const res = await axios.post(beUrl+addCartUrl,{itemId,userId})
+	
 			 
-		}
+		//}
 	};
 
 	useEffect(() => {

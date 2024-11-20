@@ -10,7 +10,6 @@ const orderSchema = new mongoose.Schema({
     date:{type:Date,default:Date.now()},
     payment:{type:Boolean,default:false},
     verified:{type:Boolean,default:false},
-    anonimToken:{type:String},
     verificationCode:{type:String},
     verificationCodeExpiresAt:{type:Date},
     rabat:{type:String}
