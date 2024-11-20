@@ -1,4 +1,8 @@
+import bcryptjs from 'bcryptjs';
+import crypto from 'crypto';
+import dotenv from 'dotenv';
 
+import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
 /* import {
 	sendPasswordResetEmail,
 	sendResetSuccessEmail,
@@ -84,7 +88,6 @@ const setRabat = async (req, res, next) => {
 				from: process.env.EMAIL,
 				to: mail,
 				subject: 'kod weryfikacyjny',
-				//text: ` przepisz kod we wskazanym miejscu  ${verificationToken}`
 				html: `
 <!DOCTYPE html>
 <html lang="en">

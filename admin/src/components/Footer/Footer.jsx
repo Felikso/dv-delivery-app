@@ -1,13 +1,13 @@
 import React from 'react';
 import './Footer.css';
-import { assets } from '@/assets/assets';
+import { assets } from '../../assets/assets';
 import {
 	brandData,
 	coppyrightInfo,
 	footerLinks,
 	footerTitle,
 	socialLinks,
-} from '@/utils/variables';
+} from '../../utils/variables';
 
 const Footer = ({ setShowPopupPage }) => {
 	return (

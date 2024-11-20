@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 //public
 import Navbar from './components/Navbar/Navbar';
@@ -18,7 +18,7 @@ import ResetPasswordPage from './pages/LoginPages/ResetPasswordPage';
 
 //import DashboardPage from './pages/AuthPages/DashboardPage';
 
-import LoadSpinner from './components/LoadSpinner/LoadSpinner.jsx';
+/* import LoadSpinner from './components/LoadSpinner/LoadSpinner.jsx'; */
 
 import { Toaster } from 'react-hot-toast';
 
@@ -33,7 +33,7 @@ import { useCartStore } from './store/cartStore';
 
 /* import LoginPopup from './components/LoginPopup/LoginPopup'; */
 /* import { pagesLinks, footerLinks } from './utils/variables'; */
-//import PopupPage from '@/components/PopupPage/PopupPage';
+import PopupPage from '@/components/PopupPage/PopupPage';
 
 /* import Verify from './pages/Verify/Verify'; */
 
@@ -79,6 +79,8 @@ const RedirectAuthenticatedUser = ({ children }) => {
 };
 
 function App() {
+
+	const [showPopupPage, setShowPopupPage] = useState(false);
 	const { isCheckingAuth, checkAuth, user, isAuthenticated } = useAuthStore();
 /* 	useEffect(() => {
 		checkAuth();
@@ -150,12 +152,13 @@ function App() {
 	
   
 
-	if (isCheckingAuth) return <LoadSpinner />;
+/* 	if (isCheckingAuth) return <LoadSpinner />; */
 
 	return (
 		<div className='background'>
 			{/* 	<BackgroundAnimation count={30} /> */}
 			{/* 	<AdminNavbar /> */}
+			{showPopupPage && <PopupPage setShowPopupPage={setShowPopupPage} showPopupPage={showPopupPage}/>}
 			<Navbar />
 			<Routes>
 				<Route path='/' element={<Home />} />
@@ -262,7 +265,7 @@ function App() {
 				{/* catch all routes */}
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
-			<Footer />
+			<Footer setShowPopupPage={setShowPopupPage}/>
 			<Toaster />
 		</div>
 	);

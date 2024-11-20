@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 
 import { assets } from '@/assets/assets';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
-import BackgroundAnimation from '@/components/BackgroundAnimation/BackgroundAnimation';
+/* import BackgroundAnimation from '@/components/BackgroundAnimation/BackgroundAnimation'; */
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '../../../store/cartStore';
 
@@ -81,7 +81,7 @@ function Cart() {
 			{netErr && <NetworkErrorText />}
 			{
 				/* dataLoading */ false ? (
-					<BackgroundAnimation />
+					/* <BackgroundAnimation /> */<p></p>
 				) : (
 					<>
 						<div className='cartItems'>

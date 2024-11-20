@@ -5,7 +5,7 @@ import Item from '../Item/Item';
 import { allCategoriesName } from '@/utils/variables.jsx';
 import { useAuthStore } from '@/store/authStore';
 import { useItemStore } from '@/store/itemStore';
-import BackgroundAnimation from '../BackgroundAnimation/BackgroundAnimation';
+/* import BackgroundAnimation from '../BackgroundAnimation/BackgroundAnimation'; */
 import NetworkErrorText from '../NetworkErrorText/NetworkErrorText.jsx';
 const ItemsDisplay = ({ category }) => {
 	const { netErr, dataLoading } = useAuthStore();
@@ -25,7 +25,7 @@ const ItemsDisplay = ({ category }) => {
 			{netErr && <NetworkErrorText />}
 			<div className='itemsDisplayList'>
 				{dataLoading ? (
-					<BackgroundAnimation />
+				/* 	<BackgroundAnimation /> */ <p></p>
 				) : (
 					items_list?.length > 0 &&
 					items_list.map((item, i) => {

@@ -20,11 +20,20 @@ const Navbar = () => {
 	const { user, logout, isAuthenticated, userCartItems } = useAuthStore();
 
 	const { cartItems } = useCartStore();
-	const cartCount = cartItems.length;
+
+	const [ shakeCart, setShakeCart ] = useState(false)
 
 	const sum = cartItems.reduce((accumulator, currentObject) => {
 		return accumulator + currentObject.quantity;
 	}, 0);
+
+	useEffect(()=>{
+		setShakeCart(true)
+		setTimeout(() => {
+			setShakeCart(false)
+		  }, 500)
+
+	},[cartItems])
 
 	const [menu, setMenu] = useState('start');
 	const [openMenu, setOpenMenu] = useState(false);
@@ -33,6 +42,7 @@ const Navbar = () => {
 
 	const navigate = useNavigate();
 	let activeClass = openMenu ? 'activeMenu' : '';
+	let hideCart = openMenu ? 'runAway': ''
 
 	const handleChange = () => {
 		setTimeout(setIsHovered(false), 2000);
@@ -88,7 +98,9 @@ const Navbar = () => {
 							onClick={() => handleSetMenu(item)}
 						>
 							{renderMenuList[item].replace('/', '').replace('panel/', '')}
-							{renderMenuList[item] == '/koszyk' && <p>{sum}</p>}
+							{renderMenuList[item] == '/koszyk' && <div id="cart" className={`cart ${shakeCart?'shake' : ''} ${hideCart}`} data-totalitems={sum}>
+  <img src={assets.cart} />
+</div>}
 						</a>
 					))}
 					{Object.entries(objMenu).map(([item, i]) => (

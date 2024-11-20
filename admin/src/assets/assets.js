@@ -7,7 +7,7 @@ import upload_area from './upload_area.png'
 import logout_icon from './logout_icon.svg'
 import rabish_icon from './rabish_icon.svg'
  */
-
+import cart from './cart.svg'
 
 
 import profile_image from './profile_image.png'
@@ -157,6 +157,7 @@ export const assets = {
     //upload_area,
     //logout_icon,
     //rabish_icon,
+    cart,
     rabish_icon,
     refresh_icon,
     profile_image,

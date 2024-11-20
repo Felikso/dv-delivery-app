@@ -44,10 +44,7 @@ const Item = ({ item }) => {
 		<div className='item'>
 			<div className='itemImageContainer'>
 				<img
-					src={
-						item.img
-							? item.img
-							: import.meta.env.VITE_BACKEND_URL + '/images/' + image
+					src={ import.meta.env.VITE_BACKEND_URL + '/images/' + image
 					}
 					alt={name}
 					className='itemImage'

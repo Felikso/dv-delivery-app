@@ -1,15 +1,11 @@
-i{
+/* i{
     position: absolute;
     width: 120px;
     height: 120px;
     border-radius: 50%;
     animation: screen infinite;
     z-index: -1;
-/*     animation: sreen; */
-/*     animation: 'screen'  infinite; */
-/*     transition: .3s;
-    animation-iteration-count: infinite;
-    animation: fadeIn; */
+
   }
   
   
@@ -364,4 +360,4 @@ i{
     to{
       opacity: 0;
     }
-  }
+  } */
