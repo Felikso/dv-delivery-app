@@ -34,7 +34,6 @@ const placeOrder = async (req, res) => {
 
 		const newOrder = new orderModel({
 			userId: req.body.userId,
-			//anonimToken: anonimCode,
 			date: Date.now(),
 			items: req.body.items,
 			amount: req.body.amount,
@@ -46,20 +45,29 @@ const placeOrder = async (req, res) => {
 
 		await newOrder.save();
 
-		
-
 		//clean cart
-		await userModel.findByIdAndUpdate(req.body.userId, {
+		/* const updatedUser = await userModel.findByIdAndUpdate(req.body.userId, {
 			cartData: {},
 			rabat: {},
-		});
+		}); */
 
 		//if save accept send addres data
-		if (req.body.address) {
+	/* 	if (req.body.address) {
 			await userModel.findByIdAndUpdate(req.body.userId, {
 				address: req.body.address,
 			});
-		}
+		} */
+			if (req.body.userId) {
+				const user = await userModel.findById(req.body.userId);
+				user.rabat = {};
+				user.cartData = {};
+				if (req.body.address) {
+				user.address = req.body.address;
+				}
+				await user.save();
+			}
+	
+
 
 		var mailOptions = {
 			from: process.env.EMAIL,

@@ -19,15 +19,11 @@ import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
 import { itemsCat } from '../../../../../backend/controllers/itemsController';
 
 const PlaceOrder = () => {
-	const token = localStorage.getItem('token');
-
-
 
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
 	const { cartItems, mergeCartItems } = useCartStore();
 	
-
 
 const sumPrice = useCartStore((state) => state.totalPrice());
 
@@ -84,7 +80,7 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 
 			if (
 				window.confirm(
-					'Czy na pewno chcez złożyć zamówienie bez zakładania konta?'
+					'Czy na pewno chcesz złożyć zamówienie bez zakładania konta?'
 				)
 			) {
 			} else {
@@ -93,22 +89,10 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 			}
 		}
 
-		/* 		let orderItems = [];
-		items_list.map((item) => {
-			if (cartItems[item._id] > 0) {
-				let itemInfo = item;
-				itemInfo[quantityItems] = cartItems[item._id];
-				orderItems.push(itemInfo);
-			}
-		}); */
 		var result = cartItems.map(function(obj) {
 			return {_id: obj._id, name: obj.name, price: obj.price, quantity: obj.quantity, __v: obj.__v};
 		});
-
-		console.log(result);
-		console.log(cartItems);
-		
-		
+	
 	
 
 		let orderData = {
@@ -118,9 +102,7 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 			rabat: rabatValue,
 			saveAddress: saveAddress,
 		};
-		let response = await axios.post(beUrl + orderPlaceUrl, orderData, {
-			headers: { token },
-		});
+		let response = await axios.post(beUrl + orderPlaceUrl, orderData);
 
 		//const { session_url } = response.data;
 		if (response.data.success) {

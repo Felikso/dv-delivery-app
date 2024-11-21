@@ -34,9 +34,13 @@ function Cart() {
 	const navigate = useNavigate();
 
 	const [data, setData] = useState('');
-	const [rabat, setRabat] = useState(
-		user?.rabat?.rabatValue ? user?.rabat.rabatValue : 0
-	);
+	const [rabat, setRabat] = useState(0);
+
+	useEffect(() => {
+		if (user?.rabat?.rabatValue) {
+			setRabat(user.rabat.rabatValue);
+		}
+	}, [user]);
 
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
