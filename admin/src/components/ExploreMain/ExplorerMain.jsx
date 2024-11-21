@@ -5,9 +5,9 @@ import { main_list } from '@/assets/assets'
 import { allCategoriesName, itemsMainData } from '@/utils/variables'
 
 
-const ExploreMain = ({category, setCategory}) => {
+const ExploreMain = ({category, setCategory, menuRef}) => {
   return (
-    <div className='exploreMain' id='exploreMain'>
+    <div className='exploreMain' id='exploreMain' ref={menuRef}>
       <h1>{itemsMainData.h1}</h1>
       <p className='exploreMainList'>{itemsMainData.p}</p>
       <div className='exploreMainList'>

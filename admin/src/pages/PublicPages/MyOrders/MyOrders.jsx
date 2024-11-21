@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import './MyOrders.css';
 
 import {
@@ -11,7 +11,6 @@ import axios from 'axios';
 import Button from '@/components/Button/Button.jsx';
 import toast from 'react-hot-toast';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText.jsx';
-import { useLocation } from 'react-router-dom';
 import CodeVerifikator from '@/components/CodeVeryfikator/CodeVerifikator.jsx';
 import { useAuthStore } from '@/store/authStore.js';
 

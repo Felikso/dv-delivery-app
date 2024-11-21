@@ -3,7 +3,6 @@ import './Navbar.css';
 import { assets } from '@/assets/assets.js';
 import {
 	brandData,
-	formData,
 	authList,
 	loginBtnText,
 	objMenu,
@@ -30,11 +29,18 @@ const Navbar = () => {
 	const [menu, setMenu] = useState('start');
 	const [openMenu, setOpenMenu] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
+	const [userName,setUserName]= useState('zaloguj się')
 	const location = useLocation();
 
 	const navigate = useNavigate();
 	let activeClass = openMenu ? 'activeMenu' : '';
 	let hideCart = openMenu;
+
+	useEffect(() => {
+		if (user) {
+			setUserName(user.name);
+		}
+	}, [user]);
 
 	useEffect(() => {
 		setShakeCart(true);
@@ -180,7 +186,7 @@ const Navbar = () => {
 								}
 							}}
 						/>
-						<p>{user ? user.name : loginBtnText}</p>
+						<p>{user ? userName : loginBtnText}</p>
 					</div>
 					<a className={`logOutImg ${isHovered ? 'hoverImg' : ''}`}>
 						{isAuthenticated ? (
