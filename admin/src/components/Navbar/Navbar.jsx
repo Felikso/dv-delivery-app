@@ -87,7 +87,7 @@ const Navbar = () => {
 					className={`navbarMenu ${activeClass}`} /* style={{flexDirection: 'row-reverse'}} */
 				>
 					{Object.entries(renderMenuList).map(([item, i]) => (
-						<a
+						<><a
 							href={`${replacePolishLetters(renderMenuList[item])}`}
 							key={i}
 							className={
@@ -98,10 +98,13 @@ const Navbar = () => {
 							onClick={() => handleSetMenu(item)}
 						>
 							{renderMenuList[item].replace('/', '').replace('panel/', '')}
-							{renderMenuList[item] == '/koszyk' && <div id="cart" className={`cart ${shakeCart?'shake' : ''} ${hideCart}`} data-totalitems={sum}>
+							{renderMenuList[item] == '/koszyk' /* && <div id="cart" className={`cart ${shakeCart?'shake' : ''} ${hideCart}`} data-totalitems={sum}>
   <img src={assets.cart} />
-</div>}
+</div> */}
 						</a>
+						<div id="cart" className={`cart ${shakeCart?'shake' : ''} ${hideCart}`} data-totalitems={sum}>
+						<Link to='/koszyk'> <img src={assets.cart} /></Link>
+</div></>
 					))}
 					{Object.entries(objMenu).map(([item, i]) => (
 						<a

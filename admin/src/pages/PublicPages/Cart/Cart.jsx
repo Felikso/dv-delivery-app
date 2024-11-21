@@ -77,7 +77,8 @@ function Cart() {
 
 	let disabled = rabat ? 'disabled' : '';
 	return (
-		<div className='cart'>
+		<div className='.cartBox{
+'>
 			{netErr && <NetworkErrorText />}
 			{
 				/* dataLoading */ false ? (

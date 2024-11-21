@@ -400,6 +400,7 @@ ul.navbarMenu a{
     justify-content:center;
     border-radius:5px;
     transition: 1s ease;
+    margin-top: 100px;
     &:before {
       content:attr(data-totalitems);
 /*       font-size:12px;
@@ -464,4 +465,10 @@ ul.navbarMenu a{
   .runAway{
     right: -200px;
   }
+
+  .cart a{
+    border: none;
+    background: none;
+  }
+
 
