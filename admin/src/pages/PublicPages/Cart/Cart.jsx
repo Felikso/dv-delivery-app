@@ -35,7 +35,7 @@ function Cart() {
 
 	const [data, setData] = useState('');
 	const [rabat, setRabat] = useState(
-		user?.rabat?.rabatValue ? user?.rabat?.rabatValue : 0
+		user?.rabat?.rabatValue ? user?.rabat.rabatValue : 0
 	);
 
 	const onChangeHandler = (e) => {
@@ -54,10 +54,14 @@ function Cart() {
 				);
 			}
 			try {
+				console.log(user.email);
+				
 				const response = await verifyRabatCode(data.rabatCode, user.email);
 				console.log(response);
 
 				if (response.success) {
+					console.log(response);
+					
 					if (response.data.rabatValue) {
 						setRabat(response.data.rabatValue);
 					} else {

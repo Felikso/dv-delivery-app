@@ -9,7 +9,8 @@ export const pagesLinks = {
     list: '/list',
     add: '/add',
     set: '/set',
-    panel: '/panel'
+    panel: '/panel',
+    verifyRabat: '/verify'
 }
 
 export const customErrors = {

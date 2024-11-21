@@ -27,7 +27,6 @@ persist(
 		set({ ...initialState, loading: true });
 		try {
 		  const res = await axios.post(API_CART_URL+api.get);
-		  console.log(res.data);
 		  
 		  set({ ...initialState, success: true, data: res.data });
 		} catch (err) {

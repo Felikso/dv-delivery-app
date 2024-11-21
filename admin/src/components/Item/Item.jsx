@@ -36,7 +36,7 @@ const Item = ({ item }) => {
 	};
 
 	useEffect(() => {
-		const iq = cartItems.filter((item) => item._id === _id);
+		const iq = JSON.stringify(cartItems) === '{}' ? {quantity:0} : cartItems.filter((item) => item._id === _id);
 		setItemQuantity(iq[0]?.quantity);
 	}, [cartItems]);
 

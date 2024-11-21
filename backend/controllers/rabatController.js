@@ -147,6 +147,8 @@ const setRabat = async (req, res, next) => {
 
 const verifyRabat = async (req, res) => {
 	const { rabatCode, email } = req.body;
+	console.log(req.body);
+	
  
 	
 	try {

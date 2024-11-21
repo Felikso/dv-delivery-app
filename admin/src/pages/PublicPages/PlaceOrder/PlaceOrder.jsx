@@ -15,7 +15,6 @@ import toast from 'react-hot-toast';
 
 import Button from '@/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { pagesLinks } from '@/store/authVar';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
 
 const PlaceOrder = () => {
@@ -23,12 +22,11 @@ const PlaceOrder = () => {
 
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
-	const { cartItems, totalPrice } = useCartStore();
+	const { cartItems } = useCartStore();
+	
 
-	/* 	const sumPrice = useCartStore((state) => state.totalPrice()); */
-	const sumPrice = totalPrice();
+const sumPrice = useCartStore((state) => state.totalPrice());
 
-	console.log(sumPrice);
 	const deliveryPrice = sumPrice === 0 ? 0 : 8;
 
 	const [data, setData] = useState(
@@ -53,11 +51,23 @@ const PlaceOrder = () => {
 	}, [user]);
 
 	const [saveAddress, setSaveAddress] = useState(false);
+	const [onlyOneToast, setOnlyOneToast] = useState(true)
+
 
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
 		setData((data) => ({ ...data, [name]: value }));
+		if(onlyOneToast&&e.target.name=='email'){
+			setOnlyOneToast(false)
+			setTimeout(() => {
+				toast.success(customInfo.unauthenticatedAccpetPlaceOrder, {
+					duration: 6000,
+					position: 'bottom-center',
+				});
+			}, 2000);
+			
+		}
 	};
 
 	const placeOrder = async (e) => {
@@ -78,6 +88,7 @@ const PlaceOrder = () => {
 				}
 			}
 		} else {
+
 			if (
 				window.confirm(
 					'Czy na pewno chcez złożyć zamówienie bez zakładania konta?'
@@ -107,18 +118,25 @@ const PlaceOrder = () => {
 		let response = await axios.post(beUrl + orderPlaceUrl, orderData, {
 			headers: { token },
 		});
-		console.log(response);
 
 		//const { session_url } = response.data;
 		if (response.data.success) {
-			if (!isAuthenticated) {
-				toast.success(customInfo.unauthenticatedAccpetPlaceOrder, {
-					duration: 6000,
-				});
-			}
 
+			localStorage.removeItem('cartData'); 
+			//mergeCartItems([])
 			navigate('/');
 			//window.location.reload();
+	
+
+				if (!isAuthenticated) {
+					setTimeout(() => {
+						toast.success(customInfo.unauthenticatedAccpetPlaceOrder, {
+							duration: 6000,
+							position: 'bottom-center',
+						});
+					}, 3000);
+				}
+		
 			//navigate(pagesLinks.orders);
 			/* if (session_url) {
 				//window.location.replace(session_url);
