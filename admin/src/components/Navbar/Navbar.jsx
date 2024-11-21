@@ -22,6 +22,7 @@ const Navbar = () => {
 	const { cartItems } = useCartStore();
 
 	const [ shakeCart, setShakeCart ] = useState(false)
+	const [ runAwayCart, setunAwayCart ] = useState(false)
 
 	const sum = cartItems.reduce((accumulator, currentObject) => {
 		return accumulator + currentObject.quantity;
@@ -29,6 +30,7 @@ const Navbar = () => {
 
 	useEffect(()=>{
 		setShakeCart(true)
+		setunAwayCart(false)
 		setTimeout(() => {
 			setShakeCart(false)
 		  }, 500)
@@ -42,7 +44,7 @@ const Navbar = () => {
 
 	const navigate = useNavigate();
 	let activeClass = openMenu ? 'activeMenu' : '';
-	let hideCart = openMenu ? 'runAway': ''
+	let hideCart = openMenu;
 
 	const handleChange = () => {
 		setTimeout(setIsHovered(false), 2000);
@@ -90,21 +92,19 @@ const Navbar = () => {
 						<><a
 							href={`${replacePolishLetters(renderMenuList[item])}`}
 							key={i}
-							className={
-								location.pathname === replacePolishLetters(renderMenuList[item])
+							className={`navLink 
+								${location.pathname === replacePolishLetters(renderMenuList[item])
 									? 'active'
-									: ''
-							}
+									: ''}
+							`}
 							onClick={() => handleSetMenu(item)}
 						>
 							{renderMenuList[item].replace('/', '').replace('panel/', '')}
-							{renderMenuList[item] == '/koszyk' /* && <div id="cart" className={`cart ${shakeCart?'shake' : ''} ${hideCart}`} data-totalitems={sum}>
-  <img src={assets.cart} />
-</div> */}
+							{renderMenuList[item] == '/koszyk'} 
 						</a>
-						<div id="cart" className={`cart ${shakeCart?'shake' : ''} ${hideCart}`} data-totalitems={sum}>
-						<Link to='/koszyk'> <img src={assets.cart} /></Link>
-</div></>
+						
+						<Link className={`cart ${shakeCart?'shake' : ''} ${runAwayCart||hideCart? 'runAway': ''}`} data-totalitems={sum}  to='/koszyk'> <img src={assets.cart} /></Link>
+</>
 					))}
 					{Object.entries(objMenu).map(([item, i]) => (
 						<a

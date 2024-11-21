@@ -330,7 +330,7 @@ ul.navbarMenu a{
       }
       
       /* Show only the first three child elements */
-      .navbarMenu > :nth-child(-n+3) {
+      .navbarMenu > :nth-child(-n+4) {
         display: flex !important;
       }
 }
@@ -416,6 +416,7 @@ ul.navbarMenu a{
       color:white;
       text-align:center;
       border-radius:24px;
+      z-index: 1;
     }
     &.shake {
       animation: shakeCart .4s ease-in-out forwards;
@@ -455,20 +456,30 @@ ul.navbarMenu a{
   
 
   .cart img{
-    width: 100px;
+    max-width: 60px;
     border-radius: 0;
     background: none;
     height: 60px;
     display: block;
+    background: var(--body-color);
+    border-radius: 10px;
+    top: 0px;
+    right: 10px;
+    position: absolute;
   }
 
   .runAway{
     right: -200px;
   }
 
-  .cart a{
-    border: none;
-    background: none;
+  .cart {
+    border: none !important;
+    background: none !important;
+    height: 100px;
+    height: 100px !important;
+    display: block !important;
+    margin-top: 100px !important;
+    width: 50px !important;
   }
 
 

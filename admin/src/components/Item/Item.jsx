@@ -16,12 +16,12 @@ const Item = ({ item }) => {
 	const { addItemToCart, cartItems, decreaseQuantity } = useCartStore();
 	const { beUrl } = useAuthStore();
 
-	const onDecreaseQuantity = async (itemId,userId) => {
+	const onDecreaseQuantity =  (itemId,userId) => {
 		decreaseQuantity(item._id);
 			toast.error(customInfo.itemRemoved);
 	};
-	const idItem = item._id;
-	const onAddToCart = async (itemId, userId) => {
+	
+	const onAddToCart =  (itemId, userId) => {
 	//	console.log(token);
 		
 	
@@ -55,7 +55,7 @@ const Item = ({ item }) => {
 							className='add'
 							onClick={onAddToCart}
 							src={assets.add_icon_white}
-							alt=''
+							alt='dodaj'
 						/>
 					</div>
 				) : (
