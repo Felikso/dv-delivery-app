@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Item.css';
 import { assets } from '@/assets/assets';
-import { currency, addCartUrl, removeFromCartUrl, customInfo } from '@/utils/variables';
+import { currency, customInfo } from '@/utils/variables';
 import toast from 'react-hot-toast';
 import { useCartStore } from '../../store/cartStore';
-import { useAuthStore } from '../../store/authStore';
-import axios from 'axios';
+
 const Item = ({ item }) => {
 	const [itemQuantity, setItemQuantity] = useState(0);
 	const { _id, name, image, description, price } = item; //destructuring of props
@@ -14,7 +13,6 @@ const Item = ({ item }) => {
 
 
 	const { addItemToCart, cartItems, decreaseQuantity } = useCartStore();
-	const { beUrl } = useAuthStore();
 
 	const onDecreaseQuantity =  (itemId,userId) => {
 		decreaseQuantity(item._id);
@@ -22,17 +20,9 @@ const Item = ({ item }) => {
 	};
 	
 	const onAddToCart =  (itemId, userId) => {
-	//	console.log(token);
-		
-	
 		addItemToCart(item);
 		toast.success(`${item.name} już w koszyku!`);
 		
-		//if(token){
-			//const res = await axios.post(beUrl+addCartUrl,{itemId,userId})
-	
-			 
-		//}
 	};
 
 	useEffect(() => {

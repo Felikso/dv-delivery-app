@@ -135,10 +135,8 @@ const verifyOrderCode = async (req, res) => {
 
 	try {
 		const veryfiedOrder = await orderModel.findOne({
-			//ObjectId:_id,
 			verified: true,
 			verificationCode: verificationCode,
-			//verificationCodeExpiresAt: { $gt: Date.now() },
 		});
 
 		if (veryfiedOrder) {
@@ -151,7 +149,6 @@ const verifyOrderCode = async (req, res) => {
 		}
 
 		const order = await orderModel.findOne({
-			//ObjectId:_id,
 			verificationCode: verificationCode,
 			verificationCodeExpiresAt: { $gt: Date.now() },
 		});
@@ -303,8 +300,7 @@ const updateStatus = async (req, res) => {
 const removeOrder = async (req, res) => {
 	try {
 		await orderModel.findByIdAndDelete(req.body.orderId);
-		console.log(req.body.orderId);
-		res.json({ success: true, message: 'sdf' });
+		res.json({ success: true, message: '' });
 	} catch {
 		res.json({ success: false, message: errorMessage });
 	}

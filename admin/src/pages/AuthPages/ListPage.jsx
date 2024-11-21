@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-//import './List.css'
-import axios from 'axios';
-import { listData, urlList, url, urlImg, urlRemove, tableTitle, errorMessage, urlUpdate } from '@/utils/variables'
+import { errorMessage } from '@/utils/variables'
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/store/authStore.js';
 
@@ -17,8 +15,6 @@ const ListPage = () => {
   
   const fetchList = async () => {
     const response = await fetchAuthList();
-   // const response = await axios.get(`${url}${urlList}`);
-    console.log('lista załadowana')
     if(response.data.success){
       setList((response.data.data).reverse())
     }else{

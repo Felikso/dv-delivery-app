@@ -29,39 +29,44 @@ const setRabat = async (req, res, next) => {
 	const { rabatValue, rabatCodeExpiresAt, emailArr } = req.body;
 
 	try {
-		//console.log(emailArr)
 		if (emailArr?.length > 0) {
 			let emailDosentExistArr = [];
 			for (const mail of emailArr) {
-				const userExists = await userModel.findOne({ email: mail })
+				const userExists = await userModel.findOne({ email: mail });
 				if (!userExists) {
-					emailDosentExistArr.push(mail)
+					emailDosentExistArr.push(mail);
 				}
-			  }
-			  let emailsArr = [];
-			  if(emailDosentExistArr[0]=='all'){
-						// jwt
-		const usersArr = await userModel.find({})
-	
-        Object.entries(usersArr).map(([item, i]) => {
-            if(!emailsArr.includes(i['email'])){
-                emailsArr.push(i['email'])
-            }})
-
-			  }else if (emailDosentExistArr.length > 0) {
-				return res.status(400).json({ success: false, message: customErrors.userDosentExists+': '+ emailDosentExistArr.join(', ') });
 			}
+			let emailsArr = [];
+			if (emailDosentExistArr[0] == 'all') {
+				// jwt
+				const usersArr = await userModel.find({});
 
+				Object.entries(usersArr).map(([item, i]) => {
+					if (!emailsArr.includes(i['email'])) {
+						emailsArr.push(i['email']);
+					}
+				});
+			} else if (emailDosentExistArr.length > 0) {
+				return res
+					.status(400)
+					.json({
+						success: false,
+						message:
+							customErrors.userDosentExists +
+							': ' +
+							emailDosentExistArr.join(', '),
+					});
+			}
 		}
-
 
 		if (!rabatValue) {
 			throw new Error(customErrors.rabatValue);
 		}
 
 		const hours24 = 24 * 60 * 60 * 1000;
-		let countRabatDays = 7 * hours24;// 7 * 24 hours;
-		if(rabatCodeExpiresAt){
+		let countRabatDays = 7 * hours24; // 7 * 24 hours;
+		if (rabatCodeExpiresAt) {
 			countRabatDays = rabatCodeExpiresAt * hours24; // 24 hours
 		}
 
@@ -70,19 +75,14 @@ const setRabat = async (req, res, next) => {
 		const rabat = new rabatModel({
 			rabatCode,
 			rabatValue,
-			rabatCodeExpiresAt:  Date.now() + countRabatDays,
-			emailArr
+			rabatCodeExpiresAt: Date.now() + countRabatDays,
+			emailArr,
 		});
 
 		await rabat.save();
 
-
-
 		let sendEmailArr = emailArr ? emailArr : usersArr;
 
-		console.log(sendEmailArr);
-		
-		
 		sendEmailArr.forEach((mail) => {
 			var mailOptions = {
 				from: process.env.EMAIL,
@@ -134,7 +134,7 @@ const setRabat = async (req, res, next) => {
 		res.status(201).json({
 			success: true,
 			message: customInfo.rabatCreatedSuccessfully,
-			rabatCode: rabatCode
+			rabatCode: rabatCode,
 			/* 		user: {
 				...user._doc,
 				password: undefined,
@@ -147,10 +147,7 @@ const setRabat = async (req, res, next) => {
 
 const verifyRabat = async (req, res) => {
 	const { rabatCode, email } = req.body;
-	console.log(req.body);
-	
- 
-	
+
 	try {
 		const rabat = await rabatModel.findOne({
 			emailArr: email,
@@ -163,41 +160,36 @@ const verifyRabat = async (req, res) => {
 				.status(400)
 				.json({ success: false, message: customErrors.expiriedCode });
 		}
-		//console.log(rabat.emailArr);
-
 		let index = rabat.emailArr.indexOf(email); // Find the index of the item
 		if (index !== -1) {
 			rabat.emailArr.splice(index, 1); // Remove the item at the index
-			const userRabat = await userModel.findOne({ email: email })
+			const userRabat = await userModel.findOne({ email: email });
 			if (userRabat) {
-				//console.log (Object.keys(userRabat.rabat).length === 0);
-				
-				if(Object.keys(userRabat.rabat).length === 0){
-					userRabat.rabat = {rabatCode: rabatCode, rabatValue: rabat.rabatValue};
-					userRabat.save()
-				}else{
-					//console.log(res);
-					
+				if (Object.keys(userRabat.rabat).length === 0) {
+					userRabat.rabat = {
+						rabatCode: rabatCode,
+						rabatValue: rabat.rabatValue,
+					};
+					userRabat.save();
+				} else {
 					return res
-					.status(400)
-					.json({ success: false, message: customErrors.rabatExists });
+						.status(400)
+						.json({ success: false, message: customErrors.rabatExists });
 				}
-
 			}
 		}
 
-		if(rabat.emailArr.length===0){
+		if (rabat.emailArr.length === 0) {
 			await rabatModel.findByIdAndDelete(rabat._id);
-            res.json({success:true,message:customInfo.rabatUsed,data:rabat.rabatValue})
-		}else{
+			res.json({
+				success: true,
+				message: customInfo.rabatUsed,
+				data: rabat.rabatValue,
+			});
+		} else {
 			await rabat.save();
-			res.json({success:true,data:rabat.rabatValue})
+			res.json({ success: true, data: rabat.rabatValue });
 		}
-
-
-
-
-
 	} catch (error) {
 		console.log(customErrors.inVeirfyEmail, error);
 		res.status(500).json({ success: false, message: customErrors.serverError });

@@ -1,18 +1,14 @@
-import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
-import { formatDate } from "../utils/date";
 import { useNavigate, useParams } from 'react-router-dom'
 import { customInfo, dashBoardData, contactMail } from '../utils/variables'
-import SearchBox from '../components/SearchBox/SearchBox'
 import React, {useState,useEffect} from 'react'
-import toast from "react-hot-toast";
 import Button from "../components/Button/Button";
 
 const NotAdminPage = () => {
 	const { user, logout, checkAdmin } = useAuthStore();
 	const { token } = useParams();
     const navigate = useNavigate();
-//console.log(checkAdmin)
+
 	const handleLogout = () => {
 		logout();
         navigate('/')
@@ -27,14 +23,11 @@ const NotAdminPage = () => {
   
 	const fetchList = async () => {
 	  const response = await fetchMailList(token);
-	 // const response = await axios.get(`${url}${urlList}`);
+
 	console.log('useeffet');
 	
 	  if(response.data.success){
 		setList(response.data.data)
-		if(list.length>0){
-			console.log(list)
-		}
 	
 	  }else{
 		//toast.error('errorMessage')

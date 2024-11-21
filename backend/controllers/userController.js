@@ -429,8 +429,6 @@ const addPermissions = async (req,res) => {
 
 // all users emails
 const userEmails = async (req,res) => {
-	const {token} = req.headers;
-	console.log('token');
 	
     try {
         const users = await userModel.find({});

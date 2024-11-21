@@ -22,7 +22,6 @@ const Navbar = () => {
 	const { cartItems } = useCartStore();
 
 	const [shakeCart, setShakeCart] = useState(false);
-	console.log(cartItems);
 	
 	const sum = JSON.stringify(cartItems) === '{}' ? 0 : cartItems?.reduce((accumulator, currentObject) => {
 		return accumulator + currentObject.quantity;

@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 export const verifyToken = (req, res, next) => {
 	
 	const token = req.cookies.token;
-	console.log(req);
 	
 	if (!token) return res.status(401).json({ success: false, message: "Unauthorized - no token provided" });
 	try {
@@ -11,7 +10,6 @@ export const verifyToken = (req, res, next) => {
 
 		if (!decoded) return res.status(401).json({ success: false, message: "Unauthorized - invalid token" });
 		if(decoded){
-			console.log(token);
 			
 			req.body.userId = decoded.userId;
 			req.userId = decoded.userId;
