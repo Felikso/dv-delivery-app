@@ -16,14 +16,18 @@ import toast from 'react-hot-toast';
 import Button from '@/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
+import { itemsCat } from '../../../../../backend/controllers/itemsController';
 
 const PlaceOrder = () => {
 	const token = localStorage.getItem('token');
+
+
 
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
 	const { cartItems, mergeCartItems } = useCartStore();
 	
+
 
 const sumPrice = useCartStore((state) => state.totalPrice());
 
@@ -97,9 +101,19 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 				orderItems.push(itemInfo);
 			}
 		}); */
+		var result = cartItems.map(function(obj) {
+			return {_id: obj._id, name: obj.name, price: obj.price, quantity: obj.quantity, __v: obj.__v};
+		});
+
+		console.log(result);
+		console.log(cartItems);
+		
+		
+	
+
 		let orderData = {
 			address: data,
-			items: cartItems,
+			items: result,
 			amount: (sumPrice - rabatAmount + deliveryPrice).toFixed(2),
 			rabat: rabatValue,
 			saveAddress: saveAddress,
@@ -122,7 +136,7 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 							duration: 6000,
 							position: 'bottom-center',
 						});
-					}, 3000);
+					}, 1500);
 				}
 		
 			//navigate(pagesLinks.orders);

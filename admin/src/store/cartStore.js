@@ -38,8 +38,8 @@ persist(
 		const itemExists = get().cartItems.find(
 		  (cartItem) => cartItem._id === item._id
 		);
-		delete item.description;
-		delete item.category; 
+		//delete item.description;
+		//delete item.category; 
 		delete item.img;
 		if (itemExists) {
 		  if (typeof itemExists.quantity === "number") {
