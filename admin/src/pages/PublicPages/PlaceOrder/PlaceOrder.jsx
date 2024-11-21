@@ -22,7 +22,7 @@ const PlaceOrder = () => {
 
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
-	const { cartItems } = useCartStore();
+	const { cartItems, mergeCartItems } = useCartStore();
 	
 
 const sumPrice = useCartStore((state) => state.totalPrice());
@@ -51,23 +51,12 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 	}, [user]);
 
 	const [saveAddress, setSaveAddress] = useState(false);
-	const [onlyOneToast, setOnlyOneToast] = useState(true)
 
 
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
 		setData((data) => ({ ...data, [name]: value }));
-		if(onlyOneToast&&e.target.name=='email'){
-			setOnlyOneToast(false)
-			setTimeout(() => {
-				toast.success(customInfo.unauthenticatedAccpetPlaceOrder, {
-					duration: 6000,
-					position: 'bottom-center',
-				});
-			}, 2000);
-			
-		}
 	};
 
 	const placeOrder = async (e) => {
@@ -123,9 +112,8 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 		if (response.data.success) {
 
 			localStorage.removeItem('cartData'); 
-			//mergeCartItems([])
+			mergeCartItems([])
 			navigate('/');
-			//window.location.reload();
 	
 
 				if (!isAuthenticated) {
