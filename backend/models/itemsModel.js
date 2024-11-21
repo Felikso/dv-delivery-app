@@ -9,6 +9,6 @@ const itemsSchema = new mongoose.Schema({
     img: {type:String},
 })
 
-const itemsModel = mongoose.models.items || mongoose.model('items',itemsSchema)
+const itemsModel = mongoose.models?.items || mongoose.model('items',itemsSchema)
 
 export default itemsModel; 

@@ -246,7 +246,7 @@ var transporter = nodemailer.createTransport({
 				from: process.env.EMAIL,
 				to: user.email,
 				subject: 'przypomnienie hasła',
-				text: `WITAMY  ${process.env.CLIENT_URL}/reset-password/${user.resetPasswordToken}`
+				text: `WITAMY  ${import.meta.env.REACT_APP_CLIENT_URL}/reset-password/${user.resetPasswordToken}`
 			  };
 			  
 			  transporter.sendMail(mailOptions, function(error, info){
@@ -271,13 +271,13 @@ var transporter = nodemailer.createTransport({
 		await user.save();
 
 		// send email
-		//await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+		//await sendPasswordResetEmail(user.email, `${import.meta.env.REACT_APP_CLIENT_URL}/reset-password/${resetToken}`);
 
 		var mailOptions = {
             from: process.env.EMAIL,
             to: user.email,
             subject: 'przypomnienie hasła',
-            text: `WITAMY  ${process.env.CLIENT_URL}/reset-password/${resetToken}`
+            text: `WITAMY  ${import.meta.env.REACT_APP_CLIENT_URL}/reset-password/${resetToken}`
           };
           
            transporter.sendMail(mailOptions, function(error, info){

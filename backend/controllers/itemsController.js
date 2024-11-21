@@ -1,4 +1,3 @@
-import { error } from "console";
 import itemsModel from "../models/itemsModel.js";
 //import fs from 'fs';
 import { succesMessage, errorMessage, removedMessage } from '../variables.js'
@@ -37,10 +36,10 @@ cloudinary.config({
 const addItems = async (req,res) => {
 
     let image_filename = req.file ? `${req.file.filename}` : 'default.png';
-/*     console.log(req.file.path)
+     console.log(req.file.path)
 
-console.log(uploadImage(req.file.path)) */
-/*     const cloudData = new FormData();
+/* console.log(uploadImage(req.file.path)) 
+     const cloudData = new FormData();
     cloudData.append('file',req.file);
     cloudData.append('upload_preset',process.env.CLOUDINARY_CLOUD_NAME);
     cloudData.append('cloud_name', process.env.CLOUDINARY_API_KEY,);   
@@ -48,11 +47,10 @@ console.log(uploadImage(req.file.path)) */
     const ress = await fetch(process.env.CLOUDINARY_URL_KEY,{
       method: 'POST',
       body: cloudData
-    })
+    }) */
 
-    console.log(ress)
 
-    const uploadedImageURL = await ress.json()  */
+    const uploadedImageURL = await ress.json()  
 
     const items = new itemsModel({
         name:req.body.name,

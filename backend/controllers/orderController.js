@@ -1,17 +1,11 @@
 import orderModel from '../models/orderModel.js';
 import userModel from '../models/userModel.js';
 import transporter from '../utils/transporter.js';
-import mongoose from 'mongoose';
 /* import Stripe from "stripe"; */
 import {
 	customErrors,
 	customInfo,
-	verifyUrl,
-	frontend_url,
-	deliveryChargesMess,
-	modePayment,
-	oderSlug,
-	removedMessage,
+
 	errorMessage,
 } from '../utils/variables.js';
 
