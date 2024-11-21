@@ -76,7 +76,7 @@ persist(
 	  },
 	  cartValues: 0,
 	  totalPrice: () =>
-		get().cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
+		get().cartItems.reduce((total, item) => total + item.price * item.quantity, 0), 
 	  getTotalCartAmount: (cartItems) => {
 		let sumPrice = 0;
 		cartItems.map(item=>{

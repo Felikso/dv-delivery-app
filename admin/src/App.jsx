@@ -16,20 +16,20 @@ import ForgotPasswordPage from './pages/LoginPages/ForgotPasswordPage.jsx';
 import EmailVerificationPage from './pages/LoginPages/EmailVerificationPage';
 import ResetPasswordPage from './pages/LoginPages/ResetPasswordPage';
 
-//import DashboardPage from './pages/AuthPages/DashboardPage';
+import DashboardPage from './pages/AuthPages/DashboardPage';
 
 /* import LoadSpinner from './components/LoadSpinner/LoadSpinner.jsx'; */
 
 import { Toaster } from 'react-hot-toast';
 
-/* import ListPage from './pages/AuthPages/ListPage';
+import ListPage from './pages/AuthPages/ListPage';
 import AddPage from './pages/AuthPages/AddPage.jsx';
-import OrdersPage from './pages/AuthPages/OrdersPage.jsx'; */
+import OrdersPage from './pages/AuthPages/OrdersPage.jsx';
 
-import { pagesLinks } from './utils/variables.jsx';
+import { pagesLinks, authList, panelPath  } from './utils/variables.jsx';
 import { useCartStore } from './store/cartStore';
-//import { replacePolishLetters } from './utils/functions.js'
-//import NotAdminPage from './pages/NotAdminPage.jsx';
+import { replacePolishLetters } from './utils/functions.js'
+import NotAdminPage from './pages/NotAdminPage.jsx';
 
 /* import LoginPopup from './components/LoginPopup/LoginPopup'; */
 /* import { pagesLinks, footerLinks } from './utils/variables'; */
@@ -43,10 +43,15 @@ import PopupPage from '@/components/PopupPage/PopupPage';
 //public
 
 // protect routes that require authentication
-/* const ProtectedRoute = ({ children }) => {
-	const { isAuthenticated, user } = useAuthStore();
+const ProtectedRoute = ({ children }) => {
+	const { isAuthenticated, user, checkAuth } = useAuthStore();
 
-	if(user){
+/* 	if (!isAuthenticated) {
+		return <Navigate to={`${pagesLinks.login}`} replace />;
+	}
+ */
+
+/* 	if(user){
 		if (!user.isAdmin) {
 			return <Navigate to='/not-admin' replace />;
 		}
@@ -59,13 +64,17 @@ import PopupPage from '@/components/PopupPage/PopupPage';
 	if (!user.isVerified) {
 		return <Navigate to={`${pagesLinks.verifyEmail}`} replace />;
 	}
+ */
 
+	useEffect(() => {
+		checkAuth();
+	}, [])
 	return (
 		<>
-		<AdminNavbar />
-		{children}
+		
+		{isAuthenticated && user.isVerified && user.isAdmin ? children: <NotAdminPage />}
 		</>);
-}; */
+};
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -168,8 +177,8 @@ function App() {
 				<Route path={`/${pagesLinks.myorders}`} element={<MyOrders />} />
 				{/*   <Route path={`/${pagesLinks.verifyOrder}/:_id`} element={<VerifyOrder />} /> */}
 
-				{/* 				<Route
-					path='/'
+								<Route
+					path='/panel'
 					element={
 						<ProtectedRoute>
 							<DashboardPage />
@@ -185,7 +194,7 @@ function App() {
 							<NotAdminPage />
 						
 					}
-				/> */}
+				/>
 
 				{/* 				{Object.entries(authList).map(([item, i]) => (
 					<Route
@@ -197,8 +206,8 @@ function App() {
 					}
 						/>
 					))} */}
-				{/* <Route
-					path={replacePolishLetters(authList.add)}
+				<Route
+					path={panelPath+replacePolishLetters(authList.add)}
 					element={
 						<ProtectedRoute>
 							<AddPage />
@@ -207,23 +216,25 @@ function App() {
 				/>
 
 			<Route
-					path={replacePolishLetters(authList.list)}
+					path={panelPath+replacePolishLetters(authList.list)}
 					element={
 						<ProtectedRoute>
 							<ListPage />
-						</ProtectedRoute>
+						</ProtectedRoute> 
+					
+					 
 					}
 				/>
 
 			<Route
-					path={replacePolishLetters(authList.orders)}
+					path={panelPath+replacePolishLetters(authList.orders)}
 					element={
 						<ProtectedRoute>
 							<OrdersPage />
 						</ProtectedRoute>
 					}
 				/>
- */}
+
 
 				<Route
 					path={pagesLinks.signup}

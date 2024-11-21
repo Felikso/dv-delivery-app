@@ -6,6 +6,10 @@ export const pagesLinks = {
     forgotPass: '/forgot-password',
     resetPass: '/reset-password',
     verifyEmail: '/verify-email',
+    list: '/list',
+    add: '/add',
+    set: '/set',
+    panel: '/panel'
 }
 
 export const customErrors = {

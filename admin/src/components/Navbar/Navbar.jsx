@@ -17,25 +17,15 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu.jsx';
 import { useCartStore } from '../../store/cartStore';
 
 const Navbar = () => {
-	const { user, logout, isAuthenticated, userCartItems } = useAuthStore();
+	const { user, logout, isAuthenticated } = useAuthStore();
 
 	const { cartItems } = useCartStore();
 
-	const [ shakeCart, setShakeCart ] = useState(false)
-	const [ runAwayCart, setunAwayCart ] = useState(false)
+	const [shakeCart, setShakeCart] = useState(false);
 
 	const sum = cartItems.reduce((accumulator, currentObject) => {
 		return accumulator + currentObject.quantity;
 	}, 0);
-
-	useEffect(()=>{
-		setShakeCart(true)
-		setunAwayCart(false)
-		setTimeout(() => {
-			setShakeCart(false)
-		  }, 500)
-
-	},[cartItems])
 
 	const [menu, setMenu] = useState('start');
 	const [openMenu, setOpenMenu] = useState(false);
@@ -45,6 +35,14 @@ const Navbar = () => {
 	const navigate = useNavigate();
 	let activeClass = openMenu ? 'activeMenu' : '';
 	let hideCart = openMenu;
+
+	useEffect(() => {
+		setShakeCart(true);
+		setOpenMenu(false);
+		setTimeout(() => {
+			setShakeCart(false);
+		}, 500);
+	}, [cartItems]);
 
 	const handleChange = () => {
 		setTimeout(setIsHovered(false), 2000);
@@ -58,7 +56,7 @@ const Navbar = () => {
 	const handleLogout = () => {
 		if (window.confirm('wylogowujesz się?')) {
 			logout();
-			localStorage.removeItem('cartData')
+			localStorage.removeItem('cartData');
 			setOpenMenu(!openMenu);
 			navigate('/');
 			window.location.reload();
@@ -71,9 +69,10 @@ const Navbar = () => {
 		}
 	}, []);
 
-	const renderMenuList = user?.isAdmin
+/* 	const renderMenuList = user?.isAdmin
 		? { ...authList, ...objPages }
-		: objPages;
+		: objPages; */
+		const renderMenuList =  objPages;
 
 	return (
 		<>
@@ -85,38 +84,48 @@ const Navbar = () => {
 				/>
 			</Link>
 			<div className='navbar'>
-				<ul
-					className={`navbarMenu ${activeClass}`} /* style={{flexDirection: 'row-reverse'}} */
-				>
+				<ul className={`navbarMenu ${activeClass}`}>
 					{Object.entries(renderMenuList).map(([item, i]) => (
-						<><a
-							href={`${replacePolishLetters(renderMenuList[item])}`}
-							key={i}
-							className={`navLink 
-								${location.pathname === replacePolishLetters(renderMenuList[item])
-									? 'active'
-									: ''}
+						<>
+							<Link
+								to={`${replacePolishLetters(renderMenuList[item])}`}
+								key={i + renderMenuList[item]}
+								className={`${
+									location.pathname ===
+									replacePolishLetters(renderMenuList[item])
+										? 'active'
+										: ''
+								}
 							`}
-							onClick={() => handleSetMenu(item)}
-						>
-							{renderMenuList[item].replace('/', '').replace('panel/', '')}
-							{renderMenuList[item] == '/koszyk'} 
-						</a>
-						
-						<Link className={`cart ${shakeCart?'shake' : ''} ${runAwayCart||hideCart? 'runAway': ''}`} data-totalitems={sum}  to='/koszyk'> <img src={assets.cart} /></Link>
-</>
+								onClick={() => handleSetMenu(item)}
+							>
+								{renderMenuList[item].replace('/', '').replace('panel/', '')}
+							</Link>
+
+							<span
+								key={i}
+								onClick={() => navigate('/koszyk')}
+								className={`cart ${shakeCart ? 'shake' : ''} ${
+									hideCart ? 'runAway' : ''
+								}`}
+								data-totalitems={sum}
+							>
+								{' '}
+								<img src={assets.cart} />
+							</span>
+						</>
 					))}
 					{Object.entries(objMenu).map(([item, i]) => (
 						<a
 							href={`/#${objMenu[item]}`}
-							key={i}
-							className={menu === item ? 'active' : ''}
+							key={i + item}
+							className={`${menu === item ? 'active' : ''}`}
 							onClick={() => handleSetMenu(item)}
 						>
 							{item}
 						</a>
 					))}
-					<div className='navLogout'>
+					<div className='navLogout' key='navLogout'>
 						<img
 							src={assets.logo}
 							alt={`logo ${brandData.name}`}

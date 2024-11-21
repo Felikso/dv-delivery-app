@@ -6,6 +6,17 @@ const beUrl = import.meta.env.VITE_BACKEND_URL;
 
 const API_URL = import.meta.env.MODE === "development" ? beUrl+"/api/auth" : "/api/auth";
 
+
+const API_ITEMS_URL =  import.meta.env.MODE === "development" ? beUrl+"/api/items" : "/api/items";
+
+const API_USERS_URL = import.meta.env.MODE === "development" ? beUrl+"/api/user" : "/api/user";
+
+const API_RABAT_URL =  import.meta.env.MODE === "development" ? beUrl+"/api/rabat" : "/api/rabat";
+
+const API_ORDER_URL =  import.meta.env.MODE === "development" ? beUrl+"/api/order" : "/api/order";
+
+const API_CART_URL = import.meta.env.MODE === "development" ? beUrl+"/api/cart" : "/api/cart";
+
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
@@ -107,7 +118,110 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
-	//API_RABATS_URL
+	fetchAuthList: async () => {
+		try {
+			const response = await axios.get(`${API_ITEMS_URL}${pagesLinks.list}`);
+			return response
+		} catch (error) {
+			set({
+				error: error.response?.data
+			});
+			throw error;
+		}
+	},
+	removeAuthItem: async (itemId) => {
+		try {
+			const response = await axios.post(`${API_ITEMS_URL}/remove`,{id:itemId});
+			set({ message: response.data.message });
+			return response 
+		} catch (error) {
+			set({
+				error: error.response
+			});
+			throw error;
+		}
+	},
+	updateAuthItem: async (itemId,formData) => {
+		try {
+
+			let activity = itemId?'update':'add';
+			const response = await axios.post(`${API_ITEMS_URL}/${activity}`,formData);
+			//const response = await axios.post(`${url}${newUrl}`, formData);
+			set({ message: response.data.message });
+			return response
+		} catch (error) {
+			set({
+				error: error.response
+			});
+			throw error;
+		}
+	},
+	fetchMailList: async (token) => {
+		try {
+			const response = await axios.get(`${API_USERS_URL}/emails`,	{ headers: { token: token } });
+			return response
+/* 			const response = await axios.get(`${API_USERS_URL}/emails`);
+			return response */
+		} catch (error) {
+			set({
+				error: error.response.data
+			});
+			throw error;
+		}
+	},
+
+	setRabat: async (rabatValue, emailArr, token) => {	
+		try {
+			const response = await axios.post(`${API_RABAT_URL}${pagesLinks.set}`,	{ rabatValue: rabatValue, emailArr:emailArr  }, { headers: { token: token } });
+			set({ message: response.data.message, rabatCode: response.data.rabatCode });
+			return response
+		} catch (error) {
+			set({
+				error: error.response.data
+			});
+			throw error;
+		}
+	},
+
+	addItemToCart: async (itemId,userId) => {
+		try {
+
+			//let activity = itemId?'update': pagesLinks.add;
+			const response = await axios.post(`${API_CART_URL}${pagesLinks.add}`,{itemId,userId});
+			//const response = await axios.post(`${url}${newUrl}`, formData);
+			set({ message: response.data.message });
+			return response
+		} catch (error) {
+			set({
+				error: error.response
+			});
+			throw error;
+		}
+	},
+	verifyRabatCode: async (rabatCode,email,token) => {
+		set({ isLoading: true, error: null });
+		try {
+			const response = await axios.post(`${API_RABAT_URL}${pagesLinks.verifyRabat}`, { rabatCode: rabatCode, email:email  }, { headers: { token: token } });
+			set({ rabatValue: response.data.rabatValue, isLoading: false });
+			return response.data;
+		} catch (error) {
+			set({ error: error.response.data.message || customErrors.verifyRabat, isLoading: false });
+			throw error;
+		}
+	},
+	verifyOrderCode: async (verificationCode,_id) => {
+		set({ isLoading: true, error: null });
+		try {
+			const response = await axios.post(`${API_ORDER_URL}${pagesLinks.verifyOrder}/${_id}`, { verificationCode: verificationCode, _id: _id  });
+			console.log(response);
+			
+			set({ rabatValue: response.data.rabatValue, isLoading: false, verified:true  });
+			return response.data;
+		} catch (error) {
+			set({ error: error.response.data.message || customErrors.verifyOrder, isLoading: false });
+			throw error;
+		}
+	},
 
 
 

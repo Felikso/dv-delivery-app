@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PlaceOrder.css';
 import {
 	cartData,
@@ -10,24 +10,25 @@ import {
 
 import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
-import { useCartStore } from '@/store/cartStore'
+import { useCartStore } from '@/store/cartStore';
 import toast from 'react-hot-toast';
 
 import Button from '@/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { pagesLinks } from '@/store/authVar';
-import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText'
+import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
 
 const PlaceOrder = () => {
-
-	const token = localStorage.getItem('token')
+	const token = localStorage.getItem('token');
 
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
-	const { cartItems } = useCartStore();
+	const { cartItems, totalPrice } = useCartStore();
 
-	const sumPrice = useCartStore((state) => state.totalPrice());
+	/* 	const sumPrice = useCartStore((state) => state.totalPrice()); */
+	const sumPrice = totalPrice();
 
+	console.log(sumPrice);
 	const deliveryPrice = sumPrice === 0 ? 0 : 8;
 
 	const [data, setData] = useState(
@@ -45,6 +46,11 @@ const PlaceOrder = () => {
 					phone: '',
 			  }
 	);
+	useEffect(() => {
+		if (user) {
+			setData(user.address);
+		}
+	}, [user]);
 
 	const [saveAddress, setSaveAddress] = useState(false);
 
@@ -57,7 +63,7 @@ const PlaceOrder = () => {
 	const placeOrder = async (e) => {
 		e.preventDefault();
 
-		if(isAuthenticated) {
+		if (isAuthenticated) {
 			if (user.address !== data) {
 				if (window.confirm('Czy chcesz zaktualizować dane adresowe?')) {
 					setSaveAddress(true);
@@ -71,16 +77,19 @@ const PlaceOrder = () => {
 					return;
 				}
 			}
-		}else{
-			if(window.confirm('Czy na pewno chcez złożyć zamówienie bez zakładania konta?')){
-			}else {
+		} else {
+			if (
+				window.confirm(
+					'Czy na pewno chcez złożyć zamówienie bez zakładania konta?'
+				)
+			) {
+			} else {
 				toast.error(customInfo.cancelPlaceOrder);
 				return;
 			}
 		}
 
-
-/* 		let orderItems = [];
+		/* 		let orderItems = [];
 		items_list.map((item) => {
 			if (cartItems[item._id] > 0) {
 				let itemInfo = item;
@@ -99,19 +108,16 @@ const PlaceOrder = () => {
 			headers: { token },
 		});
 		console.log(response);
-		
+
 		//const { session_url } = response.data;
 		if (response.data.success) {
-			if(!isAuthenticated) {
-				toast.success(
-					customInfo.unauthenticatedAccpetPlaceOrder,
-					{
-					  duration: 6000,
-					}
-				  );				  
+			if (!isAuthenticated) {
+				toast.success(customInfo.unauthenticatedAccpetPlaceOrder, {
+					duration: 6000,
+				});
 			}
 
-			navigate('/')
+			navigate('/');
 			//window.location.reload();
 			//navigate(pagesLinks.orders);
 			/* if (session_url) {
@@ -124,16 +130,15 @@ const PlaceOrder = () => {
 		} */ /* else {
 			alert('musisz się zalogować, żeby dokonac płatności :((');
 		} */
-
-		
 	};
 
-	
 	const navigate = useNavigate();
 
-	const rabatValue = user?.rabat ? user.rabat.rabatValue : 0;
+	const rabatValue = user?.rabat?.rabatValue ? user.rabat.rabatValue : 0;
 
-	const rabatAmount = user?.rabat ? sumPrice*rabatValue : 0;
+	const rabatAmount = user?.rabat ? sumPrice * rabatValue : 0;
+
+	const totalWithRabat = sumPrice - rabatAmount + deliveryPrice;
 	return (
 		<form onSubmit={placeOrder} className='placeOrder'>
 			<div className='placeOrderLeft'>
@@ -238,7 +243,7 @@ const PlaceOrder = () => {
 						<hr />
 						<div className='cartTotalDetails'>
 							<b>{cartData.total}</b>
-							<b>{(sumPrice - rabatAmount + deliveryPrice).toFixed(2)}</b>
+							<b>{totalWithRabat.toFixed(2)}</b>
 						</div>
 					</div>
 					<Button type={'submit'} color={0} text={placeOrderData.checkout} />

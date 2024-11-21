@@ -1,6 +1,6 @@
 export const contactMail = 'aleksandrasniegucka@wp.pl'
 
-export const panelPath = '';
+export const panelPath = '/panel';
 
 export const pagesLinks = {
     list: '/lista',

@@ -41,6 +41,7 @@ const placeOrder = async (req, res) => {
 		const newOrder = new orderModel({
 			userId: req.body.userId,
 			//anonimToken: anonimCode,
+			date: Date.now(),
 			items: req.body.items,
 			amount: req.body.amount,
 			address: req.body.address,

@@ -6,6 +6,7 @@ import { customInfo, dashBoardData, contactMail } from '../utils/variables'
 import SearchBox from '../components/SearchBox/SearchBox'
 import React, {useState,useEffect} from 'react'
 import toast from "react-hot-toast";
+import Button from "../components/Button/Button";
 
 const NotAdminPage = () => {
 	const { user, logout, checkAdmin } = useAuthStore();
@@ -54,26 +55,29 @@ const NotAdminPage = () => {
 				<h2 className='title textTogradient'>Cześć, {user?.name}</h2>
 				{user?.isAdmin ? 
 				<>
-				<p>siemanko</p>
-				<button
+				<p>siemanko {user.name}!</p>
+				<Button
 					onClick={handleLogout}
-				>
-					Logout
-				</button>
+					text={'wyloguj'}
+					color='0'
+					width={'200px'}
+				/>
 				</>
 				 : 
 				 <>
 				<p className='textError'>{customInfo.needPermissions}</p>
 				<a href={`mailto:${contactMail}`}><span className='textTogradient'>kliknij</span>, żeby wysłać maila</a>
-                <button
+                <Button
 					onClick={handleLogout}
-				>
-				{user ?'wyloguj' : 'przejdź do strony logowania'}
-				</button>
+					text={user ?'wyloguj' : 'przejdź do strony logowania'}
+					color='0'
+					width={user ?'200px' : '300px'}
+				/>
+				
+
 				</>
 				}
 				
-		<SearchBox />
 			
 			</div>
 

@@ -109,7 +109,7 @@ ul.navbarMenu {
     background-color:  var(--third-color);
 }
 
-ul.navbarMenu a{
+ul.navbarMenu a  {
     text-align: center;
     min-width: var(--min-nav-link-width);
 /*     filter: brightness(0.3); */
@@ -330,7 +330,7 @@ ul.navbarMenu a{
       }
       
       /* Show only the first three child elements */
-      .navbarMenu > :nth-child(-n+4) {
+      .navbarMenu > :nth-child(-n+5) {
         display: flex !important;
       }
 }
