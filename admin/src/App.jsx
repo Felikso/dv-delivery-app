@@ -34,6 +34,7 @@ import NotAdminPage from './pages/NotAdminPage.jsx';
 /* import LoginPopup from './components/LoginPopup/LoginPopup'; */
 /* import { pagesLinks, footerLinks } from './utils/variables'; */
 import PopupPage from '@/components/PopupPage/PopupPage';
+import ScrollToTop from './components/ScrollTop/ScrollTop';
 
 /* import Verify from './pages/Verify/Verify'; */
 
@@ -97,10 +98,9 @@ function App() {
 	const getCartData = useCartStore();
 	useEffect(() => {
 		checkAuth();
-
-
-		
 	}, [checkAuth]);
+
+	
 
 
 
@@ -277,6 +277,7 @@ function App() {
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
 			<Footer setShowPopupPage={setShowPopupPage}/>
+			<ScrollToTop />
 			<Toaster />
 		</div>
 	);
