@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Outfit:wght@100..900&display=swap');
 
 :root {
+
+  --mobile-sc: 900px;
   --body-color: #fcfcfc;
   --main-color: rgb(0, 0, 0);
   --l: 50%;

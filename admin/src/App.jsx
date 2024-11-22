@@ -97,6 +97,18 @@ function App() {
 		checkAuth();
 	}, [checkAuth]);
 
+	const [rabat, setRabat] = useState(0);
+
+	useEffect(() => {
+		if (user?.rabat?.rabatValue) {
+			setRabat(user.rabat.rabatValue);
+		} else {
+			setRabat(0); //clean after order
+		}
+	}, [user]);
+
+
+
 		
 
 
@@ -113,9 +125,9 @@ function App() {
 			{showPopupPage && <PopupPage setShowPopupPage={setShowPopupPage} showPopupPage={showPopupPage}/>}
 			<Navbar />
 			<Routes>
-				<Route path='/' element={<Home />} />
-				<Route path={`/${pagesLinks.cart}`} element={<Cart />} />
-				<Route path={`/${pagesLinks.order}`} element={<PlaceOrder />} />
+				<Route  path='/' element={<Home />} />
+				<Route  path={`/${pagesLinks.cart}`} element={<Cart setRabat={setRabat} rabat={rabat} />} />
+				<Route path={`/${pagesLinks.order}`} element={<PlaceOrder rabat={rabat}/>} />
 				{/*        <Route path={`/${pagesLinks.verify}`} element={<Verify />} /> */}
 				<Route path={`/${pagesLinks.myorders}`} element={<MyOrders />} />
 				{/*   <Route path={`/${pagesLinks.verifyOrder}/:_id`} element={<VerifyOrder />} /> */}

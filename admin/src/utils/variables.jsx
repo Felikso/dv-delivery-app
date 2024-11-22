@@ -315,7 +315,8 @@ export const cartData = {
     subbmitCodebtn: 'akceptuj',
     promocodePlaceholder: 'kod promocyjny',
     beforeRabat: 'przed rabatem',
-    rabat: 'po rabacie'
+    rabat: 'po rabacie',
+    removeRabatCode: 'usuń kod rabatowy'
 } 
 
 export const placeOrderData = {

@@ -21,7 +21,7 @@ import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '../../../store/cartStore';
 
-function Cart() {
+function Cart({setRabat, rabat}) {
 	const { name, price, quantity, total, remove } = cartItemsData;
 
 	const { verifyRabatCode, user, netErr, deleteRabat } = useAuthStore();
@@ -34,16 +34,9 @@ function Cart() {
 	const navigate = useNavigate();
 
 	const [data, setData] = useState('');
-	const [rabat, setRabat] = useState(0);
+
 	const [rabatExpirest, setRabatExpirest] = useState('');
 
-	useEffect(() => {
-		if (user?.rabat?.rabatValue) {
-			setRabat(user.rabat.rabatValue);
-		} else {
-			setRabat(0); //clean after order
-		}
-	}, [user]);
 
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
@@ -63,14 +56,13 @@ function Cart() {
 			try {
 				const response = await verifyRabatCode(data.rabatCode, user.email);
 				console.log(response.data);
-				
+
 				if (response.success) {
 					if (response.data) {
-						 setRabat(response.data);
-						 console.log(rabat);
-						 
+						setRabat(response.data);
+						console.log(rabat);
 					} else {
-						 setRabat(0);
+						setRabat(0);
 					}
 					if (response.rabatCodeExpiresAt) {
 						setRabatExpirest(response.rabatCodeExpiresAt);
@@ -249,7 +241,11 @@ function Cart() {
 									)}
 									<form className='cartPromocodeInput'>
 										{rabat ? (
-											rabatExpirest ? <p>Rabat wygaśnie za: {rabatExpirest}</p> : <></>
+											rabatExpirest ? (
+												<p>Rabat wygaśnie za: {rabatExpirest}</p>
+											) : (
+												<></>
+											)
 										) : (
 											<input
 												className={`${disabled}`}
@@ -259,7 +255,7 @@ function Cart() {
 												placeholder={cartData.promocodePlaceholder}
 											/>
 										)}
-										<>
+										<div style={{position: 'relative'}}>
 											{' '}
 											<button
 												className={`${disabled}`}
@@ -267,15 +263,15 @@ function Cart() {
 												type='submit'
 											>
 												{rabat
-													? user?.rabat?.rabatCode
+													? cartData.removeRabatCode
 													: cartData.subbmitCodebtn}
 											</button>
 											{rabat ? (
-												<span onClick={handleDeleteRabat}>X</span>
+												<span className='removeRabat' onClick={handleDeleteRabat}>X</span>
 											) : (
 												<></>
 											)}
-										</>
+										</div>
 									</form>
 								</div>
 							</div>

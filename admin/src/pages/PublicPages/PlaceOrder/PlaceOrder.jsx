@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
 import { itemsCat } from '../../../../../backend/controllers/itemsController';
 
-const PlaceOrder = () => {
+const PlaceOrder = ({rabat}) => {
 
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
@@ -235,7 +235,7 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 					<div>
 						<div className='cartTotalDetails'>
 							<p>{cartData.subtotal}</p>
-							<p>{(sumPrice - rabatAmount).toFixed(2)}</p>
+							<p>{rabat?<span style={{color: 'green', fontSize: '.8rem'}}>( - {rabat*100}% rabatu) </span>:<></> }{(sumPrice - rabatAmount).toFixed(2)}</p>
 						</div>
 						<hr />
 						<div className='cartTotalDetails'>

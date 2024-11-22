@@ -199,6 +199,14 @@ ul.navbarMenu a{
     text-align: center;
 }
 
+img.logoMenu{
+    display: none;
+}
+
+.navbarMenu img{
+    display: none;
+}
+
 @media (max-width:1050px) {
     .navbar .logo{
         width: 140px;
@@ -215,7 +223,7 @@ ul.navbarMenu a{
     }
 }
 
-@media (max-width:900px) {
+/* @media (max-width:900px) {
     .navbar .logo{
         width: 140px;
     }
@@ -226,25 +234,30 @@ ul.navbarMenu a{
     .navbarRight{
         gap: 20px;
     }
-/*     .navbarRight img{
+    .navbarRight img{
         width: 20px;
-    } */
+    }
     .navbarRight button{
         padding: 7px 20px;
         font-size: 15px;  
     }
+} */
+
+
+@media (max-width:1400px) {
+    /* Hide all child elements */
+    .navbarMenu > * {
+        display: none !important;
+      }
+      
+      /* Show only the first three child elements */
+      .navbarMenu > :nth-child(-n+5) {
+        display: flex !important;
+      }
 }
 
 
-    img.logoMenu{
-        display: none;
-    }
-
-    .navbarMenu img{
-        display: none;
-    }
-
-@media (max-width:750px) {
+@media (max-width:900px) {
     .navbarMenu{
     position: fixed;
     right: -1000px;
@@ -280,7 +293,7 @@ ul.navbarMenu a{
     }
 
     ul.navbarMenu{
-        width: 50vw;
+        width: 70vw;
         margin: 0;
 
     }
@@ -321,19 +334,12 @@ ul.navbarMenu a{
         margin-bottom: 20vh;
 
     }
-}
 
-@media (max-width:1400px) {
-    /* Hide all child elements */
-    .navbarMenu > * {
-        display: none !important;
-      }
-      
-      /* Show only the first three child elements */
-      .navbarMenu > :nth-child(-n+5) {
+    .navbarMenu > :nth-child(-n+100) {
         display: flex !important;
       }
 }
+
 
 
 

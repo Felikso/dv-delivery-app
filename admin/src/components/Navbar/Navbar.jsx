@@ -76,6 +76,9 @@ const Navbar = () => {
 	const renderMenuList = user?.isAdmin
 		? { ...authList, ...objPages }
 		: objPages;
+console.log(objPages);
+console.log(authList);
+
 
 	return (
 		<>

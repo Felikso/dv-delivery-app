@@ -121,6 +121,17 @@
     border-radius: 4px;
 }
 
+.removeRabat{
+    color: red;
+    font-size: 2rem;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    transform: rotate(145deg);
+    cursor: pointer;
+}
+
 @media (max-width:750px){
     .cartItemsTitle:first-child{
         display: none;
