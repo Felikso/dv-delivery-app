@@ -32,6 +32,12 @@ pointer-events: none;
 } */
 
 .inputBox{
-    position: relative; 
-margin-bottom: 1.5rem; 
+    position: relative;
+    width: 100%; 
+/* margin-bottom: 1rem; */ 
+}
+
+.textError{
+    font-size: .7rem;
+    color: red;
 }

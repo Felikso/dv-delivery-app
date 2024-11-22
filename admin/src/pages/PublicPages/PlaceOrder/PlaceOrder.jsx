@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Mail, Lock } from 'lucide-react';
 import './PlaceOrder.css';
 import {
 	cartData,
@@ -14,18 +15,17 @@ import { useCartStore } from '@/store/cartStore';
 import toast from 'react-hot-toast';
 
 import Button from '@/components/Button/Button';
+import Input from '@/components/Input/Input.jsx';
 import { useNavigate } from 'react-router-dom';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
 import { itemsCat } from '../../../../../backend/controllers/itemsController';
 
-const PlaceOrder = ({rabat}) => {
-
+const PlaceOrder = ({ rabat }) => {
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
 	const { cartItems, mergeCartItems } = useCartStore();
-	
 
-const sumPrice = useCartStore((state) => state.totalPrice());
+	const sumPrice = useCartStore((state) => state.totalPrice());
 
 	const deliveryPrice = sumPrice === 0 ? 0 : 8;
 
@@ -52,11 +52,63 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 
 	const [saveAddress, setSaveAddress] = useState(false);
 
+	const [errorMessage, setErrorMessage] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		street: '',
+		state: '',
+		city: '',
+		zipCode: '',
+		country: '',
+		phone: '',
+	});
+
+	function capitalizeFirstLetter(val) {
+		return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+	}
 
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
-		setData((data) => ({ ...data, [name]: value }));
+
+		if (e.target.name == 'zipCode') {
+			if (e.target.value.length > 6) {
+				setErrorMessage((errorMessage) => ({
+					...errorMessage,
+					[name]: 'Pamiętaj, że kod powinien się składać z pięciu cyfr',
+				}));
+				e.preventDefault()
+			} else {
+				setErrorMessage('');
+			}
+			setData((data) => ({
+				...data,
+				[name]: e.target.value.replace(/[^0-9-]/, ''),
+			}));
+		} else {
+			setData((data) => ({ ...data, [name]: value }));
+		}
+
+		if (e.target.name == 'phone') {
+			if (e.target.value.length > '9') {
+				setErrorMessage((errorMessage) => ({
+					...errorMessage,
+					[name]: 'Pamiętaj, że numer powinien się składać z dziewięciu cyfr',
+				}));
+				return;
+			} else {
+				setErrorMessage('');
+			}
+			setData((data) => ({
+				...data,
+				[name]: e.target.value.replace(/[^0-9]/g, ''),
+			}));
+		} else {
+			//setData((data) => ({ ...data, [name]: value }));
+		}
+
+		//simply validation
 	};
 
 	const placeOrder = async (e) => {
@@ -77,7 +129,6 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 				}
 			}
 		} else {
-
 			if (
 				window.confirm(
 					'Czy na pewno chcesz złożyć zamówienie bez zakładania konta?'
@@ -89,11 +140,15 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 			}
 		}
 
-		var result = cartItems.map(function(obj) {
-			return {_id: obj._id, name: obj.name, price: obj.price, quantity: obj.quantity, __v: obj.__v};
+		var result = cartItems.map(function (obj) {
+			return {
+				_id: obj._id,
+				name: obj.name,
+				price: obj.price,
+				quantity: obj.quantity,
+				__v: obj.__v,
+			};
 		});
-	
-	
 
 		let orderData = {
 			address: data,
@@ -106,21 +161,19 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 
 		//const { session_url } = response.data;
 		if (response.data.success) {
-
-			localStorage.removeItem('cartData'); 
-			mergeCartItems([])
+			localStorage.removeItem('cartData');
+			mergeCartItems([]);
 			navigate('/');
-	
 
-				if (!isAuthenticated) {
-					setTimeout(() => {
-						toast.success(customInfo.unauthenticatedAccpetPlaceOrder, {
-							duration: 6000,
-							position: 'bottom-center',
-						});
-					}, 1500);
-				}
-		
+			if (!isAuthenticated) {
+				setTimeout(() => {
+					toast.success(customInfo.unauthenticatedAccpetPlaceOrder, {
+						duration: 6000,
+						position: 'bottom-center',
+					});
+				}, 1500);
+			}
+
 			//navigate(pagesLinks.orders);
 			/* if (session_url) {
 				//window.location.replace(session_url);
@@ -141,32 +194,56 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 	const rabatAmount = user?.rabat ? sumPrice * rabatValue : 0;
 
 	const totalWithRabat = sumPrice - rabatAmount + deliveryPrice;
+
+	const handleKeyDown = (e) => {
+		if (e.key === '-' && e.target.value.length == 2) {
+			return;
+		}
+		if (e.key !== 'Backspace') {
+			if (e.target.value.length == 2) {
+				setData((data) => ({ ...data, [e.target.name]: e.target.value + '-' }));
+			}
+			
+		}
+	};
+	const handleKeyDownUpperCase = (e) => {
+		if (e.target.value.length==1) {
+			setData((data) => ({ ...data, [e.target.name]: e.target.value.toUpperCase() }));
+		}
+	
+}
+
 	return (
 		<form onSubmit={placeOrder} className='placeOrder'>
 			<div className='placeOrderLeft'>
 				{netErr && <NetworkErrorText />}
 				<p className='title'>{placeOrderData.title}</p>
 				<div className='multiFiled'>
-					<input
+					<Input
+						//icon={Mail}
 						required
 						className='input'
 						name='firstName'
 						onChange={onChangeHandler}
+						onKeyDown={handleKeyDownUpperCase}
 						value={data.firstName}
 						type='text'
 						placeholder={placeOrderData.firstName}
+						errorMess={errorMessage.firstName}
 					/>
-					<input
+					<Input
 						required
 						className='input'
 						name='lastName'
 						onChange={onChangeHandler}
+						onKeyDown={handleKeyDownUpperCase}
 						value={data.lastName}
 						type='text'
 						placeholder={placeOrderData.lastName}
+						errorMess={errorMessage.lastName}
 					/>
 				</div>
-				<input
+				<Input
 					required
 					className='input'
 					name='email'
@@ -174,18 +251,21 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 					value={data.email}
 					type='email'
 					placeholder={placeOrderData.email}
+					errorMess={errorMessage.email}
 				/>
 				<div className='multiFiled'>
-					<input
+					<Input
 						required
 						className='input'
 						name='street'
 						onChange={onChangeHandler}
+						onKeyDown={handleKeyDownUpperCase}
 						value={data.street}
 						type='text'
 						placeholder={placeOrderData.street}
+						errorMess={errorMessage.street}
 					/>
-					<input
+					<Input
 						required
 						className='input'
 						name='numberStreet'
@@ -193,33 +273,35 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 						value={data.numberStreet}
 						type='text'
 						placeholder={placeOrderData.numberStreet}
+						errorMess={errorMessage.numberStreet}
 					/>
 				</div>
 				<div className='multiFiled'>
-					<input
+					<Input
 						required
 						className='input'
 						name='city'
 						onChange={onChangeHandler}
+						onKeyDown={handleKeyDownUpperCase}
 						value={data.city}
 						type='text'
 						placeholder={placeOrderData.city}
+						errorMess={errorMessage.city}
 					/>
-					<input
+					<Input
 						required
 						className='input'
 						name='zipCode'
 						onChange={onChangeHandler}
+						onKeyDown={(e) => handleKeyDown(e)}
 						value={data.zipCode}
 						type='text'
+						maxLength={6}
 						placeholder={placeOrderData.zipCode}
+						errorMess={errorMessage.zipCode}
 					/>
 				</div>
-				{/*         <div className='multiFiled'>
-					<Input required name='state' onChange={onChangeHandler} value={data.state} type='text' placeholder={placeOrderData.state} />
-					<Input required name='country' onChange={onChangeHandler} value={data.country} type='text' placeholder={placeOrderData.country} />
-				</div> */}
-				<input
+				<Input
 					required
 					className='input'
 					name='phone'
@@ -227,6 +309,7 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 					value={data.phone}
 					type='text'
 					placeholder={placeOrderData.phone}
+					errorMess={errorMessage.phone}
 				/>
 			</div>
 			<div className='placeOrderRight'>
@@ -235,7 +318,16 @@ const sumPrice = useCartStore((state) => state.totalPrice());
 					<div>
 						<div className='cartTotalDetails'>
 							<p>{cartData.subtotal}</p>
-							<p>{rabat?<span style={{color: 'green', fontSize: '.8rem'}}>( - {rabat*100}% rabatu) </span>:<></> }{(sumPrice - rabatAmount).toFixed(2)}</p>
+							<p>
+								{rabat ? (
+									<span style={{ color: 'green', fontSize: '.8rem' }}>
+										( - {rabat * 100}% rabatu){' '}
+									</span>
+								) : (
+									<></>
+								)}
+								{(sumPrice - rabatAmount).toFixed(2)}
+							</p>
 						</div>
 						<hr />
 						<div className='cartTotalDetails'>
