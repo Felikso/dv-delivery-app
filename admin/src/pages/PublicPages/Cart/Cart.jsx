@@ -43,15 +43,8 @@ function Cart() {
 		} else {
 			setRabat(0); //clean after order
 		}
-	}, [user, data]);
+	}, [user]);
 
-	useEffect(() => {
-		if (user?.rabat?.rabatValue) {
-			setRabat(user.rabat.rabatValue);
-		} else {
-			setRabat(0); //clean after order
-		}
-	}, [rabat]);
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -69,24 +62,27 @@ function Cart() {
 			}
 			try {
 				const response = await verifyRabatCode(data.rabatCode, user.email);
-
+				console.log(response.data);
+				
 				if (response.success) {
-					if (response.data.rabatValue) {
-						setRabat(response.data.rabatValue);
+					if (response.data) {
+						 setRabat(response.data);
+						 console.log(rabat);
+						 
 					} else {
-						setRabat(0);
+						 setRabat(0);
 					}
-					if (response.data.rabatCodeExpiresAt) {
-						setRabatExpirest(response.data.rabatCodeExpiresAt);
+					if (response.rabatCodeExpiresAt) {
+						setRabatExpirest(response.rabatCodeExpiresAt);
 					}
 					toast.success('kod rabatowy zaakceptowany');
-					window.location.reload();
+					//window.location.reload();
 				} else {
 					toast.error('podano nieprawidłowy kod rabatowy');
 				}
 			} catch (error) {
 				console.log(error);
-				toast.error(error?.response?.data?.message);
+				toast.error(error?.response?.message);
 			}
 		}
 	};
@@ -102,7 +98,7 @@ function Cart() {
 					setRabat(0); //
 					setRabatExpirest(0);
 					toast.success('kod rabatowy został usunięty');
-					window.location.reload();
+					//window.location.reload();
 				} else {
 					toast.error('podano nieprawidłowy kod rabatowy');
 				}
