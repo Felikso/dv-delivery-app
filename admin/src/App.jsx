@@ -91,69 +91,12 @@ const RedirectAuthenticatedUser = ({ children }) => {
 function App() {
 
 	const [showPopupPage, setShowPopupPage] = useState(false);
-	const { isCheckingAuth, checkAuth, user, isAuthenticated } = useAuthStore();
-/* 	useEffect(() => {
-		checkAuth();
-	}, []); */
-	const getCartData = useCartStore();
+	const { checkAuth, user, isAuthenticated } = useAuthStore();
+
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
 
-	
-
-
-
-
-
-
-	if(false){
-		
-		if(getCartData.cartItems){
-			//if (window.confirm('Przed zalogowaniem w koszyku znajdowały się już inne przedmioty. Czy chcesz je dodać do swojego koszyka?')) {
-			if(false){
-				useEffect(() => {
-					getCartData.execute();
-						//console.log(getCartData.cartItems);
-				  if(getCartData.data?.cartData){
-					  const userCartDataArr = getCartData.data.cartData;
-			  
-		/* 			  Object.keys(userCartDataArr).forEach(function(key, index) {
-						if(getCartData.cartItems){
-							getCartData.cartItems.map((item,i)=>{
-				  
-								if(key==item._id){
-									console.log(item._id);
-									
-									console.log(userCartDataArr[key]+item.quantity); //sum of qinatity to set in localstorage
-									//console.log(item.quantity)
-								}
-								
-								
-								//console.log(item._id)
-								}
-						)
-						}
-		
-						  
-						  //console.log(userCartDataArr[key])
-						}); */
-			  
-			  
-					  
-			  
-			  
-						console.log(userCartDataArr)
-						console.log(user._id)
-					  console.log(getCartData.cartItems);
-				  }
-				  }, []);
-			}
-		
-			}
-		}
-	
-		
 		
 
 
@@ -207,7 +150,7 @@ function App() {
 						/>
 					))} */}
 				<Route
-					path={panelPath+replacePolishLetters(authList.add)}
+					path={replacePolishLetters(authList.add)}
 					element={
 						<ProtectedRoute>
 							<AddPage />
@@ -216,7 +159,7 @@ function App() {
 				/>
 
 			<Route
-					path={panelPath+replacePolishLetters(authList.list)}
+					path={replacePolishLetters(authList.list)}
 					element={
 						<ProtectedRoute>
 							<ListPage />
@@ -227,7 +170,7 @@ function App() {
 				/>
 
 			<Route
-					path={panelPath+replacePolishLetters(authList.orders)}
+					path={replacePolishLetters(authList.orders)}
 					element={
 						<ProtectedRoute>
 							<OrdersPage />

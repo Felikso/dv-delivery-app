@@ -14,6 +14,7 @@ import { useAuthStore } from '@/store/authStore';
 import { replacePolishLetters } from '@/utils/functions.js';
 import BurgerMenu from '../BurgerMenu/BurgerMenu.jsx';
 import { useCartStore } from '../../store/cartStore';
+import { panelPath } from '../../utils/variables';
 
 const Navbar = () => {
 	const { user, logout, isAuthenticated } = useAuthStore();
@@ -29,7 +30,7 @@ const Navbar = () => {
 	const [menu, setMenu] = useState('start');
 	const [openMenu, setOpenMenu] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
-	const [userName,setUserName]= useState('zaloguj się')
+	const [userName,setUserName]= useState('zaloguj się');
 	const location = useLocation();
 
 	const navigate = useNavigate();
@@ -69,16 +70,16 @@ const Navbar = () => {
 		}
 	};
 
-	useEffect(() => {
-		for (let key in authList) {
-			//authList[key] = ({`/panel${authList[key]}`})
-		}
-	}, []);
 
-/* 	const renderMenuList = user?.isAdmin
+ 	const renderMenuList = user?.isAdmin
 		? { ...authList, ...objPages }
-		: objPages; */
-		const renderMenuList =  objPages;
+		: objPages; 
+		//const renderMenuList =  objPages;
+		console.log(authList);
+		console.log(objPages);
+		console.log(renderMenuList);
+		
+		
 
 	return (
 		<>
@@ -105,10 +106,10 @@ const Navbar = () => {
 							`}
 								onClick={() => handleSetMenu(item)}
 							>
-								{renderMenuList[item].replace('/', '').replace('panel/', '')}
+								{renderMenuList[item].replace(panelPath, '').replace('/', '')}
 							</Link>
 
-							<span
+							{renderMenuList[item].includes('/koszyk') && <span
 								key={i}
 								onClick={() => navigate('/koszyk')}
 								className={`cart ${shakeCart ? 'shake' : ''} ${
@@ -118,7 +119,7 @@ const Navbar = () => {
 							>
 								{' '}
 								<img src={assets.cart} />
-							</span>
+							</span>}
 						</>
 					))}
 					{Object.entries(objMenu).map(([item, i]) => (

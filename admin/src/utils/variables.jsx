@@ -5,7 +5,7 @@ export const panelPath = '/panel';
 export const pagesLinks = {
     list: '/lista',
     add: '/dodaj',
-    orders: '/zamówienia',
+    orderss: '/zamówienia',
     login: '/login',
     logout: '/logout',
     signup: '/signup',
@@ -23,9 +23,9 @@ export const pagesLinks = {
 }
 
 export const authList = {
-    list: `/lista`,
-    add: '/dodaj',
-    orders: '/zamówienia', 
+    list: `${panelPath}/lista`,
+    add: `${panelPath}/dodaj`,
+    orders: `${panelPath}/zamówione`, 
 }
 
 export const customErrors = {
@@ -209,7 +209,7 @@ export const objMenu = {
 
 export const objPages = {
     cart: '/koszyk',
-    orders: '/zamówienia',
+    orderss: '/zamówienia',
   };
 
 export const itemsQuantity = 'liczba przedmiotów'

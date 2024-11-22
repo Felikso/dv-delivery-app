@@ -323,7 +323,7 @@ ul.navbarMenu a{
     }
 }
 
-@media (min-width:900px) {
+@media (max-width:1400px) {
     /* Hide all child elements */
     .navbarMenu > * {
         display: none !important;
