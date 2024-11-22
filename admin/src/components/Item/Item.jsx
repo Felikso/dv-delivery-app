@@ -7,26 +7,25 @@ import { useCartStore } from '../../store/cartStore';
 
 const Item = ({ item }) => {
 	const [itemQuantity, setItemQuantity] = useState(0);
-	const { _id, name, image, description, price } = item; //destructuring of props
-
-	//const token = localStorage.getItem('token')
-
+	const { _id, name, image, description, price } = item;
 
 	const { addItemToCart, cartItems, decreaseQuantity } = useCartStore();
 
-	const onDecreaseQuantity = async (itemId,userId) => {
+	const onDecreaseQuantity = async (itemId, userId) => {
 		await decreaseQuantity(item._id);
 		toast.error(customInfo.itemRemoved);
 	};
-	
+
 	const onAddToCart = async (itemId, userId) => {
 		await addItemToCart(item);
 		toast.success(`${item.name} już w koszyku!`);
-		
 	};
 
 	useEffect(() => {
-		const iq = JSON.stringify(cartItems) === '{}' ? {quantity:0} : cartItems.filter((item) => item._id === _id);
+		const iq =
+			JSON.stringify(cartItems) === '{}'
+				? { quantity: 0 }
+				: cartItems.filter((item) => item._id === _id);
 		setItemQuantity(iq[0]?.quantity);
 	}, [cartItems]);
 
@@ -34,12 +33,11 @@ const Item = ({ item }) => {
 		<div className='item'>
 			<div className='itemImageContainer'>
 				<img
-					src={ import.meta.env.VITE_BACKEND_URL + '/images/' + image
-					}
+					src={import.meta.env.VITE_BACKEND_URL + '/images/' + image}
 					alt={name}
 					className='itemImage'
 				/>
-				{!itemQuantity /* !cartItems[_id] with that was error */ ? (
+				{!itemQuantity ? (
 					<div className='animatedIcons'>
 						<img
 							className='add'

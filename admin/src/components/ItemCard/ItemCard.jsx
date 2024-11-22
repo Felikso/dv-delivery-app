@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './ItemCard.css';
 import {
 	addData,
@@ -7,10 +7,8 @@ import {
 	urlAdd,
 	urlEdit,
 	urlImg,
-	urlRemove,
 } from '@/utils/variables';
 import { assets } from '@/assets/assets';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/store/authStore.js';
 const ItemCard = ({ postData, fetchList, add = false }) => {
@@ -75,7 +73,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 				formData.append('id', _id);
 			}
 
-			let newUrl = _id ? urlEdit : urlAdd;
+			//let newUrl = _id ? urlEdit : urlAdd;
 
 			const response = await updateAuthItem(_id, formData);
 
@@ -119,11 +117,13 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 	let disabled = edit ? '' : 'disabled';
 	let imageId = edit ? 'image' : '';
 
-	let placeholderImage = img
-		? img
-		: postData?.image
+	let placeholderImage = postData?.image
+		? `${url}${urlImg}${postData.image}`
+		: img
 		? `${url}${urlImg}${postData.image}`
 		: assets.upload_area;
+		console.log(postData.image);
+		
 	return (
 		<form onSubmit={onSubmitHandler} className={`addForm ${allowEdit}`}>
 			{!edit&&<p
