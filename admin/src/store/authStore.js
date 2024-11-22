@@ -170,14 +170,27 @@ export const useAuthStore = create((set) => ({
 		}
 	},
 
-	setRabat: async (rabatValue, emailArr, token) => {	
+	setRabat: async (rabatValue, emailArr, rabatCodeExpiresAt) => {	
 		try {
-			const response = await axios.post(`${API_RABAT_URL}${pagesLinks.set}`,	{ rabatValue: rabatValue, emailArr:emailArr  }, { headers: { token: token } });
+			const response = await axios.post(`${API_RABAT_URL}${pagesLinks.set}`,	{ rabatValue: rabatValue, emailArr:emailArr, rabatCodeExpiresAt:rabatCodeExpiresAt  });
 			set({ message: response.data.message, rabatCode: response.data.rabatCode });
 			return response
 		} catch (error) {
 			set({
 				error: error.response.data
+			});
+			throw error;
+		}
+	},
+
+	deleteRabat: async (rabatCode) => {	
+		try {
+			const response = await axios.post(`${API_RABAT_URL}${api.delete}`,	{ rabatCode: rabatCode });
+			set({ message: response.data.message, rabatCode: rabatCode });
+			return response
+		} catch (error) {
+			set({
+				error: error.response
 			});
 			throw error;
 		}

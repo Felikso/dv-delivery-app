@@ -50,7 +50,9 @@ export const customErrors = {
     failedData: 'kod nie jest przypisany do tego użytkownika',
     expiriedCode: 'kod niestety już wygasł',
 
-    orderAllreadyVeryried: 'zamówienie zostało już zweryfikowane'
+    orderAllreadyVeryried: 'zamówienie zostało już zweryfikowane',
+    rabatUsed: 'rabat został już wykorzystany',
+    userDosentHaveRabat: 'kod rabatowy nie jest przypisany do uzytkownika'
 
 
 
@@ -65,7 +67,8 @@ export const customInfo = {
     sentCodeToEmail: 'na podany adres email wysłano wiadomość z dalszymi wskazówkami w celu zresetowania hasła',
     resetSuccessfull: 'hasło zresetowane pomyślnie',
     rabatCreatedSuccessfully: 'rabat wygenerowany pomyślnie',
-    rabatUsed: 'rabat wykorzystany'
+    rabatUsed: 'rabat wykorzystany',
+    rabatDeleted: 'rabat został usunięty'
 
 
 }

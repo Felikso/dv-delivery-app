@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema(
 			type: Object,
 			default: {},
 		},
+		deletedRabatCode: {
+			type: Array,
+			default: []
+		},
 		resetPasswordToken: String,
 		resetPasswordExpiresAt: Date,
 		verificationToken: String,

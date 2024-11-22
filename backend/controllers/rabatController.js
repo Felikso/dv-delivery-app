@@ -66,6 +66,8 @@ const setRabat = async (req, res, next) => {
 
 		const hours24 = 24 * 60 * 60 * 1000;
 		let countRabatDays = 7 * hours24; // 7 * 24 hours;
+		console.log(rabatCodeExpiresAt);
+		
 		if (rabatCodeExpiresAt) {
 			countRabatDays = rabatCodeExpiresAt * hours24; // 24 hours
 		}
@@ -150,15 +152,23 @@ const verifyRabat = async (req, res) => {
 
 	try {
 		const rabat = await rabatModel.findOne({
-			emailArr: email,
+			//emailArr: email,
 			rabatCode: rabatCode,
 			rabatCodeExpiresAt: { $gt: Date.now() },
 		});
-
 		if (!rabat) {
 			return res
 				.status(400)
 				.json({ success: false, message: customErrors.expiriedCode });
+		}
+		if(rabat.emailArr.includes(`used_${email}`)){
+			return res
+				.status(400)
+				.json({ success: false, message: customErrors.rabatUsed });
+		}
+		if(rabat.emailArr.includes('all')){
+				rabat.emailArr.push(email);
+				//rabat.emailArr.push(`used_${email}`) // logic for use rabat for user only once
 		}
 		let index = rabat.emailArr.indexOf(email); // Find the index of the item
 		if (index !== -1) {
@@ -170,6 +180,7 @@ const verifyRabat = async (req, res) => {
 						rabatCode: rabatCode,
 						rabatValue: rabat.rabatValue,
 					};
+					rabat.emailArr.push(`used_${email}`); //puseh as rabat allready used
 					userRabat.save();
 				} else {
 					return res
@@ -181,14 +192,14 @@ const verifyRabat = async (req, res) => {
 
 		if (rabat.emailArr.length === 0) {
 			await rabatModel.findByIdAndDelete(rabat._id);
-			res.json({
+			res.status(200).json({
 				success: true,
 				message: customInfo.rabatUsed,
 				data: rabat.rabatValue,
 			});
 		} else {
 			await rabat.save();
-			res.json({ success: true, data: rabat.rabatValue });
+			res.status(200).json({ success: true, data: rabat.rabatValue });
 		}
 	} catch (error) {
 		console.log(customErrors.inVeirfyEmail, error);
@@ -196,4 +207,39 @@ const verifyRabat = async (req, res) => {
 	}
 };
 
-export { setRabat, verifyRabat };
+const deleteRabat = async (req, res) => {
+	const { rabatCode } = req.body;
+	
+	try {
+		if (req.body.userId) {
+			const user = await userModel.findById(req.body.userId);
+			//console.log(user);
+			
+			if(user?.rabat?.rabatCode == rabatCode){
+
+				const updateRabat = await rabatModel.findOne({
+					rabatCode: rabatCode
+				});
+
+				const filteredArray = updateRabat.emailArr.filter(item => item !== `used_${user.email}`);
+
+				if(!updateRabat.emailArr.includes('all')){
+					filteredArray.push(user.email);
+				}
+
+				updateRabat.emailArr = filteredArray;
+				user.rabat = {};
+				await updateRabat.save();
+				await user.save();
+				res.status(200).json({ success: true, message: customInfo.rabatDeleted });
+			}else{
+				res.status(500).json({ success: false, message:customErrors.userDosentHaveRabat });
+			}
+		}
+		
+	} catch (error) {
+		
+	}
+}
+
+export { setRabat, verifyRabat, deleteRabat };

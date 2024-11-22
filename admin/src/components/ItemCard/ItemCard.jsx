@@ -122,7 +122,6 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 		: img
 		? `${url}${urlImg}${postData.image}`
 		: assets.upload_area;
-		console.log(postData.image);
 		
 	return (
 		<form onSubmit={onSubmitHandler} className={`addForm ${allowEdit}`}>
@@ -139,7 +138,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 			</p>}
 			<div className='addDataBox'>
 				<div 			className={`addImgUpload flexCol ${disabled}`}>
-					<p>{img ? 'zmień' : addData.addPhoto}</p>
+					<p>{edit&&(img ? 'zmień' : addData.addPhoto)}</p>
 					<label htmlFor='image'>
 						<img
 							src={image ? URL.createObjectURL(image) : placeholderImage}

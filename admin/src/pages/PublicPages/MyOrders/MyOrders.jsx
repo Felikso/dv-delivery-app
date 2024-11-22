@@ -118,7 +118,9 @@ const MyOrders = () => {
 									</p>
 									<span>
 										{item.amount.toFixed(2)} {currency}
-										{item.rabat > 0 ? '( -' + item.rabat * 100 + '% )' : ''}
+										<br/>
+										<br/>
+										{item.rabat > 0 ? '( -' + Math.floor(item.rabat * 100) + '% )' : ''}
 									</span>
 									<span>{item.items.length}</span>
 									<div>

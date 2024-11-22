@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import './SearchBox.css';
-import SearchTable from './SearchTable';
-import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
 import loop_icon from './loop_icon.svg';
 import procent_icon from './procent_icon.svg';
 import toast from 'react-hot-toast';
-
 
 function SearchBox() {
 	const { setRabat } = useAuthStore();
@@ -18,7 +15,7 @@ function SearchBox() {
 		const response = await fetchMailList();
 
 		if (response.data.success) {
-			setList(response.data.data);
+			setList(response.data.data.sort());
 		} else {
 			toast.error('Problem z pobraniem danych');
 			toast.success('Spróbuj odświeżyć stronę');
@@ -47,7 +44,6 @@ function SearchBox() {
 			}
 		}
 		setValue(e.target.value.replace(/[^0-9]/g, ''));
-
 	};
 
 	//data changing in input
@@ -55,6 +51,29 @@ function SearchBox() {
 	const [query, setQuery] = useState('');
 
 	const [checkedData, setCheckedData] = useState([]);
+
+	const [rabatExpirest, setRabatExpirest] = useState('');
+
+	const handleChangeSelect = (e) => {
+		setRabatExpirest(e.target.value);
+	}
+
+	const convertDate = (dateStr) => {
+		const date = new Date(dateStr);
+		const day = String(date.getDate()).padStart(2, '0');
+		const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+		const year = date.getFullYear();
+		const hours = String(date.getHours()).padStart(2, '0');
+		const minutes = String(date.getMinutes()).padStart(2, '0');
+		const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}`;
+		return formattedDate;
+	};
+
+	const hours24 = 24 * 60 * 60 * 1000;
+	let countRabatDays = Date.now() + rabatExpirest * hours24; // 7 * 24 hours;
+
+	let renderRabatDays = convertDate(new Date(countRabatDays));
+	
 
 	const handleChangeCheck = (e) => {
 		if (e.target.checked == true) {
@@ -77,30 +96,42 @@ function SearchBox() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+	
+		if(value ==''){
+			//await new Promise((reslove)=>setTimeout(reslove, 500))
+			toast.error('wpisz wartość przyznawanego rabatu')
+			return
+		}
+		if(checkedData.length<1){
+
+			toast.error('musisz wybrać uzytkownika')
+			return
+		}
+		if(!rabatExpirest){
+			toast.error('zatwierdź czas trwania rabatu')
+			return
+		}
 
 		let rabatValue = (value / 100).toString().replace('0.', '.');
 		let emailArr = checkedData;
-
-
-			
+		let rabatCodeExpiresAt = rabatExpirest;
 		try {
+			const response = await setRabat(rabatValue, emailArr, rabatCodeExpiresAt);
 
-			const response = await setRabat(rabatValue, emailArr);
-
-			if(response.data.success){
-				toast.success(`Rabat ${value}% ustawiony pomyślnie`);
+			if (response.data.success) {
+				toast.success(`Rabat ${value}% ustawiony pomyślnie`, {
+					duration: 5000,
+					position: 'bottom-center',
+				});
 				setCheckedData([]);
 				setValue('');
-				setRabatCode(response.data.rabatCode)
+				setRabatCode(response.data.rabatCode);
 				//uncheck all checkboxes if success
-				let checkboxesArr = document.querySelectorAll("input[type='checkbox']")
-				checkboxesArr.forEach(i=>i.checked=false)
-				
-			  }else{
-				toast.error(errorMessage)
-			  }
-
-
+				let checkboxesArr = document.querySelectorAll("input[type='checkbox']");
+				checkboxesArr.forEach((i) => (i.checked = false));
+			} else {
+				toast.error(errorMessage);
+			}
 		} catch (error) {
 			toast.error('Problem z ustawieniem rabatu');
 		}
@@ -110,27 +141,34 @@ function SearchBox() {
 
 	async function copyTextToClipboard(text) {
 		if (navigator.clipboard) {
-		  await navigator.clipboard.writeText(text);
+			await navigator.clipboard.writeText(text);
 		} else {
-		  document.execCommand('copy', true, text);
+			document.execCommand('copy', true, text);
 		}
-	  }
+	}
 
-	  const textToCopy = rabatCode;
+	const textToCopy = rabatCode;
 
-	  const handleCopyClick = (e) => {
+	const handleCopyClick = (e) => {
 		e.preventDefault(); //cause form
 		copyTextToClipboard(textToCopy);
 		toast.success('rabatskopiowanydo schowka');
-	  };
+	};
 
+	if (!list.includes('all')) {
+		list.unshift('all');
+	}
 	return (
 		<form className='SearchBox' /* onClick={handleSubmit} */>
 			<p>Wybierz adresy e-mail, którym chcesz przyznać rabat</p>
-			{rabatCode&&<div  className='buttonBox'>
-			<div className='rabatCode search'>{textToCopy}</div>
-			<button onClick={(e)=>handleCopyClick(e)}>Skopiuj kod rabatowy</button>
-    		</div>}
+			{rabatCode && (
+				<div className='buttonBox'>
+					<div className='rabatCode search'>{textToCopy}</div>
+					<button onClick={(e) => handleCopyClick(e)}>
+						Skopiuj kod rabatowy
+					</button>
+				</div>
+			)}
 			<div className='inputBox'>
 				<div className='iconBox'>
 					<img src={loop_icon} alt='Wyszukaj adres email' className='icon' />
@@ -140,6 +178,17 @@ function SearchBox() {
 					placeholder='Wyszukaj...'
 					onChange={(e) => setQuery(e.target.value.toLowerCase())}
 				/>
+			</div>
+		
+			{rabatExpirest&& <p>rabat wygaśnie: {renderRabatDays}</p>}
+			<div className='buttonBox'>
+				<select className='search' onChange={handleChangeSelect} required>
+				<option>wybierz czas trwania rabatu</option>
+					<option value='1'>dzień</option>
+					<option value='7'>tydzień</option>
+					<option value='30'>miesiąc</option>
+				</select>
+				<button className='disabled'>czas trwania rabatu</button>
 			</div>
 
 			<div className='buttonBox'>
@@ -152,6 +201,7 @@ function SearchBox() {
 						placeholder='Wpisz wysokość rabatu'
 						value={value}
 						onChange={handleChange}
+						required
 					/>
 				</div>
 				<button onClick={handleSubmit} type='submit'>
@@ -170,7 +220,7 @@ function SearchBox() {
 									<div className='tick_mark'></div>
 								</label>
 							</div>
-							<p>{item}</p>
+							<p>{item == 'all' ? 'każdy uzytkownik' : item}</p>
 						</div>
 					))}
 			</div>

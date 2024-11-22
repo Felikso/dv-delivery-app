@@ -27,7 +27,8 @@ export const customErrors = {
 export const api= {
     add: '/add',
     get: '/get',
-    update: '/update'
+    update: '/update',
+    delete: '/delete'
 }
 
 export const urlAdd = '/api/items/add';

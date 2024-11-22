@@ -24,7 +24,7 @@ import { useCartStore } from '../../../store/cartStore';
 function Cart() {
 	const { name, price, quantity, total, remove } = cartItemsData;
 
-	const { verifyRabatCode, user, netErr } = useAuthStore();
+	const { verifyRabatCode, user, netErr, deleteRabat } = useAuthStore();
 	const { cartItems, decreaseQuantity } = useCartStore();
 
 	const sumPrice = useCartStore((state) => state.totalPrice());
@@ -35,13 +35,23 @@ function Cart() {
 
 	const [data, setData] = useState('');
 	const [rabat, setRabat] = useState(0);
+	const [rabatExpirest, setRabatExpirest] = useState('');
 
 	useEffect(() => {
 		if (user?.rabat?.rabatValue) {
 			setRabat(user.rabat.rabatValue);
+		} else {
+			setRabat(0); //clean after order
 		}
-	}, [user]);
+	}, [user, data]);
 
+	useEffect(() => {
+		if (user?.rabat?.rabatValue) {
+			setRabat(user.rabat.rabatValue);
+		} else {
+			setRabat(0); //clean after order
+		}
+	}, [rabat]);
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -58,23 +68,21 @@ function Cart() {
 				);
 			}
 			try {
-				console.log(user.email);
-				
 				const response = await verifyRabatCode(data.rabatCode, user.email);
-				console.log(response);
 
 				if (response.success) {
-					console.log(response);
-					
 					if (response.data.rabatValue) {
 						setRabat(response.data.rabatValue);
 					} else {
 						setRabat(0);
 					}
+					if (response.data.rabatCodeExpiresAt) {
+						setRabatExpirest(response.data.rabatCodeExpiresAt);
+					}
 					toast.success('kod rabatowy zaakceptowany');
-					//window.location.reload();
+					window.location.reload();
 				} else {
-					toast.error('podany nieprawidłowy kod rabatowy');
+					toast.error('podano nieprawidłowy kod rabatowy');
 				}
 			} catch (error) {
 				console.log(error);
@@ -83,14 +91,38 @@ function Cart() {
 		}
 	};
 
+	const handleDeleteRabat = async (e) => {
+		e.preventDefault();
+
+		if (window.confirm('Czy na pewno chcesz usunąć swój kod rabatowy?')) {
+			try {
+				const response = await deleteRabat(user?.rabat.rabatCode);
+
+				if (response.data.success) {
+					setRabat(0); //
+					setRabatExpirest(0);
+					toast.success('kod rabatowy został usunięty');
+					window.location.reload();
+				} else {
+					toast.error('podano nieprawidłowy kod rabatowy');
+				}
+			} catch (error) {
+				console.log(error);
+				toast.error(error?.response?.message);
+			}
+		}
+	};
+
 	let disabled = rabat ? 'disabled' : '';
 	return (
-		<div className='.cartBox{
-'>
+		<div
+			className='.cartBox{
+'
+		>
 			{netErr && <NetworkErrorText />}
 			{
 				/* dataLoading */ false ? (
-					/* <BackgroundAnimation /> */<p></p>
+					/* <BackgroundAnimation /> */ <p></p>
 				) : (
 					<>
 						<div className='cartItems'>
@@ -169,7 +201,10 @@ function Cart() {
 								>
 									<b>
 										{rabat
-											? cartData.rabat + ' ( ' + rabat * 100 + '% ) '
+											? cartData.rabat +
+											  ' ( ' +
+											  Math.floor(rabat * 100) +
+											  '% ) '
 											: cartData.total}
 									</b>
 									<b>
@@ -218,7 +253,7 @@ function Cart() {
 									)}
 									<form className='cartPromocodeInput'>
 										{rabat ? (
-											<></>
+											rabatExpirest ? <p>Rabat wygaśnie za: {rabatExpirest}</p> : <></>
 										) : (
 											<input
 												className={`${disabled}`}
@@ -228,13 +263,23 @@ function Cart() {
 												placeholder={cartData.promocodePlaceholder}
 											/>
 										)}
-										<button
-											className={`${disabled}`}
-											onClick={(e) => handleSetRabat(e)}
-											type='submit'
-										>
-											{rabat ? user.rabat.rabatCode : cartData.subbmitCodebtn}
-										</button>
+										<>
+											{' '}
+											<button
+												className={`${disabled}`}
+												onClick={(e) => handleSetRabat(e)}
+												type='submit'
+											>
+												{rabat
+													? user?.rabat?.rabatCode
+													: cartData.subbmitCodebtn}
+											</button>
+											{rabat ? (
+												<span onClick={handleDeleteRabat}>X</span>
+											) : (
+												<></>
+											)}
+										</>
 									</form>
 								</div>
 							</div>
