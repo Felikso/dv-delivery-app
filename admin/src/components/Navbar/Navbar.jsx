@@ -22,15 +22,18 @@ const Navbar = () => {
 	const { cartItems } = useCartStore();
 
 	const [shakeCart, setShakeCart] = useState(false);
-	
-	const sum = JSON.stringify(cartItems) === '{}' ? 0 : cartItems?.reduce((accumulator, currentObject) => {
-		return accumulator + currentObject.quantity;
-	}, 0);
+
+	const sum =
+		JSON.stringify(cartItems) === '{}'
+			? 0
+			: cartItems?.reduce((accumulator, currentObject) => {
+					return accumulator + currentObject.quantity;
+			  }, 0);
 
 	const [menu, setMenu] = useState('start');
 	const [openMenu, setOpenMenu] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
-	const [userName,setUserName]= useState('zaloguj się');
+	const [userName, setUserName] = useState('zaloguj się');
 	const location = useLocation();
 
 	const navigate = useNavigate();
@@ -70,16 +73,9 @@ const Navbar = () => {
 		}
 	};
 
-
- 	const renderMenuList = user?.isAdmin
+	const renderMenuList = user?.isAdmin
 		? { ...authList, ...objPages }
-		: objPages; 
-		//const renderMenuList =  objPages;
-		console.log(authList);
-		console.log(objPages);
-		console.log(renderMenuList);
-		
-		
+		: objPages;
 
 	return (
 		<>
@@ -109,17 +105,19 @@ const Navbar = () => {
 								{renderMenuList[item].replace(panelPath, '').replace('/', '')}
 							</Link>
 
-							{renderMenuList[item].includes('/koszyk') && <span
-								key={i}
-								onClick={() => navigate('/koszyk')}
-								className={`cart ${shakeCart ? 'shake' : ''} ${
-									hideCart ? 'runAway' : ''
-								}`}
-								data-totalitems={sum}
-							>
-								{' '}
-								<img src={assets.cart} />
-							</span>}
+							{renderMenuList[item].includes('/koszyk') && (
+								<span
+									key={i}
+									onClick={() => navigate('/koszyk')}
+									className={`cart ${shakeCart ? 'shake' : ''} ${
+										hideCart ? 'runAway' : ''
+									}`}
+									data-totalitems={sum}
+								>
+									{' '}
+									<img src={assets.cart} />
+								</span>
+							)}
 						</>
 					))}
 					{Object.entries(objMenu).map(([item, i]) => (

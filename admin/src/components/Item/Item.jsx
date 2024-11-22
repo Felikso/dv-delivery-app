@@ -14,13 +14,13 @@ const Item = ({ item }) => {
 
 	const { addItemToCart, cartItems, decreaseQuantity } = useCartStore();
 
-	const onDecreaseQuantity =  (itemId,userId) => {
-		decreaseQuantity(item._id);
-			toast.error(customInfo.itemRemoved);
+	const onDecreaseQuantity = async (itemId,userId) => {
+		await decreaseQuantity(item._id);
+		toast.error(customInfo.itemRemoved);
 	};
 	
-	const onAddToCart =  (itemId, userId) => {
-		addItemToCart(item);
+	const onAddToCart = async (itemId, userId) => {
+		await addItemToCart(item);
 		toast.success(`${item.name} już w koszyku!`);
 		
 	};

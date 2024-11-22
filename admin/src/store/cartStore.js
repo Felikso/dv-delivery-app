@@ -35,6 +35,7 @@ persist(
 		}
 	  },
 	addItemToCart: async (item,itemId) => {
+		await new Promise((reslove)=>setTimeout(reslove, 500))
 		const itemExists = get().cartItems.find(
 		  (cartItem) => cartItem._id === item._id
 		);
@@ -54,6 +55,7 @@ persist(
 		
 	  },
 	  decreaseQuantity: async (productId,itemId) => {
+		await new Promise((reslove)=>setTimeout(reslove, 500))
 		const itemExists = get().cartItems.find(
 		  (cartItem) => cartItem._id === productId
 		);

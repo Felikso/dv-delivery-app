@@ -27,7 +27,7 @@ const LoginPage = () => {
 	const { login, isLoading, error, beUrl } = useAuthStore();
 	const API_GET_CART_URL = import.meta.env.MODE === "development" ? beUrl+loginPagesLinks.urlCartGet : loginPagesLinks.urlCartGet;
 	const getCartData = useCartStore();
-	const { mergeCartItems} = useCartStore();
+	const { mergeCartItems } = useCartStore();
 	/* const mergeCartItems = useCartStore((state) => state.cartItems); */
 
 	const handleLogin = async (e) => {
@@ -36,10 +36,7 @@ const LoginPage = () => {
 		await login(email, password, checkAdmin);
 		
 		getCartData.execute()
-		const res = await axios.post(API_GET_CART_URL);
-		console.log(res);
-
-		const fechedData = res;
+		const fechedData = await axios.post(API_GET_CART_URL);
 
 		if(fechedData.data.cartData){
 			const userCartDataArr = fechedData.data?.cartData
@@ -68,7 +65,6 @@ const LoginPage = () => {
 						return acc;
 					}, []);
 	
-					console.log(mergedArray);
 					let mergedCart = '';
 					mergedArray.map((item) => {
 						mergedCart += item.name + ' x ' + item.quantity + '\n ';
