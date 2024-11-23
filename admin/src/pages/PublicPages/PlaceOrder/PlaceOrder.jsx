@@ -30,6 +30,8 @@ import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
 const PlaceOrder = ({ rabat }) => {
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
 
+	const navigate = useNavigate();
+
 	const { cartItems, mergeCartItems } = useCartStore();
 
 	const sumPrice =
@@ -220,7 +222,6 @@ const PlaceOrder = ({ rabat }) => {
 		}
 	};
 
-	const navigate = useNavigate();
 
 	const rabatValue = user?.rabat?.rabatValue ? user.rabat.rabatValue : 0;
 
