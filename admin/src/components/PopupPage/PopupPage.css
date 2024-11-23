@@ -97,13 +97,12 @@
 
 @media (max-width:750px) {
     .popupPageContainer {
-        margin-top: auto;
-        width: 95vw;
+        margin-top: 40px;
+        width: 100vw;
     }
     .popupPageContent{
         margin: 30px;
     }
-    
     
 }
 
