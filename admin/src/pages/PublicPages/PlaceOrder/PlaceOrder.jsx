@@ -25,7 +25,9 @@ const PlaceOrder = ({ rabat }) => {
 
 	const { cartItems, mergeCartItems } = useCartStore();
 
-	const sumPrice = useCartStore((state) => state.totalPrice())-useCartStore((state) => state.totalPrice())*rabat;
+	const sumPrice =
+		useCartStore((state) => state.totalPrice()) -
+		useCartStore((state) => state.totalPrice()) * rabat;
 
 	const deliveryPrice = sumPrice === 0 ? 0 : 8;
 
@@ -64,13 +66,21 @@ const PlaceOrder = ({ rabat }) => {
 		phone: '',
 	});
 
-	function capitalizeFirstLetter(val) {
-		return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-	}
-
 	const onChangeHandler = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
+
+		if (e.target.name === 'firstName') {
+			if (e.keyCode == 32) {
+				e.preventDefault();
+				return;
+				if (e.target.name !== 'city') {
+					console.log(e.target.name);
+
+					//setData((data) => ({ ...data, [name]: String(e.target.value).charAt(0).toUpperCase() + String(e.target.value).slice(1).toLocaleLowerCase() }));
+				}
+			}
+		}
 
 		if (e.target.name == 'zipCode') {
 			if (e.target.value.length > 6) {
@@ -78,19 +88,15 @@ const PlaceOrder = ({ rabat }) => {
 					...errorMessage,
 					[name]: 'Pamiętaj, że kod powinien się składać z pięciu cyfr',
 				}));
-				e.preventDefault()
+				e.preventDefault();
 			} else {
 				setErrorMessage('');
 			}
 			setData((data) => ({
 				...data,
-				[name]: e.target.value.replace(/[^0-9-]/, ''),
+				[name]: e.target.value.replace(/[^0-9-]/g, ''),
 			}));
-		} else {
-			setData((data) => ({ ...data, [name]: value }));
-		}
-
-		if (e.target.name == 'phone') {
+		} else if (e.target.name == 'phone') {
 			if (e.target.value.length > '9') {
 				setErrorMessage((errorMessage) => ({
 					...errorMessage,
@@ -106,8 +112,27 @@ const PlaceOrder = ({ rabat }) => {
 			}));
 		} else {
 			//setData((data) => ({ ...data, [name]: value }));
-		}
+			let newString = '';
+			if (e.target.name === 'email') {
+				if (e.target.value.includes('@')) {
+					setErrorMessage('');
+				}
+				newString = value;
+				newString.replace(' ', '');
+			} else {
+				let newArr = [];
+				value.split(' ').map((str) => {
+					newArr.push(
+						String(str).charAt(0).toUpperCase() +
+							String(str).slice(1).toLocaleLowerCase()
+					);
+				});
 
+				newString = newArr.join(' ');
+			}
+
+			setData((data) => ({ ...data, [name]: newString.replace('  ', ' ') }));
+		}
 		//simply validation
 	};
 
@@ -203,15 +228,47 @@ const PlaceOrder = ({ rabat }) => {
 			if (e.target.value.length == 2) {
 				setData((data) => ({ ...data, [e.target.name]: e.target.value + '-' }));
 			}
-			
 		}
 	};
-	const handleKeyDownUpperCase = (e) => {
-		if (e.target.value.length==1) {
-			setData((data) => ({ ...data, [e.target.name]: e.target.value.toUpperCase() }));
+
+	const handleKeyDownLockWhitespace = (e) => {
+		if (e.keyCode == 32) {
+			e.preventDefault();
+			return;
+			console.log('mail');
+			console.log(e.target.name);
 		}
+		/* 		const name = e.target.name;
+		const value = e.target.value;
+		//capitalizeAfterWhitespace(value)
+		allowOnlyOneWhitespace(value)
+		//console.log(capitalizeAfterWhitespace(value));
+		
+		if (e.keyCode == 32) {
+			if(e.target.name !== 'city'){
+				console.log(e.target.name);
+
 	
-}
+			//setData((data) => ({ ...data, [name]: String(e.target.value).charAt(0).toUpperCase() + String(e.target.value).slice(1).toLocaleLowerCase() }));
+		}else{
+
+		
+		
+		//setData((data) => ({ ...data, [e.target.name]: String(e.target.value).toLocaleLowerCase() }));
+
+	
+	} */
+	};
+	const handleEmailBlur = (e) => {
+		if (!e.target.value.includes('@')) {
+			setErrorMessage((errorMessage) => ({
+				...errorMessage,
+				[e.target.name]: 'Adres niepoprawny - brakuje @',
+			}));
+		} else {
+			setErrorMessage('');
+		}
+	};
 
 	return (
 		<form onSubmit={placeOrder} className='placeOrder'>
@@ -225,7 +282,6 @@ const PlaceOrder = ({ rabat }) => {
 						className='input'
 						name='firstName'
 						onChange={onChangeHandler}
-						onKeyDown={handleKeyDownUpperCase}
 						value={data.firstName}
 						type='text'
 						placeholder={placeOrderData.firstName}
@@ -236,7 +292,6 @@ const PlaceOrder = ({ rabat }) => {
 						className='input'
 						name='lastName'
 						onChange={onChangeHandler}
-						onKeyDown={handleKeyDownUpperCase}
 						value={data.lastName}
 						type='text'
 						placeholder={placeOrderData.lastName}
@@ -248,6 +303,8 @@ const PlaceOrder = ({ rabat }) => {
 					className='input'
 					name='email'
 					onChange={onChangeHandler}
+					onKeyDown={handleKeyDownLockWhitespace}
+					onBlur={handleEmailBlur}
 					value={data.email}
 					type='email'
 					placeholder={placeOrderData.email}
@@ -259,7 +316,6 @@ const PlaceOrder = ({ rabat }) => {
 						className='input'
 						name='street'
 						onChange={onChangeHandler}
-						onKeyDown={handleKeyDownUpperCase}
 						value={data.street}
 						type='text'
 						placeholder={placeOrderData.street}
@@ -282,7 +338,6 @@ const PlaceOrder = ({ rabat }) => {
 						className='input'
 						name='city'
 						onChange={onChangeHandler}
-						onKeyDown={handleKeyDownUpperCase}
 						value={data.city}
 						type='text'
 						placeholder={placeOrderData.city}
