@@ -183,7 +183,7 @@ console.log(authList);
 									if (user) {
 										handleLogout();
 									} else {
-										navigate('/');
+										navigate('/login');
 									}
 								}
 							}}

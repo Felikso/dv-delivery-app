@@ -104,11 +104,20 @@
         margin: 30px;
     }
 
+    .popupPageTitle{
+        margin-bottom: 10px;
+    }
+
+    .popupPageTitle h2{
+        font-size: 24px;
+    }
+
     .popupPageTitle img{
         position: absolute;
         bottom: 0;
         right: 0;
-        transform: translate(-30px, -30px);}
+        transform: translate(-30px, -30px);
+    }
     
 }
 

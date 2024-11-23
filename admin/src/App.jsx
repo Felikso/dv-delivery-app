@@ -26,8 +26,7 @@ import ListPage from './pages/AuthPages/ListPage';
 import AddPage from './pages/AuthPages/AddPage.jsx';
 import OrdersPage from './pages/AuthPages/OrdersPage.jsx';
 
-import { pagesLinks, authList, panelPath  } from './utils/variables.jsx';
-import { useCartStore } from './store/cartStore';
+import { pagesLinks, authList } from './utils/variables.jsx';
 import { replacePolishLetters } from './utils/functions.js'
 import NotAdminPage from './pages/NotAdminPage.jsx';
 
@@ -91,7 +90,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 function App() {
 
 	const [showPopupPage, setShowPopupPage] = useState(false);
-	const { checkAuth, user, isAuthenticated } = useAuthStore();
+	const { checkAuth, user } = useAuthStore();
 
 	useEffect(() => {
 		checkAuth();

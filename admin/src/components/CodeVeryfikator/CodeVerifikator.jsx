@@ -54,7 +54,7 @@ const CodeVerifikator = ({
 	return (
 		<div className='cardContent'>
 			<div className='codeVerifikatorForm'>
-				<h2 className='textTogradient'>{title}</h2>
+				<h3 className='textTogradient'>{title}</h3>
 
 				<form onSubmit={handleSubmit}>
 					<div className='codeVerifikatorBox'>

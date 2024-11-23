@@ -9,6 +9,7 @@
     color: var(--third-color);
     font-weight: 500;
     margin: 20px;
+    font-size: 30px;
 }
 
 .exploreMainText{
@@ -73,12 +74,16 @@
         max-width: 100%;
         font-size: 14px;
     }
+
+    .exploreMain h1{
+        font-size: 20px;
+    }
+
     .exploreMainListItem img{
             width: 100px;
             height: 100px;
             cursor: pointer;
             border-radius: 50%;
             transition: 0.2s;
-          
         }
 }

@@ -1,6 +1,6 @@
 .cartBox{
     margin-top: 100px;
-    max-width: 95%;
+    max-width: 95vw;
 
 }
 
@@ -127,7 +127,7 @@
 }
 
 .removeRabat{
-    color: red;
+    color: var(--red);
     font-size: 2rem;
     font-weight: bold;
     position: absolute;
@@ -181,4 +181,17 @@
     .cartPromocode{
         justify-content: start ;
     }
+
+    .cartTotal button:first-child{
+        width: 40vw;
+    }
+
+    .cartPromocodeInput input{
+        width: 40vw;
+    }
+
+    .cartPromocode p{
+        font-size: 12px;
+    }
 }
+

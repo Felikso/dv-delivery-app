@@ -17,8 +17,10 @@
     justify-content: space-between; 
     }
 
-    .codeVerifikatorForm h2{
+    .codeVerifikatorForm h3{
         font-size: 16px !important;
         padding: 0 !important;
         text-align: center;
+        margin-bottom: 1rem;
+        line-height: 2;
     }
