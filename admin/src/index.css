@@ -10,7 +10,7 @@
 	--green: rgb(0, 100, 0);
 
 	--gold: rgb(194, 164, 68);
-	--goldLight: rgb(194, 164, 68);
+	--goldLight: rgb(224, 192, 85);
 	--goldDarkTransparent: rgb(175 157 98 / 69%);
 	--goldMiddle: rgb(161, 142, 77);
 
@@ -19,10 +19,10 @@
 	--background-gradient2: linear-gradient(178deg, #ffff33 10%, #3333ff);
 
 	--gray: #4b4635;
-	--darkGray: #1b1b1b;
+	--grayDark: #1b1b1b;
 	--grayTransparent: rgba(92, 92, 92, 0.69);
 	--grayLight: hsla(0, 0%, 100%, 0.5);
-	--grayDark: rgba(190, 190, 190, 0.5);
+
 
 	--mobile-sc: 900px;
 

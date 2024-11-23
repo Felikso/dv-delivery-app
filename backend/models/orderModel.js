@@ -8,8 +8,6 @@ const orderSchema = new mongoose.Schema({
     address:{type:Object,required:true},
     status:{type:String,default:orderStatusMess},
     date:{type:Date,default:Date.now()},
-    payment:{type:Boolean,default:false},
-    verified:{type:Boolean,default:false},
     verificationCode:{type:String},
     verificationCodeExpiresAt:{type:Date},
     rabat:{type:String}

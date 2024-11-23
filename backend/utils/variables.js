@@ -20,6 +20,7 @@ export const wrongTokenMess = 'błędny odnośnik do konta'
 export const verifyUrl = '/weryfikacja' //remember in frontend
 export const odrerSlug = 'zamowienia' //and name of new database
 export const userOrdersUrl = '/zamowienia-klienta'
+export const resetPassUrl = '/reset-password'
 
 export const customErrors = {
     logout: 'wystąpił problem podczas wylogowania',
@@ -52,7 +53,10 @@ export const customErrors = {
 
     orderAllreadyVeryried: 'zamówienie zostało już zweryfikowane',
     rabatUsed: 'rabat został już wykorzystany',
-    userDosentHaveRabat: 'kod rabatowy nie jest przypisany do uzytkownika'
+    userDosentHaveRabat: 'kod rabatowy nie jest przypisany do uzytkownika',
+    loadListField: 'lista nie została załadowana',
+    verifyOrderField: 'weryfikacja zamówienia się nie powiodła',
+    statusUpdateFiled: 'aktualizacja statusu zamówienia sie nie powiodła'
 
 
 
@@ -68,7 +72,10 @@ export const customInfo = {
     resetSuccessfull: 'hasło zresetowane pomyślnie',
     rabatCreatedSuccessfully: 'rabat wygenerowany pomyślnie',
     rabatUsed: 'rabat wykorzystany',
-    rabatDeleted: 'rabat został usunięty'
+    rabatDeleted: 'rabat został usunięty',
+    orderSuccess: 'zamówienie złożone pomyślnie',
+    statusUpdated: 'status zamówienia zaktualizowany',
+    orderRemoved: 'zamówienie zostało usunięte'
 
 
 }

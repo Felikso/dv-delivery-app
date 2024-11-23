@@ -9,7 +9,7 @@
     flex: 1;
     padding: 0 1em;
     color: var(--blackLight);
-    background-color: var(--darkGray);
+    background-color: var(--grayDark);
     background-image: none;
     cursor: pointer;
   }

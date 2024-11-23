@@ -21,7 +21,7 @@ border-radius: 0.5rem;
 border-width: 5px; 
 border-color: var(--goldLight);
 color: var(--white);
-background-color: var(--darkGray);
+background-color: var(--grayDark);
 --bg-opacity: 0.5; 
 transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
 transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -39,8 +39,8 @@ width: 80vw;
 .SearchBox button{
   padding-left: 0.75rem; 
   align-self: start;
-  border-color: var(--darkGray);
-  color: var(--darkGray);
+  border-color: var(--grayDark);
+  color: var(--grayDark);
   background-color: var(--goldLight);
   cursor: pointer;
   transition: 1s ease;
@@ -48,7 +48,7 @@ width: 80vw;
 .SearchBox button:hover{
   border-color: var(--goldLight);
   color: var(--white);
-  background-color: var(--darkGray);
+  background-color: var(--grayDark);
 }
 
 .buttonBox{

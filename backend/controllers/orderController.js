@@ -1,7 +1,6 @@
 import orderModel from '../models/orderModel.js';
 import userModel from '../models/userModel.js';
 import transporter from '../utils/transporter.js';
-/* import Stripe from "stripe"; */
 import {
 	customErrors,
 	customInfo,
@@ -16,9 +15,6 @@ import {
 } from '../utils/emailTemplates.js';
 
 
-/* const stripe = Stripe(process.env.STRIPE_SECRET_KEY); */
-
-//placing user order for frontend
 const placeOrder = async (req, res) => {
 	const verificationCode = Math.floor(
 		100000 + Math.random() * 900000
@@ -26,12 +22,10 @@ const placeOrder = async (req, res) => {
 
 	try {
 		let rabatValue = 0;
-		//let orderId = req.body.userId ? req.body.userId : ''; //if user registered else id is from verifikation code
 		if (req.body.userId) {
 			const user = await userModel.findById(req.body.userId);
 			rabatValue = user?.rabat ? user.rabat.rabatValue : 0;
 		}
-
 		const itemsArr = req.body.items;
 
 		const newOrder = new orderModel({
@@ -42,7 +36,7 @@ const placeOrder = async (req, res) => {
 			address: req.body.address,
 			rabat: rabatValue,
 			verificationCode,
-			verificationCodeExpiresAt: Date.now() + 60 * 60 * 1000, // 1 hour
+			verificationCodeExpiresAt: Date.now() + 60 * 60 * 1000, 
 		});
 
 		await newOrder.save();
@@ -63,12 +57,10 @@ const placeOrder = async (req, res) => {
 				itemsForMail += '<p>'+item.name+' x '+item.quantity+'</p>'
 			})
 	
-
-
 		var mailOptions = {
 			from: process.env.EMAIL,
 			to: req.body.address.email,
-			subject: 'kod weryfikacyjny dla zamówienia',
+			subject: 'Kod weryfikacyjny dla zamówienia',
 
 			html: 
 			MAIL_HEADER
@@ -82,7 +74,7 @@ const placeOrder = async (req, res) => {
 				verificationCode
 			)
 			.replace(
-				'{orderPath}',
+				'{mailPath}',
 				process.env.REACT_APP_CLIENT_URL+`/${odrerSlug}`
 			)
 			.replace(
@@ -100,49 +92,11 @@ const placeOrder = async (req, res) => {
 			if (error) {
 				console.log(error);
 			} else {
-				//console.log(customInfo.emailSent + info.response);
 				return res.json({success:true,message:'shortPassMess'})
 			}
 		});
 
-/* 		const line_items = req.body.items.map((item) => ({
-			price_data: {
-				currency: 'pln',
-				product_data: {
-					namie: item.name,
-				},
-				unit_amount: item.price * 100 * 80,
-			},
-			quantity: item.quantity,
-		}));
-
-		line_items.push({
-			price_data: {
-				currency: 'pln',
-				product_data: {
-					name: deliveryChargesMess,
-				},
-				unit_amount: 2 * 100 * 80,
-			},
-			quantity: 1,
-		}); */
-
-		/*         const session = await stripe.checkout.sessions.create({
-            line_items:line_items,
-            mode:modePayment,
-            success_url: `${frontend_url}/verify?succes=true&orderId=${newOrder._id}`,
-            cancel_url: `${frontend_url}/verify?succes=false&orderId=${newOrder._id}`,
-
-            
-        res.json({success:true,session_url:session.url})
-
-        }) */
-
-		// const session = `${frontend_url}${verifyUrl}?success=true&orderId=${newOrder._id}`
-		// const session = `${frontend_url}/${odrerSlug}`;
-		//const session = `${frontend_url}/${odrerSlug}?success=true&orderId=${newOrder._id}`
-
-		res.json({ success: true /* ,session_url:session */ });
+		res.json({ success: true, message: customInfo.orderSuccess });
 	} catch (error) {
 		console.log(error);
 		
@@ -179,23 +133,11 @@ const verifyOrderCode = async (req, res) => {
 				.json({ success: false, message: customErrors.expiriedCode });
 		}
 
-		// Create two date objects
-		/* let date1 = new Date(order.verificationCodeExpiresAt);
-                let date2 = new Date(Date.now());
-    
-                // Compare the dates
-                if (date1.getTime() > date2.getTime()) {
-                    console.log('Date1 is earlier than Date2')
-                    return res.status(400).json({ success: false, message: customErrors.expiriedCode});
-                } */
-
 		if (order._id == _id) {
-			//date compare
 
 			if (order._id == _id) {
 				order.verified = true;
-				//order.verificationCode = undefined;
-				//order.verificationCodeExpiresAt = undefined;
+
 				await order.save();
 				return res.status(200).json({
 					success: true,
@@ -207,34 +149,6 @@ const verifyOrderCode = async (req, res) => {
 					.status(400)
 					.json({ success: false, message: customErrors.failedData });
 			}
-
-			//await sendWelcomeEmail(user.email, user.name);
-
-			/** mail */
-			/* 		var mailOptions = {
-            from: process.env.EMAIL,
-            to: order.address.email,
-            subject: 'potwierdzone zamówienie w trakcie realizacji',
-			html: PASSWORD_RESET_REQUEST_TEMPLATE
-
-          };
-          
-          transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-              console.log(error);
-            } else {
-              console.log(customInfo.emailSent + info.response);
-              return res.json({success:true,message:'shortPassMess'}) 
-            }
-          });
-
-		res.status(200).json({
-			success: true,
-			message: customInfo.emailSentSuccessfully,
-            verified: true
-		}); */
-
-			//mail
 		}
 		return res
 			.status(400)
@@ -245,23 +159,6 @@ const verifyOrderCode = async (req, res) => {
 	}
 };
 
-const verifyOrder = async (req, res) => {
-	const { orderId, success } = req.body;
-	try {
-		if (success == 'true') {
-			await orderModel.findByIdAndUpdate(orderId, { payment: true });
-			res.json({ success: true, message: 'paid' });
-		} else {
-			await orderModel.findByIdAndDelete(orderId);
-			res.json({ success: false, message: 'error with paid' });
-		}
-	} catch (error) {
-		console.log(error);
-		res.json({ success: false, message: 'error ;(' });
-	}
-};
-
-//user orders for frontend
 const userOrders = async (req, res) => {
 	let orderId = req.body.userId ? req.body.userId : '';
 	let codeId = req.body.codeId;
@@ -289,18 +186,17 @@ const userOrders = async (req, res) => {
 	} catch (error) {
 		console.log(error);
 
-		res.json({ success: false, message: 'error' });
+		res.json({ success: false, message: customErrors.loadListField });
 	}
 };
 
-//listing orders for admin panel
 
 const listOrders = async (req, res) => {
 	try {
 		const orders = await orderModel.find({});
 		res.json({ success: true, data: orders });
 	} catch (error) {
-		res.json({ success: false, message: 'error ;(' });
+		res.json({ success: false, message: customErrors.loadListField });
 	}
 };
 
@@ -309,18 +205,17 @@ const updateStatus = async (req, res) => {
 		await orderModel.findByIdAndUpdate(req.body.orderId, {
 			status: req.body.status,
 		});
-		res.json({ success: true, message: 'status updated' });
+		res.json({ success: true, message: customInfo.statusUpdated });
 	} catch (error) {
 		console.log(error);
-		res.json({ success: false, message: 'error' });
+		res.json({ success: false, message: customErrors.statusUpdateFiled });
 	}
 };
 
-//remove item
 const removeOrder = async (req, res) => {
 	try {
 		await orderModel.findByIdAndDelete(req.body.orderId);
-		res.json({ success: true, message: '' });
+		res.json({ success: true, message: customInfo.orderRemoved });
 	} catch {
 		res.json({ success: false, message: errorMessage });
 	}
@@ -328,7 +223,6 @@ const removeOrder = async (req, res) => {
 
 export {
 	placeOrder,
-	verifyOrder,
 	userOrders,
 	listOrders,
 	updateStatus,
