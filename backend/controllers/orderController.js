@@ -10,7 +10,7 @@ import {
 } from '../utils/variables.js';
 
 import {
-	PASSWORD_RESET_REQUEST_TEMPLATE,
+	ORDER_VERYFIKATION,
 	PASSWORD_RESET_SUCCESS_TEMPLATE,
 	VERIFICATION_EMAIL_TEMPLATE,
 } from '../utils/emailTemplates.js';
@@ -32,10 +32,12 @@ const placeOrder = async (req, res) => {
 			rabatValue = user?.rabat ? user.rabat.rabatValue : 0;
 		}
 
+		const itemsArr = req.body.items;
+
 		const newOrder = new orderModel({
 			userId: req.body.userId,
 			date: Date.now(),
-			items: req.body.items,
+			items: itemsArr,
 			amount: req.body.amount,
 			address: req.body.address,
 			rabat: rabatValue,
@@ -45,18 +47,6 @@ const placeOrder = async (req, res) => {
 
 		await newOrder.save();
 
-		//clean cart
-		/* const updatedUser = await userModel.findByIdAndUpdate(req.body.userId, {
-			cartData: {},
-			rabat: {},
-		}); */
-
-		//if save accept send addres data
-	/* 	if (req.body.address) {
-			await userModel.findByIdAndUpdate(req.body.userId, {
-				address: req.body.address,
-			});
-		} */
 			if (req.body.userId) {
 				const user = await userModel.findById(req.body.userId);
 				user.rabat = {};
@@ -66,15 +56,21 @@ const placeOrder = async (req, res) => {
 				}
 				await user.save();
 			}
+
+			let itemsForMail = ''
+
+			itemsArr.map(item=>{
+				itemsForMail += '<p>'+item.name+' '+item.quantity+'</p>'
+			})
 	
 
 
 		var mailOptions = {
 			from: process.env.EMAIL,
 			to: req.body.address.email,
-			subject: 'kod weryfikacyjny',
+			subject: 'kod weryfikacyjny dla zamówienia',
 
-			html: VERIFICATION_EMAIL_TEMPLATE
+			html: ORDER_VERYFIKATION
 			.replace(
 				'{verificationCode}',
 				verificationCode
@@ -82,6 +78,10 @@ const placeOrder = async (req, res) => {
 			.replace(
 				'{orderPath}',
 				process.env.REACT_CLIENT_URL+`/${oderSlug}`
+			)
+			.replace(
+				'{itemsForMail}',
+				itemsForMail
 			)
 		};
 
