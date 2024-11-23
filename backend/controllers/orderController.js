@@ -81,7 +81,7 @@ const placeOrder = async (req, res) => {
 			)
 			.replace(
 				'{orderPath}',
-				process.env.REACT_CLIENT_URL
+				process.env.REACT_CLIENT_URL+`/${oderSlug}`
 			)
 		};
 
