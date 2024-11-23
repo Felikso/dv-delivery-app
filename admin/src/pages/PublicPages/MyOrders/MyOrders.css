@@ -37,6 +37,7 @@
 
 .myOrdersOrder:nth-child(2n){ 
     background-color: var(--grayDark);
+    color: var(--white)
 }
 
 .myOrdersOrder:first-child{

@@ -160,7 +160,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 					<div className='addItemName flexCol'>
 						<p>{addData.itemName}</p>
 						<input
-							className={`${disabled}`}
+							className={`${disabled} input`}
 							onChange={onChangeHandler}
 							value={data.name}
 							type='text'
@@ -170,7 +170,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 
 						<p>{addData.itemDesc}</p>
 						<textarea
-							className={`${disabled}`}
+							className={`${disabled} input`}
 							onChange={(e) => onChangeHandler(e)}
 							value={data.description}
 							name='description'
@@ -183,7 +183,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 						<div className='addCat flexCol'>
 							<p>{addData.itemCat}</p>
 							<select
-								className={`${disabled}`}
+								className={`${disabled} input`}
 								onChange={onChangeHandler}
 								value={data.category}
 								name='category'
@@ -198,7 +198,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 						<div className='addPrice flexCol'>
 							<p>{addData.itemPrice}</p>
 							<input
-								className={`${disabled}`}
+								className={`${disabled} input`}
 								onChange={onChangeHandler}
 								value={data.price}
 								type='number'
@@ -207,9 +207,9 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 							/>
 						</div>
             {!(edit=='unique')?<>
-              <a onClick={handleEdit} className='addBtn'>
+              <button onClick={handleEdit} className='addBtn' type='button'>
 							{edit?addData.breakEdit:addData.editBtn}
-						</a>
+						</button>
             </>:<div></div>}
             <button className={`addBtn ${disabled}`} type='submit'>
             {edit?((edit=='unique')?addData.addBtn:addData.acceptEdit):addData.addBtn}

@@ -163,3 +163,13 @@
 .none {
     display: none;
 }
+.addItemName{
+    overflow: hidden;
+}
+
+.addItemName textarea{
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+}

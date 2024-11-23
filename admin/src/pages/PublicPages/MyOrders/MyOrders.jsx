@@ -124,7 +124,7 @@ const MyOrders = () => {
 									<div>
 										<p className='myOrdersDate'>{convertDate(item.date)}</p>
 										<p>
-											<span>&#x25cf;</span> <b>{item.status}</b>
+											<b>{item.status}</b>
 										</p>
 									</div>
 									<Button

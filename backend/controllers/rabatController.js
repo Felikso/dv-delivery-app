@@ -71,9 +71,10 @@ const setRabat = async (req, res) => {
 				: 'za miesiąc';
 
 		sendEmailArr.forEach((mail) => {
+			let email = mail.email ? mail.email : mail
 			var mailOptions = {
 				from: process.env.EMAIL,
-				to: mail,
+				to: email,
 				subject: 'Kod rabatowy',
 				html:
 					MAIL_HEADER.replace('{headTitle}', 'Nowy kod rabatowy') +
