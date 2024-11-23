@@ -60,7 +60,7 @@ const signup = async (req, res) => {
 			subject: 'Potwierdzenie adresu email',
 			html:
 				MAIL_HEADER.replace('{headTitle}', 'Weryfikacja adresu email') +
-				ORDER_VERYFIKATION.replace(
+				EMAIL_VERYFIKATION.replace(
 					'{verificationCode}',
 					verificationToken
 				).replace(

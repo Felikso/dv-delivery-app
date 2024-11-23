@@ -65,9 +65,9 @@ const Navbar = () => {
 
 	const handleLogout = () => {
 		if (window.confirm('wylogowujesz się?')) {
-			logout();
 			localStorage.removeItem('cartData');
 			setOpenMenu(!openMenu);
+			logout();
 			navigate('/');
 			window.location.reload();
 		}

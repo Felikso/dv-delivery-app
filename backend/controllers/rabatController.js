@@ -10,6 +10,7 @@ const setRabat = async (req, res) => {
 	const { rabatValue, rabatCodeExpiresAt, emailArr } = req.body;
 
 	try {
+		const usersArr = await userModel.find({});
 		if (emailArr?.length > 0) {
 			let emailDosentExistArr = [];
 			for (const mail of emailArr) {
@@ -20,7 +21,7 @@ const setRabat = async (req, res) => {
 			}
 			let emailsArr = [];
 			if (emailDosentExistArr[0] == 'all') {
-				const usersArr = await userModel.find({});
+				
 
 				Object.entries(usersArr).map(([item, i]) => {
 					if (!emailsArr.includes(i['email'])) {

@@ -8,7 +8,7 @@
     /* Personalize */
     flex: 1;
     padding: 0 1em;
-    color: var(--blackLight);
+    color: var(--grayLight);
     background-color: var(--grayDark);
     background-image: none;
     cursor: pointer;
