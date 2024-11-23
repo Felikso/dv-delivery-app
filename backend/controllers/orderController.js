@@ -74,10 +74,15 @@ const placeOrder = async (req, res) => {
 			to: req.body.address.email,
 			subject: 'kod weryfikacyjny',
 
-			html: VERIFICATION_EMAIL_TEMPLATE.replace(
+			html: VERIFICATION_EMAIL_TEMPLATE
+			.replace(
 				'{verificationCode}',
 				verificationCode
-			),
+			)
+			.replace(
+				'{orderPath}',
+				process.env.REACT_CLIENT_URL
+			)
 		};
 
 		transporter.sendMail(mailOptions, function (error, info) {
