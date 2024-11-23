@@ -5,14 +5,14 @@ import transporter from '../utils/transporter.js';
 import {
 	customErrors,
 	customInfo,
-
+	odrerSlug,
 	errorMessage,
 } from '../utils/variables.js';
 
 import {
 	ORDER_VERYFIKATION,
-	PASSWORD_RESET_SUCCESS_TEMPLATE,
-	VERIFICATION_EMAIL_TEMPLATE,
+	MAIL_HEADER,
+	MAIL_FOOTER,
 } from '../utils/emailTemplates.js';
 
 
@@ -70,19 +70,30 @@ const placeOrder = async (req, res) => {
 			to: req.body.address.email,
 			subject: 'kod weryfikacyjny dla zamówienia',
 
-			html: ORDER_VERYFIKATION
+			html: 
+			MAIL_HEADER
+			.replace(
+				'{headTitle}',
+				'Weryfikacja zamówienia'
+			) +
+			ORDER_VERYFIKATION
 			.replace(
 				'{verificationCode}',
 				verificationCode
 			)
 			.replace(
 				'{orderPath}',
-				process.env.REACT_CLIENT_URL+`/${oderSlug}`
+				process.env.REACT_CLIENT_URL+`/${odrerSlug}`
 			)
 			.replace(
 				'{itemsForMail}',
 				itemsForMail
 			)
+			.replace(
+				'{headTitle}',
+				'Weryfikacja zamówienia'
+			) +
+			MAIL_FOOTER
 		};
 
 		transporter.sendMail(mailOptions, function (error, info) {
@@ -128,11 +139,13 @@ const placeOrder = async (req, res) => {
         }) */
 
 		// const session = `${frontend_url}${verifyUrl}?success=true&orderId=${newOrder._id}`
-		// const session = `${frontend_url}/${oderSlug}`;
-		//const session = `${frontend_url}/${oderSlug}?success=true&orderId=${newOrder._id}`
+		// const session = `${frontend_url}/${odrerSlug}`;
+		//const session = `${frontend_url}/${odrerSlug}?success=true&orderId=${newOrder._id}`
 
 		res.json({ success: true /* ,session_url:session */ });
 	} catch (error) {
+		console.log(error);
+		
 		res.json({ success: false, message: customErrors.orderFiled });
 	}
 };

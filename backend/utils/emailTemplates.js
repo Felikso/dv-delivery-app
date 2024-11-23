@@ -5,7 +5,7 @@ export const MAIL_HEADER = `
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="./vd.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weryfikacja zamówienia</title>
+  <title>{headTitle}</title>
 
   <style>
     @font-face {
@@ -14,7 +14,6 @@ export const MAIL_HEADER = `
         url('fonts/Segoe.wof') format('woff'), 
         url('fonts/Segoe.ttf') format('truetype');  
     }
-
     .body{font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;}
 
     .mailBox{background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgb(148, 118, 37) 50%, rgb(0, 0, 0) 100%); padding: 20px; text-align: center; border-top-right-radius: 50px; border-top-left-radius: 50px;}
@@ -231,50 +230,6 @@ export const welcomeTemplate = `
 `;
 
 export const ORDER_VERYFIKATION = `
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="./vd.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weryfikacja zamówienia</title>
-
-  <style>
-    @font-face {
-      font-family: Segoe;
-    src:url('fonts/Segoe.eot?#') format('eot'),    
-        url('fonts/Segoe.wof') format('woff'), 
-        url('fonts/Segoe.ttf') format('truetype');  
-    }
-
-    .body{font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;}
-
-    .mailBox{background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgb(148, 118, 37) 50%, rgb(0, 0, 0) 100%); padding: 20px; text-align: center; border-top-right-radius: 50px; border-top-left-radius: 50px;}
-
-    .title{color: white; margin: 0; font-size: 1rem;}
-
-    .mailContent{background-color: rgba(228, 198, 99, 0.555); padding: 1rem 3rem; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-bottom-right-radius: 50px; border-bottom-left-radius: 50px;}
-
-    .codeBox{text-align: center; margin: 3rem 0;}
-
-    .code{font-size: 32px; font-weight: bold; letter-spacing: 5px; color: rgb(148, 118, 37);}
-
-    .messageBox{display: flex; flex-direction: column; gap: 20px;}
-
-    .messageContent{text-align: center; align-self: flex-start; display: grid; gap: 10px; align-self: center; margin-top: 1rem;}
-
-    .codeExpiried{font-weight: 700;}
-
-    .button{font-weight: bold; background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgb(148, 118, 37) 50%, rgb(0, 0, 0) 100%); text-decoration: none; color: white; padding: 20px; border-radius: 30px;}
-    
-    .logo{text-align: center; line-height: .9; font-size: 4rem; margin-top: 0px; font-family: Segoe Print;}
-
-    .dontReplay{text-align: center; margin-top: 20px; color: #888; font-size: 0.8em; }
-
-    </style>
-</head>
-<body class="body">
-  <div class="mailBox">
     <h1 class="title">Zweryfikuj swoje zamówienie</h1>
   </div>
   <div class="mailContent">
@@ -290,6 +245,9 @@ export const ORDER_VERYFIKATION = `
     <a href="{orderPath}" class="button">Potwierdzam zamówienie</a>
     <p class="codeExpiried">Kod za godzinę wygaśnie!</p>
     <p>Pozdrowienia</p>
+`
+
+export const MAIL_FOOTER = `
   </div>
   <h4 class="logo">Ventus <br>Dev</h4>
 </div>

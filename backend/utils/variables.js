@@ -18,7 +18,7 @@ export const wrongTokenMess = 'błędny odnośnik do konta'
 
 //export const frontend_url = import.meta.env.REACT_APP_CLIENT_URL?import.meta.env.REACT_APP_CLIENT_URL:'http://localhost:5173'
 export const verifyUrl = '/weryfikacja' //remember in frontend
-export const oderSlug = 'zamowienia' //and name of new database
+export const odrerSlug = 'zamowienia' //and name of new database
 export const userOrdersUrl = '/zamowienia-klienta'
 
 export const customErrors = {

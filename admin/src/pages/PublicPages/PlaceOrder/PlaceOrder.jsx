@@ -169,7 +169,7 @@ const PlaceOrder = ({ rabat }) => {
 				}
 			} else {
 				if (window.confirm('Czy na pewno chcez złożyć zamówienie?')) {
-					toast.success(customInfo.accpetPlaceOrder);
+					
 				} else {
 					toast.error(customInfo.cancelPlaceOrder);
 					return;
@@ -206,7 +206,11 @@ const PlaceOrder = ({ rabat }) => {
 		};
 		let response = await axios.post(beUrl + orderPlaceUrl, orderData);
 
+		console.log(response);
+		
+
 		if (response.data.success) {
+			toast.success(customInfo.accpetPlaceOrder);
 			localStorage.removeItem('cartData');
 			mergeCartItems([]);
 			navigate('/');
@@ -219,6 +223,8 @@ const PlaceOrder = ({ rabat }) => {
 					});
 				}, 1500);
 			}
+		}else{
+			toast.error(response.data.message);
 		}
 	};
 
