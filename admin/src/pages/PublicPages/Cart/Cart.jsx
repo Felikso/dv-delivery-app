@@ -74,7 +74,7 @@ function Cart({setRabat, rabat}) {
 				}
 			} catch (error) {
 				console.log(error);
-				toast.error(error?.response?.message);
+				toast.error(error?.response?.data.message);
 			}
 		}
 	};
@@ -96,7 +96,7 @@ function Cart({setRabat, rabat}) {
 				}
 			} catch (error) {
 				console.log(error);
-				toast.error(error?.response?.message);
+				toast.error(error?.response?.data.message);
 			}
 		}
 	};
@@ -118,11 +118,9 @@ function Cart({setRabat, rabat}) {
 								<p></p>
 								<p>{name}</p>
 								<p>{price}</p>
-								<p>{quantity}</p>
 								<p>{total}</p>
 								<p>{remove}</p>
 							</div>
-							<br />
 							<hr />
 							{cartItems.map((item, i) => {
 								const onDecreaseQuantity = () => {
@@ -132,18 +130,18 @@ function Cart({setRabat, rabat}) {
 								return (
 									<div key={i} className='cartItemsTitle cartItemsItem'>
 										<img
+										className='cartItemsImg'
 											src={
 												import.meta.env.VITE_BACKEND_URL + imgUrl + item.image
 											}
 											alt={`zdjęcie ${item.name}`}
 										/>
-										<p>{item.name}</p>
-										<p>
-											{item.price}
-											{currency}
+										<p className='name'>{item.name} x {item.quantity}</p>
+										<p className='price'>
+											{item.price} {' '}
+											{currency} x {item.quantity}
 										</p>
-										<p>{item.quantity}</p>
-										<p>
+										<p className='total'>
 											{item.price * item.quantity}
 											{currency}
 										</p>

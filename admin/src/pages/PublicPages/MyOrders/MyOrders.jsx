@@ -27,7 +27,6 @@ const MyOrders = () => {
 			{ codeId: codeId.join(""),
 				userId: userOrdersUrl._id
 			 },
-	/* 		{ headers: { token } } */
 		);
 		
 		setData(response.data.data);
@@ -52,7 +51,6 @@ const MyOrders = () => {
 		e.preventDefault();
 		const verificationCode = codeId.join("");
 		fetchOrders(verificationCode);
-		//setCodeId(verificationCode)
 
 	};
 
@@ -106,7 +104,7 @@ const MyOrders = () => {
 							}
 							return (
 								<div key={i} className='myOrdersOrder'>
-									<img src={assets.parcel_icon} alt='' className='' />
+									<img src={assets.parcel_icon} alt='' className='myOrderImg' />
 									<p>
 										{item.items.map((it, x) => {
 											if (x === item.items.length - 1) {

@@ -12,7 +12,7 @@
 
 .cartItemsTitle{
     display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr .5fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr .5fr;
     align-items: center;
     color: var(--third-color);
     font-size: max(1vw,12px);
@@ -27,7 +27,6 @@
 
 
 .cartItemsItem{
-    margin: 10px 0;
     color: black;
     border-bottom: 3px solid var( --body-color);
     min-height: 80px;
@@ -36,6 +35,11 @@
 .cartItemsItem img{
     width: 50px;
     min-height: 50px;
+}
+
+.cartItemsItem .cartItemsImg{
+    width: 100px;
+    min-height: 100px;
 }
 
 .cart hr{
@@ -133,10 +137,42 @@
     cursor: pointer;
 }
 
+.cartItemsItem  .name { font-size: .8rem; font-weight: 700; }
+.cartItemsItem  .price, .total { color: var(--green); font-weight: 700; }
+
 @media (max-width:750px){
     .cartItemsTitle:first-child{
         display: none;
     }
+
+    .cartItemsTitle{
+        display: grid;
+        align-items: center;
+        color: var(--third-color);
+        font-size: max(1vw,12px);
+    }
+
+    .cartItemsItem {
+        display: grid; 
+        grid-auto-columns: 1fr; 
+        grid-template-columns: 1fr 1fr 1fr; 
+        grid-template-rows: 1.6fr 0.4fr 1fr; 
+        gap: 0px 0px; 
+        justify-items: center;
+        grid-template-areas: 
+          "img img img"
+          "name name name"
+          "price total delete"; 
+          font-size: 1rem;
+      }
+
+      .cartItemsItem .cartItemsImg{
+         grid-area: img; width: 200px; min-height: 200px;
+      }
+      .cartItemsItem  .name { grid-area: name; font-size: 1.3rem; font-weight: 700; }
+      .cartItemsItem  .price { grid-area: price; color: var(--green) }
+      .cartItemsItem  .total { grid-area: total; }
+      .cartItemsItem  .cross { grid-area: delete; }
     
     .cartBottom{
         flex-direction: column-reverse;

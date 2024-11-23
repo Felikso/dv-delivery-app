@@ -20,6 +20,8 @@
     width: 100vw;
 }
 
+
+
 .myOrdersOrder{
     display: grid;
     grid-template-columns: .5fr 3fr .5fr .5fr 2fr .5fr;
@@ -84,7 +86,7 @@
 
 @media (max-width:900px){
     .myOrdersOrder{
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 2fr 1fr;
         row-gap: 5px;
         font-size: 12px;
     }
@@ -92,6 +94,18 @@
     .myOrdersOrder button{
         font-size: 10px;
     }
+
+    .myOrdersOrder:nth-child(1) {
+        display: none;
+        }
+
+    .myOrdersOrder :nth-child(4) {
+        display: none;
+        }
+    
+        .myOrdersOrder .myOrderImg {
+            display: none;
+            }
 
     
 }
