@@ -22,7 +22,7 @@
 
 .headerContents h2{
     font-weight: 500;
-    color: var(--second-fc-light);
+    color: var(--white);
     font-size: max(2vw,20px);
     text-align: left;
     text-transform: uppercase;
@@ -33,7 +33,7 @@
 }
 
 .headerContents p{
-    color: var(--second-fc-light);
+    color: var(--white);
     font-size: 1.1vw;
     line-height: 1.8;
     text-align: left;
@@ -41,10 +41,10 @@
 
 /* .headerContents a{
     border: none;
-    color:var(--second-fc-light);
+    color:var(--white);
     font-weight: 500;
     padding: 1vw 2.3vw;
-    background-color: var(--main-color);
+    background-color: var(--black);
     font-size: max(1vw,16px);
     border-radius: 50px;
 }

@@ -11,7 +11,7 @@
     font-weight: 600;
 /*     font-size: calc(12px + .5vw); */
     font-size: clamp(.5rem, .4rem + 2cqi, .75rem);
-    color: var(--second-fc-light);
+    color: var(--white);
     text-transform: uppercase;
     cursor: pointer;
     margin: 20px;
@@ -50,7 +50,7 @@
 
 .btnHover.color-0 {
     background-image: var(--main-gradient);
-    box-shadow: 0 4px 15px 0 var(--btn-hover);
+    box-shadow: 0 4px 15px 0 var(--blackTransparent);
 }
 
 .btnHover.color-1 {
@@ -107,7 +107,7 @@
   @keyframes flip {
     0%,80% {
       transform: rotateY(360deg) ;
-      color: var(--main-fc);
+      color: var(--blackLight);
     }
   }
 

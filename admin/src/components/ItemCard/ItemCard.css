@@ -24,16 +24,16 @@
 }
 
 .addData{
-    background: var(--seond-content-bg);
+    background: var(--goldMiddle);
 }
 
 .addDataBox{
-    border: solid 3px var(--main-content-bg);
+    border: solid 3px var(--goldDarkTransparent);
 }
 
 
 .addImgUpload{
-    background: var(--main-content-bg);
+    background: var(--goldDarkTransparent);
     justify-content: center;
     text-align: center;
     height: 100%;
@@ -59,7 +59,7 @@
     font-size: 3vw;
     z-index: 1;
     opacity: .8;
-    color: var(--second-fc-light);
+    color: var(--white);
 }
 
 
@@ -67,10 +67,6 @@
    padding: 10px;
 } 
 
-
-.addItemName .addItemDesc{
-   /*  width: max(40%,280px); */
-}
 
 .addItemDesc textarea {
     height: 10px;
@@ -103,8 +99,8 @@
     max-width: 100%;
     border: none;
     padding: 10px;
-    background-color: var(--main-color);
-    color: var(--body-color);
+    background-color: var(--black);
+    color: var(--white);
     cursor: pointer;
     transition: .3s;
 }
@@ -140,19 +136,6 @@
 }
 
 
-.addImgUpload{
-/*     min-height: 130px;
-    min-width: 130px; */
-}
-.addItemName{
-/*     min-height: 130px;
-    min-width: 250px; */
-}
-
-.addImgUpload img{
-    /* width: 10px; */
-}
-
 .addImgUpload p{
     font-size: 10px;
 
@@ -173,9 +156,8 @@
 
 
 .hidden {
- /*    position: absolute; */
     transform: translate(-2000px, 0px);
-/*     z-index: 1000000000000; */
+
 }
 
 .none {

@@ -170,7 +170,7 @@ console.log(authList);
 						className='navProfile'
 						onClick={() => {
 							setOpenMenu();
-							navigate('/');
+							navigate('/login');
 						}}
 					>
 						<img

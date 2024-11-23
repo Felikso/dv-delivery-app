@@ -7,8 +7,8 @@
     width: 100px;
     height: 100px;
     place-self: center;
-    border: 5px solid var(--third-color);
-    border-top-color: var(--fourth-color);
+    border: 5px solid var(--brown);
+    border-top-color: var(--black);
     border-radius: 50%;
     animation: rotate 1s infinite;
 }

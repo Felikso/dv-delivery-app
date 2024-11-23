@@ -128,13 +128,14 @@ function Cart({setRabat, rabat}) {
 
 								return (
 									<div key={i} className='cartItemsTitle cartItemsItem'>
+										<div className='cartItemsImg'>
 										<img
-										className='cartItemsImg'
 											src={
 												import.meta.env.VITE_BACKEND_URL + imgUrl + item.image
 											}
 											alt={`zdjęcie ${item.name}`}
 										/>
+										</div>
 										<p className='name'>{item.name} x {item.quantity}</p>
 										<p className='price'>
 											{item.price} {' '}

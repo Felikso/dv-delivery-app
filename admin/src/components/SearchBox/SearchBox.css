@@ -5,6 +5,7 @@
     padding: 10px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
     gap: 20px;
+    background: var(--goldMiddle);
   }
 
 /*   .SearchBox p{
@@ -18,9 +19,9 @@ padding-right: 0.75rem;
 padding-left: 2.5rem; 
 border-radius: 0.5rem; 
 border-width: 5px; 
-border-color: var(--second-bg-light);
-color: var(--second-fc-light);
-background-color: var(--second-bg);
+border-color: var(--goldLight);
+color: var(--white);
+background-color: var(--darkGray);
 --bg-opacity: 0.5; 
 transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
 transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -38,16 +39,16 @@ width: 80vw;
 .SearchBox button{
   padding-left: 0.75rem; 
   align-self: start;
-  border-color: var(--second-bg);
-  color: var(--second-fc);
-  background-color: var(--second-bg-light);
+  border-color: var(--darkGray);
+  color: var(--darkGray);
+  background-color: var(--goldLight);
   cursor: pointer;
   transition: 1s ease;
 }
 .SearchBox button:hover{
-  border-color: var(--second-bg-light);
-  color: var(--second-fc-light);
-  background-color: var(--second-bg);
+  border-color: var(--goldLight);
+  color: var(--white);
+  background-color: var(--darkGray);
 }
 
 .buttonBox{

@@ -6,7 +6,7 @@
 }
 
 .exploreMain h1{
-    color: var(--third-color);
+    color: var(--brown);
     font-weight: 500;
     margin: 20px;
     font-size: 30px;
@@ -22,9 +22,9 @@
     justify-content: space-between;
     align-items: center;
     overflow-x: scroll;
-    background-color: var(--body-color);
-    border-top: 3px var(--second-fc) solid;
-    border-bottom: 5px var(--second-fc) solid;
+    background-color: var(--white);
+    border-top: 3px var(--goldLight) solid;
+    border-bottom: 5px var(--goldLight) solid;
     padding: 20px;
 }
 
@@ -52,19 +52,19 @@
 
 .exploreMainListItem p{
     margin-top: 10px;
-    color: var(--fourth-color);
+    color: var(--black);
     text-align: center;
 }
 
 /* .exploreMain hr{
     margin:  10px 0px;
     height: 2px;
-    background-color: var(--third-color);
+    background-color: var(--brown);
     border: none;
 } */
 
 .exploreMainListItem .active{
-    border: 4px double var(--third-fc-light);
+    border: 4px double var(--redLight);
     padding: 2px;
 }
 

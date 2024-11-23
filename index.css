@@ -1,56 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Outfit:wght@100..900&display=swap');
 
 :root {
-  --body-color: #ffffff;
-  --main-color: rgb(0, 0, 0);
+
+  --backgroundColor: white;
+  --white: #ffffff;
+  --black: rgb(0, 0, 0);
   --l: 50%;
 
-  --main-fc: #1b1b1b;
-  --main-bg: rgba(222, 222, 222, 0.69);
+  --blackLight: #1b1b1b;
+  --grayTransparent: rgba(222, 222, 222, 0.69);
 
-  --second-fc: rgb(155, 123, 20);
-  --second-bg: var(--main-fc);
+  --goldLight: rgb(186 156 63);
+  --blackLight: var(--blackLight);
 
-  --main-content-bg: rgb(175 157 98 / 69%);
-  --seond-content-bg: rgb(161, 142, 77);
+  --goldDarkTransparent: rgb(175 157 98 / 69%);
+  --goldMiddle: rgb(161, 142, 77);
 
-  --second-bg-light: rgba(252, 218, 109, 0.685);
-  --second-fc-light: #ffffff;
+  
+  --white: #ffffff;
 
 
 
-/*   --color-primary: hsl(var(--main-fc),var(--l));
-  --second-fc: rgb(255, 166, 0);
-  --color-primary-lighter: hsl(var(--main-fc),calc(var(--l) + 10%));
-  --color-primary-lightest: hsl(var(--main-fc),calc(var(--l) + 30%)); */
+/*   --color-primary: hsl(var(--blackLight),var(--l));
+  --goldLight: rgb(255, 166, 0);
+  --color-primary-lighter: hsl(var(--blackLight),calc(var(--l) + 10%));
+  --color-primary-lightest: hsl(var(--blackLight),calc(var(--l) + 30%)); */
 
-  --third-color: rgb(83, 64, 25);
-  --fourth-color: #101010;
+  --brown: rgb(83, 64, 25);
+  
 
   --main-gradient: radial-gradient(circle, rgba(255,78,0,1) 0%, rgba(122,35,5,1) 60%, rgba(102,0,0,1) 100%);
-  --background-griadent: rgb(179, 160, 98);
+  --goldLight: rgb(179, 160, 98);
 
   --animation-link-color: rgb(100, 100, 100);
-  --animation-link-color-hover: var(--second-fc);
+  --animation-link-color-hover: var(--goldLight);
 
   --btn-color: white;
-  --btn-hover: rgba(45, 0, 67, 0.637); /* btn shadow */
+  --blackTransparent: rgba(45, 0, 67, 0.637); /* btn shadow */
 
-  --icon-color: var(--second-fc);
+  --icon-color: var(--goldLight);
 
     /* NavBar*/
 
   --min-nav-link-width: 150px;
   --nav-height: 80px;
   --nav-border-height: 5px;
-  --nav-color: var(--second-fc);
-  --nav-bg: var(--body-color);
+  --nav-color: var(--goldLight);
+  --nav-bg: var(--white);
 
-  --red-icon-bg: rgb(187, 60, 60);
-  --light-icon-bg: rgb(210, 210, 210); 
+  --redLight: rgb(187, 60, 60);
+  --whiteDark: rgb(210, 210, 210); 
 
-  --table-bg: hsla(0, 0%, 100%, 0.5);
-  --table-second-bg: rgba(190, 190, 190, 0.5);
+  --grayLight: hsla(0, 0%, 100%, 0.5);
+  --grayDark: rgba(190, 190, 190, 0.5);
 
 }
 
@@ -66,9 +68,8 @@
 
 body{
   min-height: 100vh;
-  color: var(--fourth-color);
-  background: rgb(0,0,0);
-  background: var(--background-griadent);
+  color: var(--black);
+  background: var(--backgroundColor);;
   padding-top: var(--nav-height);
 }
 
@@ -80,7 +81,7 @@ a{
 hr{
   border: none;
   height: 1px;
-  background-color: var(--second-fc);
+  background-color: var(--goldLight);
 }
 
 .appContent{
@@ -104,10 +105,7 @@ position: relative;
 justify-content: center; 
 align-items: center; 
 min-height: 100vh; 
-
-/* background-image: linear-gradient(to bottom right); 
-background-color: #111827; 
-background-color: #064E3B;  */
+background: var(--backgroundColor);
 }
 
 .cardContent{
@@ -118,7 +116,7 @@ background-color: #064E3B;  */
     border-color: #2c84ff; 
     width: 100%; 
     max-width: 28rem; 
-    background-color: var(--main-bg);
+    background-color: var(--grayTransparent);
     --bg-opacity: 0.8; 
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
 }
@@ -151,7 +149,7 @@ padding-bottom: 1rem;
 padding-left: 2rem;
 padding-right: 2rem; 
 justify-content: center; 
-/* background-color: color-mix(in srgb, var(--main-color) 95%, black 5%); */
+/* background-color: color-mix(in srgb, var(--black) 95%, black 5%); */
 --bg-opacity: 0.5; 
 
 }
@@ -159,7 +157,7 @@ justify-content: center;
 .infoText{
     font-size: 0.875rem;
 line-height: 1.25rem; 
-color: var(--second-fc); 
+color: var(--goldLight); 
 
 }
 

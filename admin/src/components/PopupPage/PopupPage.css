@@ -14,8 +14,8 @@
     height: 80vh;
     position: fixed;
     overflow: scroll;
-    color: var(--second-fc-light);
-    background-color: var(--dark-bg);
+    color: var(--white);
+    background-color: var(--blackLight);
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -72,18 +72,18 @@
 }
 
 .popupPageContent h3{
-    color: var(--second-fc);
+    color: var(--goldLight);
 }
 
 .popupPageContent h4{
-    color: var(--third-fc-light);
+    color: var(--redLight);
 }
 
 
 
 .popupPageContent h2{
-    color: var(--second-fc);
-    background: var(--fourth-color);
+    color: var(--goldLight);
+    background: var(--black);
     padding: 20px;
 }
 

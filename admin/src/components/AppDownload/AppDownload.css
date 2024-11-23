@@ -5,9 +5,9 @@
     text-align: center;
     font-weight: 500; 
     width: 100%;
-    background-color: var(--seond-content-bg);
-    border-top: 3px var(--second-fc) solid;
-    border-bottom: 5px var(--second-fc) solid;
+    background-color: var(--goldMiddle);
+    border-top: 3px var(--goldLight) solid;
+    border-bottom: 5px var(--goldLight) solid;
     padding: 80px;
 }
 
