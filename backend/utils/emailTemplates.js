@@ -38,6 +38,8 @@ export const MAIL_HEADER = `
 
     .dontReplay{text-align: center; margin-top: 20px; color: #888; font-size: 0.8em; }
 
+    .itemsBox{font-size: 1rem;font-style: italic; margin: 1.5rem 0;}
+
     </style>
 </head>
 <body class="body">
@@ -230,12 +232,14 @@ export const welcomeTemplate = `
 `;
 
 export const ORDER_VERYFIKATION = `
-    <h1 class="title">Zweryfikuj swoje zamówienie</h1>
+<h1 class="title">Zweryfikuj swoje zamówienie</h1>
   </div>
   <div class="mailContent">
     <p>Cześć,</p>
     <p>Udało Ci się pomyślnie złożyć zamówienie. ;)</p> 
-    {itemsForMail}
+    <div class="itemsBox">
+      {itemsForMail}
+    </div>
     <p> Potwierdź je wpisując kod z obrazka pod wskazany link:</p>
     <div class="codeBox">
       <span class="code">{verificationCode}</span>

@@ -60,7 +60,7 @@ const placeOrder = async (req, res) => {
 			let itemsForMail = ''
 
 			itemsArr.map(item=>{
-				itemsForMail += '<p>'+item.name+' '+item.quantity+'</p>'
+				itemsForMail += '<p>'+item.name+' x '+item.quantity+'</p>'
 			})
 	
 
@@ -83,7 +83,7 @@ const placeOrder = async (req, res) => {
 			)
 			.replace(
 				'{orderPath}',
-				process.env.REACT_CLIENT_URL+`/${odrerSlug}`
+				process.env.REACT_APP_CLIENT_URL+`/${odrerSlug}`
 			)
 			.replace(
 				'{itemsForMail}',
