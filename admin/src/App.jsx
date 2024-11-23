@@ -73,7 +73,7 @@ const ProtectedRoute = ({ children }) => {
 	return (
 		<>
 		
-		{isAuthenticated && user.isVerified && user.isAdmin ? children: <NotAdminPage />}
+		{isAuthenticated && user.isVerified && user.isAdmin ? <div style={{margin: '80px auto'}}>{children}</div>: <NotAdminPage />}
 		</>);
 };
 

@@ -53,7 +53,7 @@ width: 80vw;
 .buttonBox{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 80vw;
+  width: 90vw;
   gap: 20px;
 }
 
@@ -135,7 +135,7 @@ pointer-events: none;
     }
 
     .search, .buttonBox {
-      width: 25vw;
+      width: 33vw;
     }
 
   }

@@ -25,7 +25,7 @@ const PlaceOrder = ({ rabat }) => {
 
 	const { cartItems, mergeCartItems } = useCartStore();
 
-	const sumPrice = useCartStore((state) => state.totalPrice());
+	const sumPrice = useCartStore((state) => state.totalPrice())-useCartStore((state) => state.totalPrice())*rabat;
 
 	const deliveryPrice = sumPrice === 0 ? 0 : 8;
 

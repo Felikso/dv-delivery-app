@@ -50,9 +50,30 @@ function SearchBox() {
 
 	const [query, setQuery] = useState('');
 
+	const [selectAll, setSelectAll] = useState(false);
+
 	const [checkedData, setCheckedData] = useState([]);
 
 	const [rabatExpirest, setRabatExpirest] = useState('');
+
+	const handleSelectAllChange = () => {
+		const newSelectAll = !selectAll;
+		setSelectAll(newSelectAll);
+		setCheckedData(list);
+
+	  };
+
+	  const handleCheckboxChange = (index) => {
+		const newCheckboxes = [...checkedData];
+		//newCheckboxes[index].checked = !newCheckboxes[index].checked;
+		setCheckedData(newCheckboxes);
+		console.log('test');
+		console.log(checkedData);
+		
+		
+		setSelectAll(newCheckboxes.every(cb => cb.checked));
+	  };
+
 
 	const handleChangeSelect = (e) => {
 		setRabatExpirest(e.target.value);
@@ -76,6 +97,13 @@ function SearchBox() {
 	
 
 	const handleChangeCheck = (e) => {
+		if(e.target.id=='all'){
+			setCheckedData(list);
+			let checkboxesArr = document.querySelectorAll("input[type='checkbox']");
+			checkboxesArr.forEach((i) => (i.checked = true));
+		}else{
+			document.querySelector('#all').checked = false
+		}
 		if (e.target.checked == true) {
 			setCheckedData((checkedData) => [...checkedData, e.target.id]);
 		}
@@ -83,7 +111,6 @@ function SearchBox() {
 			let newArr = checkedData;
 			let index = newArr.indexOf(e.target.id);
 			if (index !== -1) {
-				console.log(e.target.checked);
 				newArr.splice(index, 1);
 				setCheckedData(newArr);
 			}
@@ -113,7 +140,7 @@ function SearchBox() {
 		}
 
 		let rabatValue = (value / 100).toString().replace('0.', '.');
-		let emailArr = checkedData;
+		let emailArr = list.length < checkedData.length ? ['all'] : checkedData.filter(item => item !== 'all');
 		let rabatCodeExpiresAt = rabatExpirest;
 		try {
 			const response = await setRabat(rabatValue, emailArr, rabatCodeExpiresAt);
