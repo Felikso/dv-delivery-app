@@ -1,10 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Mail, Lock } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import {
+	Mail,
+	Lock,
+	UserCheck,
+	UserPlus,
+	MapPinHouse,
+	Milestone,
+	LandPlot,
+	TowerControl,
+	PhoneCall,
+} from 'lucide-react';
 import './PlaceOrder.css';
 import {
 	cartData,
 	placeOrderData,
-	quantityItems,
 	orderPlaceUrl,
 	customInfo,
 } from '@/utils/variables';
@@ -13,12 +22,10 @@ import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import toast from 'react-hot-toast';
-
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input.jsx';
 import { useNavigate } from 'react-router-dom';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
-import { itemsCat } from '../../../../../backend/controllers/itemsController';
 
 const PlaceOrder = ({ rabat }) => {
 	const { user, isAuthenticated, netErr, beUrl } = useAuthStore();
@@ -70,70 +77,83 @@ const PlaceOrder = ({ rabat }) => {
 		const name = e.target.name;
 		const value = e.target.value;
 
-		if (e.target.name === 'firstName') {
-			if (e.keyCode == 32) {
-				e.preventDefault();
-				return;
-				if (e.target.name !== 'city') {
-					console.log(e.target.name);
-
-					//setData((data) => ({ ...data, [name]: String(e.target.value).charAt(0).toUpperCase() + String(e.target.value).slice(1).toLocaleLowerCase() }));
-				}
-			}
+		if (e.target.value.length === e.target.maxLength) {
+			setErrorMessage((errorMessage) => ({
+				...errorMessage,
+				[name]: 'Przekroczono limit znaków',
+			}));
+			e.target.value = e.target.value.slice(0, e.target.maxLength - 1);
+		} else {
+			setErrorMessage('');
 		}
 
 		if (e.target.name == 'zipCode') {
-			if (e.target.value.length > 6) {
-				setErrorMessage((errorMessage) => ({
-					...errorMessage,
-					[name]: 'Pamiętaj, że kod powinien się składać z pięciu cyfr',
-				}));
-				e.preventDefault();
-			} else {
-				setErrorMessage('');
-			}
 			setData((data) => ({
 				...data,
 				[name]: e.target.value.replace(/[^0-9-]/g, ''),
 			}));
-		} else if (e.target.name == 'phone') {
-			if (e.target.value.length > '9') {
-				setErrorMessage((errorMessage) => ({
-					...errorMessage,
-					[name]: 'Pamiętaj, że numer powinien się składać z dziewięciu cyfr',
-				}));
-				return;
-			} else {
+		} else if (e.target.name === 'email') {
+			if (e.target.value.includes('@')) {
 				setErrorMessage('');
 			}
 			setData((data) => ({
 				...data,
+				[name]: e.target.value.replace(
+					/[^0-9^a-zA-ZąęóńćĆśŚżŻźŹłŁ\.\-\@/]/g,
+					''
+				),
+			}));
+		}else if (e.target.name == 'phone') {
+			setData((data) => ({
+				...data,
 				[name]: e.target.value.replace(/[^0-9]/g, ''),
 			}));
+		} else if (e.target.name === 'numberStreet') {
+			console.log('dsdf');
+
+			setData((data) => ({
+				...data,
+				[name]: e.target.value.replace(
+					/[^0-9^a-zA-ZąęóńćĆśŚżŻźŹłŁ\.\-\/]/g,
+					''
+				),
+			}));
 		} else {
-			//setData((data) => ({ ...data, [name]: value }));
 			let newString = '';
 			if (e.target.name === 'email') {
 				if (e.target.value.includes('@')) {
 					setErrorMessage('');
 				}
-				newString = value;
+				newString = e.target.value;
 				newString.replace(' ', '');
 			} else {
-				let newArr = [];
-				value.split(' ').map((str) => {
-					newArr.push(
-						String(str).charAt(0).toUpperCase() +
-							String(str).slice(1).toLocaleLowerCase()
-					);
-				});
+				const upperSpecialChart = (value, char, toLower = true) => {
+					let newArr = [];
+					value.split(char).map((str) => {
+						let string = toLower
+							? String(str).slice(1).toLocaleLowerCase()
+							: String(str).slice(1);
+						newArr.push(String(str).charAt(0).toUpperCase() + string);
+					});
+					newString = newArr.join(char);
+					return newString;
+				};
+				newString = upperSpecialChart(e.target.value, ' ');
 
-				newString = newArr.join(' ');
+				if (newString.includes('-')) {
+					newString = upperSpecialChart(newString, '-', false);
+				}
 			}
 
-			setData((data) => ({ ...data, [name]: newString.replace('  ', ' ') }));
+			//(/[\s-]+/) white space + hyper
+
+			setData((data) => ({
+				...data,
+				[name]: newString
+					.replace('  ', ' ')
+					.replace(/[^a-zA-ZąęóńćĆśŚżŻźŹłŁ\- ]/g, ''),
+			}));
 		}
-		//simply validation
 	};
 
 	const placeOrder = async (e) => {
@@ -184,7 +204,6 @@ const PlaceOrder = ({ rabat }) => {
 		};
 		let response = await axios.post(beUrl + orderPlaceUrl, orderData);
 
-		//const { session_url } = response.data;
 		if (response.data.success) {
 			localStorage.removeItem('cartData');
 			mergeCartItems([]);
@@ -198,18 +217,7 @@ const PlaceOrder = ({ rabat }) => {
 					});
 				}, 1500);
 			}
-
-			//navigate(pagesLinks.orders);
-			/* if (session_url) {
-				//window.location.replace(session_url);
-			} else {
-				alert('musisz się zalogować, żeby dokonac płatności');
-			} */
-		} /* else if (response.data.success && orderData) {
-			window.location.replace(session_url);
-		} */ /* else {
-			alert('musisz się zalogować, żeby dokonac płatności :((');
-		} */
+		}
 	};
 
 	const navigate = useNavigate();
@@ -235,29 +243,7 @@ const PlaceOrder = ({ rabat }) => {
 		if (e.keyCode == 32) {
 			e.preventDefault();
 			return;
-			console.log('mail');
-			console.log(e.target.name);
 		}
-		/* 		const name = e.target.name;
-		const value = e.target.value;
-		//capitalizeAfterWhitespace(value)
-		allowOnlyOneWhitespace(value)
-		//console.log(capitalizeAfterWhitespace(value));
-		
-		if (e.keyCode == 32) {
-			if(e.target.name !== 'city'){
-				console.log(e.target.name);
-
-	
-			//setData((data) => ({ ...data, [name]: String(e.target.value).charAt(0).toUpperCase() + String(e.target.value).slice(1).toLocaleLowerCase() }));
-		}else{
-
-		
-		
-		//setData((data) => ({ ...data, [e.target.name]: String(e.target.value).toLocaleLowerCase() }));
-
-	
-	} */
 	};
 	const handleEmailBlur = (e) => {
 		if (!e.target.value.includes('@')) {
@@ -277,92 +263,98 @@ const PlaceOrder = ({ rabat }) => {
 				<p className='title'>{placeOrderData.title}</p>
 				<div className='multiFiled'>
 					<Input
-						//icon={Mail}
+						icon={UserCheck}
 						required
-						className='input'
 						name='firstName'
 						onChange={onChangeHandler}
 						value={data.firstName}
 						type='text'
+						maxLength={20}
 						placeholder={placeOrderData.firstName}
 						errorMess={errorMessage.firstName}
 					/>
 					<Input
+						icon={UserPlus}
 						required
-						className='input'
 						name='lastName'
 						onChange={onChangeHandler}
 						value={data.lastName}
 						type='text'
+						maxLength={30}
 						placeholder={placeOrderData.lastName}
 						errorMess={errorMessage.lastName}
 					/>
 				</div>
 				<Input
+					icon={Mail}
 					required
-					className='input'
 					name='email'
 					onChange={onChangeHandler}
 					onKeyDown={handleKeyDownLockWhitespace}
 					onBlur={handleEmailBlur}
 					value={data.email}
 					type='email'
+					maxLength={45}
 					placeholder={placeOrderData.email}
 					errorMess={errorMessage.email}
 				/>
 				<div className='multiFiled'>
 					<Input
+						icon={Milestone}
 						required
-						className='input'
 						name='street'
 						onChange={onChangeHandler}
 						value={data.street}
 						type='text'
+						maxLength={45}
 						placeholder={placeOrderData.street}
 						errorMess={errorMessage.street}
 					/>
 					<Input
+						icon={MapPinHouse}
 						required
-						className='input'
 						name='numberStreet'
 						onChange={onChangeHandler}
 						value={data.numberStreet}
 						type='text'
+						maxLength={10}
 						placeholder={placeOrderData.numberStreet}
 						errorMess={errorMessage.numberStreet}
 					/>
 				</div>
 				<div className='multiFiled'>
 					<Input
+						icon={TowerControl}
 						required
-						className='input'
 						name='city'
 						onChange={onChangeHandler}
 						value={data.city}
 						type='text'
+						maxLength={40} //Wólka Sokołowska k. Wólki Niedźwiedzkiej
 						placeholder={placeOrderData.city}
 						errorMess={errorMessage.city}
 					/>
 					<Input
+						icon={LandPlot}
 						required
-						className='input'
 						name='zipCode'
 						onChange={onChangeHandler}
 						onKeyDown={(e) => handleKeyDown(e)}
 						value={data.zipCode}
 						type='text'
-						maxLength={6}
+						maxLength={7}
 						placeholder={placeOrderData.zipCode}
 						errorMess={errorMessage.zipCode}
 					/>
 				</div>
 				<Input
+					icon={PhoneCall}
 					required
-					className='input'
 					name='phone'
 					onChange={onChangeHandler}
 					value={data.phone}
 					type='text'
+					maxLength={10}
 					placeholder={placeOrderData.phone}
 					errorMess={errorMessage.phone}
 				/>

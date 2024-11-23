@@ -19,14 +19,14 @@
     margin-bottom: 50px;
 }
 
-.placeOrderLeft input{
+/* .placeOrderLeft input{
     margin-bottom: 15px;
     width: 100%;
     padding: 10px;
     border: 1px solid var(--second-color);
     border-radius: 4px;
     outline-color: var(--fourth-color);
-}
+} */
 
 .placeOrderLeft .multiFiled{
     display: flex;

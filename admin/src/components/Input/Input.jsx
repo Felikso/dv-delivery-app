@@ -25,7 +25,7 @@ const Input = ({ icon: Icon, errorMess, ...props }) => {
       }
 	
 	return (
-	
+	<div className='inputErrorsBox'>
 		<div className='inputBox'>
 			<div className='iconBox'>
 				{Icon? <Icon className='icon' /> : <></>}
@@ -36,9 +36,10 @@ const Input = ({ icon: Icon, errorMess, ...props }) => {
 				//value={value}
 				//onChange={(e) => validInput(e)}
 			/>
-					{(errorMess||errorMessage) && <p className='textError'>{errorMess||errorMessage}</p>}
+					
 		</div>
-
+		{(errorMess||errorMessage) && <p className='textError'>{errorMess||errorMessage}</p>}
+</div>
 	
 	);
 };
