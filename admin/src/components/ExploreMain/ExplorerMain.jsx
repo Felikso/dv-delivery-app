@@ -6,6 +6,10 @@ import { allCategoriesName, itemsMainData } from '@/utils/variables'
 
 
 const ExploreMain = ({category, setCategory, menuRef}) => {
+
+/*   if(Math.random() > 0.5){
+    return new Error('Test error boundary')
+  } */
   return (
     <div className='exploreMain' id='exploreMain' ref={menuRef}>
       <h1>{itemsMainData.h1}</h1>
@@ -20,7 +24,9 @@ const ExploreMain = ({category, setCategory, menuRef}) => {
               <img
               className={category===item.main_name?'active':''} 
               src={item.main_image} 
-              alt={item.main_name} />
+              alt={item.main_name} 
+              loading='lazy'
+              />
               <p>{item.main_name}</p>
             </div>
           ))

@@ -122,3 +122,26 @@
     width: 35px;
 }
 
+
+/* Item Skeleton */
+
+.itemSkeleton {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    background: none;
+    min-height: 400px;
+  }
+  .itemSkeleton .rowImg {
+   
+  }
+  .itemSkeleton .rowContent {
+    flex: 1;
+    padding: .5rem;
+  }
+  .itemSkeleton .skeletonTitle{
+    display: grid;
+    grid-template-columns: 1fr .6fr;
+    gap: 30px;
+    margin-bottom: 1rem;
+  }

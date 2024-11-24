@@ -1,14 +1,25 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
-import { useEffect, useState } from 'react';
-
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 //public
 import Navbar from './components/Navbar/Navbar';
-import Home from '@/pages/PublicPages/Home/Home';
+
+/* import Home from '@/pages/PublicPages/Home/Home';
 import Cart from '@/pages/PublicPages/Cart/Cart';
 import PlaceOrder from '@/pages/PublicPages/PlaceOrder/PlaceOrder';
-import MyOrders from '@/pages/PublicPages/MyOrders/MyOrders';
+import MyOrders from '@/pages/PublicPages/MyOrders/MyOrders'; */
+
 import Footer from '@/components/Footer/Footer';
+
+const Home = React.lazy(()=>import('@/pages/PublicPages/Home/Home'))
+const Cart = React.lazy(()=>import('@/pages/PublicPages/Cart/Cart'))
+const PlaceOrder = React.lazy(()=>import('@/pages/PublicPages/PlaceOrder/PlaceOrder'))
+const MyOrders = React.lazy(()=>import('@/pages/PublicPages/MyOrders/MyOrders'))
+
+import { ErrorBoundary } from "react-error-boundary"
+import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary'
+
+
 
 import SignUpPage from './pages/LoginPages/SignUpPage';
 import LoginPage from './pages/LoginPages/LoginPage.jsx';
@@ -30,6 +41,8 @@ import NotAdminPage from './pages/NotAdminPage.jsx';
 
 import PopupPage from '@/components/PopupPage/PopupPage';
 import ScrollToTop from './components/ScrollTop/ScrollTop';
+
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const ProtectedRoute = ({ children }) => {
 	const { isAuthenticated, user, checkAuth } = useAuthStore();
@@ -78,7 +91,7 @@ function App() {
 	}, [user]);
 
 	/* 	if (isCheckingAuth) return <LoadSpinner />; */
-
+	const navigate = useNavigate();
 	return (
 		<div className='background'>
 			{showPopupPage && (
@@ -88,8 +101,24 @@ function App() {
 				/>
 			)}
 			<Navbar />
+			
+			
 			<Routes>
-				<Route path='/' element={<Home />} />
+
+
+
+			<Route path='/' element={
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            onReset={() => navigate('/')}
+          >
+            <Suspense fallback={<div>LOADING...</div>}>
+              <Home />
+            </Suspense>
+          </ErrorBoundary>}
+        />
+			
+
 				<Route
 					path={`/${pagesLinks.cart}`}
 					element={<Cart setRabat={setRabat} rabat={rabat} />}
@@ -98,9 +127,7 @@ function App() {
 					path={`/${pagesLinks.order}`}
 					element={<PlaceOrder rabat={rabat} />}
 				/>
-				{/*        <Route path={`/${pagesLinks.verify}`} element={<Verify />} /> */}
 				<Route path={`/${pagesLinks.myorders}`} element={<MyOrders />} />
-				{/*   <Route path={`/${pagesLinks.verifyOrder}/:_id`} element={<VerifyOrder />} /> */}
 
 				<Route
 					path='/panel'

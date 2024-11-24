@@ -134,6 +134,7 @@ function Cart({setRabat, rabat}) {
 												import.meta.env.VITE_BACKEND_URL + imgUrl + item.image
 											}
 											alt={`zdjęcie ${item.name}`}
+											loading='lazy'
 										/>
 										</div>
 										<p className='name'>{item.name} x {item.quantity}</p>
