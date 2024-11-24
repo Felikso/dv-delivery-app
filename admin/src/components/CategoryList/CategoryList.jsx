@@ -6,6 +6,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 import './CategoryList.css';
 import Loader from '@/components/Loader/Loader';
+import CategoryCard from '../ItemCard/CategoryCard';
 
 const CategoryList = () => {
 	const [list, setList] = useState([]);
@@ -34,9 +35,7 @@ const CategoryList = () => {
 				<Suspense fallback={<Loader />}>
         <div className='listBox'>
         {list.map((item, i) => (
-					<div key={i}>
-                        {item.name}
-                    </div>
+					<CategoryCard postData={item} key={i}/>
 				))}
         			</div>
 				</Suspense>

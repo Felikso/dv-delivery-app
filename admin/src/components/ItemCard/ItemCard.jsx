@@ -9,7 +9,7 @@ import {
 import { assets } from '@/assets/assets';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/store/authStore.js';
-const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdit}) => {
+const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdit, setImgState, delateFocus}) => {
 
 	const { name, description, price, category, _id, img } = postData
 		? postData
@@ -34,12 +34,13 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdi
 	};
 
 	const handleEdit = (e) => {
-		//setEdit(!edit);
 		if(setCurrentEl){
 			setCurrentEl(_id)
 		}else{
 			setEdit(!edit);
 		}
+		delateFocus();
+		setImgState((imgState) => ({ ...imgState, ['item']: !edit }))
 	
 	};
 

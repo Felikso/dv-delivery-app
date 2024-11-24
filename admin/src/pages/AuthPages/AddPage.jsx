@@ -8,32 +8,32 @@ import CategoryList from '../../components/CategoryList/CategoryList';
 
 const AddPage = () => {
 
-	const [currentEl, setCurrentEl] = useState('')
-  const [add, setAdd] = useState(false)
 	const [edit, setEdit] = useState(false);
-  const itemRef = useRef(null);
-  const ref = useRef(null);
+  
 
-  const handleFocus = (e) =>{
-    console.log(e.target);
+
+  const [imgState, setImgState] = useState({
+    item: false,
+    card: false,
+    items: false
+  })
+
+  const delateFocus = (e) =>{
+    console.log(e);
+    setImgState({
+      item: false,
+      card: false,
+      items: false
+    })
     
   }
 
-  useEffect(() => {
-    const element = itemRef.current;
-    console.log(currentEl);
-    
-    console.log(element); // 👈️ element here
-  }, []);
-  const element = itemRef.current;
-  console.log(element);
-	//		setCurrentEl(_id)
   return (
     <div className='addPage'>
       <div >
-      <ItemCard ref={itemRef} onClick={handleFocus} edit={edit} setEdit={setEdit} setCurrentEl={setCurrentEl}/>
+      <ItemCard delateFocus={delateFocus} edit={imgState.item} setImgState={setImgState} setEdit={setEdit} />
       <div>
-      <CategoryCard  ref={ref} onClick={handleFocus} edit={!edit} setEdit={setEdit} setCurrentEl={setCurrentEl}/>
+      <CategoryCard   delateFocus={delateFocus} edit={imgState.card} setImgState={setImgState}  setEdit={setEdit}/>
       <CategoryList />
       </div>
       </div>

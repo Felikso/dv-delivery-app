@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import './ItemCard.css';
 import {
 	addData,
-	categories,
 	url,
 	urlImg,
 } from '@/utils/variables';
 import { assets } from '@/assets/assets';
 import { toast } from 'react-toastify';
 import { useAdminStore } from '@/store/adminStore.js';
-const CategoryCard = ({ postData, add = false, handleEdit, edit, setEdit, setCurrentEl}) => {
+const CategoryCard = ({ postData, add = false, edit, setEdit, setCurrentEl, setImgState, delateFocus}) => {
 	const { name, img, _id } = postData
 		? postData
 		: '';
@@ -31,10 +30,13 @@ const CategoryCard = ({ postData, add = false, handleEdit, edit, setEdit, setCur
 	const handleEdit = (e) => {
 		if(setCurrentEl){
 			setCurrentEl(_id)
+		}else{
+			setEdit(!edit);
 		}
-		setEdit(!edit);
+		delateFocus();
+		setImgState((imgState) => ({ ...imgState, ['card']: !edit }))
+	
 	};
-
 
 
 	const onSubmitHandler = async (e) => {
