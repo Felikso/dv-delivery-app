@@ -87,7 +87,7 @@ export const myOrdersUrl = '/moje-zamowienia'
 export const userOrdersUrl = orderUrl+'/zamowienia-klienta' //endpoint to set in backend
 
 export const quantityItems = 'quantity' //string in order
-/* export const deliveryPrice = 8 */ //useContext
+
 
 export const orders = 'zamówienia'
 

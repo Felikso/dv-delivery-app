@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 
 import { allCategoriesName } from '@/utils/variables';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 
-import Loader from '../../../components/Loader/Loader';
+import Loader from '@/components/Loader/Loader';
 
 const Header = React.lazy(() => import('@/components/Header/Header'));
 const ExploreMain = React.lazy(() =>
@@ -23,26 +23,8 @@ import './Home.css';
 
 const Home = () => {
 	const [category, setCategory] = useState(allCategoriesName);
-	const menuRef = useRef(null);
-	const contactRef = useRef(null);
-	const location = useLocation();
 
-	useEffect(() => {
-		// Other location checking and authority enforcing functions here
-	}, [location]);
-
-	useEffect(() => {
-		if (!menuRef.current) return;
-		if (
-			location.hash == '#exploreMain' &&
-			menuRef.current.getBoundingClientRect()
-		) {
-
-			const scrollPosY = 600;
-			menuRef.current.scrollIntoView();
-			window.scrollTo(0, scrollPosY);
-		}
-	}, [location]);
+	const navigate = useNavigate();
 
 	return (
 		<>
@@ -63,7 +45,6 @@ const Home = () => {
 					<ExploreMain
 						category={category}
 						setCategory={setCategory}
-						menuRef={menuRef}
 					/>
 				</Suspense>
 			</ErrorBoundary>
@@ -80,7 +61,7 @@ const Home = () => {
 				onReset={() => navigate('/')}
 			>
 				<Suspense fallback={<Loader />}>
-					<AppDownload contactRef={contactRef} />
+					<AppDownload />
 				</Suspense>
 			</ErrorBoundary>
 		</>

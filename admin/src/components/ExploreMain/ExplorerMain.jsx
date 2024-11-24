@@ -5,13 +5,13 @@ import { main_list } from '@/assets/assets'
 import { allCategoriesName, itemsMainData } from '@/utils/variables'
 
 
-const ExploreMain = ({category, setCategory, menuRef}) => {
+const ExploreMain = ({category, setCategory}) => {
 
 /*   if(Math.random() > 0.5){
     return new Error('Test error boundary')
   } */
   return (
-    <div className='exploreMain' id='exploreMain' ref={menuRef}>
+    <div className='exploreMain' id='exploreMain'>
       <h1>{itemsMainData.h1}</h1>
       <p className='exploreMainList'>{itemsMainData.p}</p>
       <div className='exploreMainList'>

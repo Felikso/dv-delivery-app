@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import './MyOrders.css';
 
 import { userOrdersUrl, myOrdersData, currency } from '@/utils/variables.jsx';
@@ -10,8 +10,13 @@ import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText.jsx
 import CodeVerifikator from '@/components/CodeVeryfikator/CodeVerifikator.jsx';
 import { useAuthStore } from '@/store/authStore.js';
 
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
+
+import Loader from '@/components/Loader/Loader';
+
 const MyOrders = () => {
-	const { isAuthenticated, error, isLoading, beUrl, netErr, user } =
+	const {  error, isLoading, beUrl, netErr, isAuthenticated } =
 		useAuthStore();
 
 	const [data, setData] = useState([]);
@@ -61,8 +66,13 @@ const MyOrders = () => {
 		<div className='myOrders'>
 			{netErr && <NetworkErrorText />}
 
-			{!data?.length ? (
-				<CodeVerifikator
+			<ErrorBoundary
+				FallbackComponent={ErrorFallback}
+				onReset={() => navigate('/')}
+			>
+				<Suspense fallback={<Loader />}>
+				{!data?.length ? (
+				 isAuthenticated ? <Loader />: <CodeVerifikator
 					handleSubmit={handleSubmit}
 					title={'wprowadź kod z maila, żeby potwierdzić złożone zamówienie'}
 					isLoading={isLoading}
@@ -132,6 +142,10 @@ const MyOrders = () => {
 					</div>
 				</>
 			)}
+				</Suspense>
+			</ErrorBoundary>
+
+
 		</div>
 	);
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Cart.css';
 
 import {
@@ -6,7 +6,6 @@ import {
 	cartItemsData,
 	currency,
 	pagesLinks,
-	customErrors,
 	customInfo,
 	imgUrl,
 } from '@/utils/variables';
@@ -17,14 +16,14 @@ import toast from 'react-hot-toast';
 
 import { assets } from '@/assets/assets';
 import NetworkErrorText from '@/components/NetworkErrorText/NetworkErrorText';
-/* import BackgroundAnimation from '@/components/BackgroundAnimation/BackgroundAnimation'; */
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '../../../store/cartStore';
+import Loader from '@/components/Loader/Loader'
 
 function Cart({setRabat, rabat}) {
-	const { name, price, quantity, total, remove } = cartItemsData;
+	const { name, price, total, remove } = cartItemsData;
 
-	const { verifyRabatCode, user, netErr, deleteRabat } = useAuthStore();
+	const { verifyRabatCode, user, netErr, deleteRabat, dataLoading } = useAuthStore();
 	const { cartItems, decreaseQuantity } = useCartStore();
 
 	const sumPrice = useCartStore((state) => state.totalPrice());
@@ -67,7 +66,6 @@ function Cart({setRabat, rabat}) {
 						setRabatExpirest(response.rabatCodeExpiresAt);
 					}
 					toast.success('kod rabatowy zaakceptowany');
-					//window.location.reload();
 				} else {
 					toast.error('podano nieprawidłowy kod rabatowy');
 				}
@@ -89,7 +87,6 @@ function Cart({setRabat, rabat}) {
 					setRabat(0); //
 					setRabatExpirest(0);
 					toast.success('kod rabatowy został usunięty');
-					//window.location.reload();
 				} else {
 					toast.error('podano nieprawidłowy kod rabatowy');
 				}
@@ -107,8 +104,8 @@ function Cart({setRabat, rabat}) {
 		>
 			{netErr && <NetworkErrorText />}
 			{
-				/* dataLoading */ false ? (
-					/* <BackgroundAnimation /> */ <p></p>
+				dataLoading  ? (
+					<Loader />
 				) : (
 					<>
 						<div className='cartItems'>
@@ -120,7 +117,7 @@ function Cart({setRabat, rabat}) {
 								<p>{remove}</p>
 							</div>
 							<hr />
-							{cartItems.map((item, i) => {
+							{cartItems.length==0 ? <><NetworkErrorText text='Koszyk niestety jeszcze jest pusty' paragraph='Najwyższy czas go zapełnić!'/></> :cartItems.map((item, i) => {
 								const onDecreaseQuantity = () => {
 									decreaseQuantity(item._id);
 								};
@@ -134,6 +131,8 @@ function Cart({setRabat, rabat}) {
 											}
 											alt={`zdjęcie ${item.name}`}
 											loading='lazy'
+											width='200'
+											height='200'
 										/>
 										</div>
 										<p className='name'>{item.name} x {item.quantity}</p>

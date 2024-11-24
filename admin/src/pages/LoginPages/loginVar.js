@@ -19,25 +19,6 @@ export const loginPagesLinks = {
 }
 
 
-/* 
-export const url = 'http://localhost:4000'
-export const itemsUrl = '/api/items/list'
-export const imgUrl = '/images/'
-export const addCartUrl = '/api/cart/add'
-export const removeFromCartUrl = '/api/cart/remove'
-export const getFromCartUrl = '/api/cart/get'
-export const orderUrl = '/api/order/'
-export const orderPlaceUrl = orderUrl+'/place'
-export const orderVerifyUrl = orderUrl+loginPagesLinks.verify
-export const myOrdersUrl = '/moje-zamowienia'
-export const userOrdersUrl = orderUrl+'/zamowienia-klienta' //endpoint to set in backend
-
-export const quantityItems = 'quantity' //string in order
-/* export const deliveryPrice = 8 */ //useContext
-
-/* export const orders = 'zamówienia'
-
-export const logout = 'wyloguj' */
 
 
 export const formData = {

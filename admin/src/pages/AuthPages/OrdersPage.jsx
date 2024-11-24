@@ -6,15 +6,18 @@ import {
 	url,
 	orderStatus,
 	urlRemoveOrder,
-	ordersTitle,
 	myOrdersData,
 } from '@/utils/variables.jsx';
 import { assets } from '@/assets/assets.js';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
 import { currency } from '../../utils/variables';
+import { useAuthStore } from '../../store/authStore';
+
+import Loader from '@/components/Loader/Loader';
 
 const OrdersPage = () => {
 
+	const { dataLoading } = useAuthStore;
 
 	const [orders, setOrders] = useState([]);
 
@@ -53,8 +56,14 @@ const OrdersPage = () => {
 		fetchAllOrders();
 	}, []);
 	return (
+
+		
+			dataLoading  ? (
+				<Loader />
+			) : (
+
+		
 		<div className='order add'>
-			<h3>{ordersTitle}</h3>
 			<div className='orderList'>
 				<div className={`orderItem`}>
 					<b>{myOrdersData.quantityTitle}</b>
@@ -127,6 +136,7 @@ const OrdersPage = () => {
 				))}
 			</div>
 		</div>
+	)
 	);
 };
 
