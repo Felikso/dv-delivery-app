@@ -31,6 +31,7 @@ const ListPage = () => {
 	}, []);
 	const [currentEl, setCurrentEl] = useState('')
 	const [edit, setEdit] = useState(false);
+	console.log(currentEl);
 	
 
 	return (

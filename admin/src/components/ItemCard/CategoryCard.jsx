@@ -9,7 +9,7 @@ import {
 import { assets } from '@/assets/assets';
 import { toast } from 'react-toastify';
 import { useAdminStore } from '@/store/adminStore.js';
-const CategoryCard = ({ postData, add = false, edit, setEdit, setCurrentEl}) => {
+const CategoryCard = ({ postData, add = false, handleEdit, edit, setEdit, setCurrentEl}) => {
 	const { name, img, _id } = postData
 		? postData
 		: '';
@@ -29,8 +29,9 @@ const CategoryCard = ({ postData, add = false, edit, setEdit, setCurrentEl}) => 
 	};
 
 	const handleEdit = (e) => {
-    
-  
+		if(setCurrentEl){
+			setCurrentEl(_id)
+		}
 		setEdit(!edit);
 	};
 

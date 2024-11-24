@@ -9,7 +9,7 @@ import {
 import { assets } from '@/assets/assets';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/store/authStore.js';
-const ItemCard = ({ postData, fetchList, add = false, setCurrentEl}) => {
+const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdit}) => {
 
 	const { name, description, price, category, _id, img } = postData
 		? postData
@@ -17,7 +17,7 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl}) => {
 
 	const { removeAuthItem, updateAuthItem } = useAuthStore();
 
-	const [edit, setEdit] = useState(add);
+	/* const [edit, setEdit] = useState(add); */
 	const [image, setImage] = useState(false);
 	const [data, setData] = useState({
 		name: name,
@@ -34,10 +34,13 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl}) => {
 	};
 
 	const handleEdit = (e) => {
-		setCurrentEl(_id)
-		console.log(_id);
-		
-		setEdit(!edit);
+		//setEdit(!edit);
+		if(setCurrentEl){
+			setCurrentEl(_id)
+		}else{
+			setEdit(!edit);
+		}
+	
 	};
 
 
