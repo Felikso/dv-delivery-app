@@ -15,6 +15,7 @@ import { replacePolishLetters } from '@/utils/functions.js';
 import BurgerMenu from '../BurgerMenu/BurgerMenu.jsx';
 import { useCartStore } from '../../store/cartStore';
 import { panelPath } from '../../utils/variables';
+import Cookies from 'js-cookie'
 
 const Navbar = () => {
 	const { user, logout, isAuthenticated } = useAuthStore();
@@ -68,6 +69,7 @@ const Navbar = () => {
 			localStorage.removeItem('cartData');
 			setOpenMenu(!openMenu);
 			logout();
+			Cookies.remove('token')
 			navigate('/');
 			window.location.reload();
 		}
