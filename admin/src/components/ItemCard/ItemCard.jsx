@@ -9,14 +9,15 @@ import {
 import { assets } from '@/assets/assets';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/store/authStore.js';
-const ItemCard = ({ postData, fetchList, add = false, handleEdit, edit, setEdit}) => {
+const ItemCard = ({ postData, fetchList, add = false, setCurrentEl}) => {
+
 	const { name, description, price, category, _id, img } = postData
 		? postData
 		: '';
 
 	const { removeAuthItem, updateAuthItem } = useAuthStore();
 
-	//const [edit, setEdit] = useState(add);
+	const [edit, setEdit] = useState(add);
 	const [image, setImage] = useState(false);
 	const [data, setData] = useState({
 		name: name,
@@ -32,10 +33,13 @@ const ItemCard = ({ postData, fetchList, add = false, handleEdit, edit, setEdit}
 		setData((data) => ({ ...data, [name]: value }));
 	};
 
-	/* const handleEdit = (e) => {
+	const handleEdit = (e) => {
+		setCurrentEl(_id)
+		console.log(_id);
+		
 		setEdit(!edit);
-		handleEditItem()
-	}; */
+	};
+
 
 
 	const onSubmitHandler = async (e) => {

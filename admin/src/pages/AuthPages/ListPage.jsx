@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useRef } from 'react';
 import { errorMessage } from '@/utils/variables';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/store/authStore.js';
@@ -10,6 +10,10 @@ import Loader from '@/components/Loader/Loader';
 
 const ListPage = () => {
 	const [list, setList] = useState([]);
+
+
+
+	
 
 	const { fetchAuthList } = useAuthStore();
 
@@ -25,6 +29,10 @@ const ListPage = () => {
 	useEffect(() => {
 		fetchList();
 	}, []);
+	const [currentEl, setCurrentEl] = useState('')
+	const [edit, setEdit] = useState(false);
+	
+
 	return (
 		<>
 
@@ -34,9 +42,11 @@ const ListPage = () => {
 			>
 				<Suspense fallback={<Loader />}>
         <div className='listBox'>
-        {list.map((item, i) => (
-					<ItemCard key={i} postData={item} fetchList={fetchList} />
-				))}
+        {list.map((item, i) => {
+					return <ItemCard key={i} postData={item} fetchList={fetchList}  edit={currentEl===item._id?true:false} setEdit={setEdit} setCurrentEl={setCurrentEl}/>
+		}
+
+				)}
         			</div>
 				</Suspense>
 			</ErrorBoundary>
