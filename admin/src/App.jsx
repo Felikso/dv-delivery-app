@@ -18,8 +18,6 @@ import ResetPasswordPage from './pages/LoginPages/ResetPasswordPage';
 
 import DashboardPage from './pages/AuthPages/DashboardPage';
 
-/* import LoadSpinner from './components/LoadSpinner/LoadSpinner.jsx'; */
-
 import { Toaster } from 'react-hot-toast';
 
 import ListPage from './pages/AuthPages/ListPage';
@@ -27,53 +25,27 @@ import AddPage from './pages/AuthPages/AddPage.jsx';
 import OrdersPage from './pages/AuthPages/OrdersPage.jsx';
 
 import { pagesLinks, authList } from './utils/variables.jsx';
-import { replacePolishLetters } from './utils/functions.js'
+import { replacePolishLetters } from './utils/functions.js';
 import NotAdminPage from './pages/NotAdminPage.jsx';
 
-/* import LoginPopup from './components/LoginPopup/LoginPopup'; */
-/* import { pagesLinks, footerLinks } from './utils/variables'; */
 import PopupPage from '@/components/PopupPage/PopupPage';
 import ScrollToTop from './components/ScrollTop/ScrollTop';
 
-/* import Verify from './pages/Verify/Verify'; */
-
-/* import VerifyOrder from './pages/VerifyOrder/VerifyOrder.jsx';
- */
-//import toast from 'react-hot-toast';
-//public
-
-// protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
 	const { isAuthenticated, user, checkAuth } = useAuthStore();
 
-/* 	if (!isAuthenticated) {
-		return <Navigate to={`${pagesLinks.login}`} replace />;
-	}
- */
-
-/* 	if(user){
-		if (!user.isAdmin) {
-			return <Navigate to='/not-admin' replace />;
-		}
-		
-	}
-	if (!isAuthenticated) {
-		return <Navigate to={`${pagesLinks.login}`} replace />;
-	}
-
-	if (!user.isVerified) {
-		return <Navigate to={`${pagesLinks.verifyEmail}`} replace />;
-	}
- */
-
 	useEffect(() => {
 		checkAuth();
-	}, [])
+	}, []);
 	return (
 		<>
-		
-		{isAuthenticated && user.isVerified && user.isAdmin ? <div style={{margin: '80px auto'}}>{children}</div>: <NotAdminPage />}
-		</>);
+			{isAuthenticated && user.isVerified && user.isAdmin ? (
+				<div style={{ margin: '80px auto' }}>{children}</div>
+			) : (
+				<NotAdminPage />
+			)}
+		</>
+	);
 };
 
 // redirect authenticated users to the home page
@@ -88,7 +60,6 @@ const RedirectAuthenticatedUser = ({ children }) => {
 };
 
 function App() {
-
 	const [showPopupPage, setShowPopupPage] = useState(false);
 	const { checkAuth, user } = useAuthStore();
 
@@ -106,32 +77,32 @@ function App() {
 		}
 	}, [user]);
 
-
-
-		
-
-
-
-	
-  
-
-/* 	if (isCheckingAuth) return <LoadSpinner />; */
+	/* 	if (isCheckingAuth) return <LoadSpinner />; */
 
 	return (
 		<div className='background'>
-			{/* 	<BackgroundAnimation count={30} /> */}
-			{/* 	<AdminNavbar /> */}
-			{showPopupPage && <PopupPage setShowPopupPage={setShowPopupPage} showPopupPage={showPopupPage}/>}
+			{showPopupPage && (
+				<PopupPage
+					setShowPopupPage={setShowPopupPage}
+					showPopupPage={showPopupPage}
+				/>
+			)}
 			<Navbar />
 			<Routes>
-				<Route  path='/' element={<Home />} />
-				<Route  path={`/${pagesLinks.cart}`} element={<Cart setRabat={setRabat} rabat={rabat} />} />
-				<Route path={`/${pagesLinks.order}`} element={<PlaceOrder rabat={rabat}/>} />
+				<Route path='/' element={<Home />} />
+				<Route
+					path={`/${pagesLinks.cart}`}
+					element={<Cart setRabat={setRabat} rabat={rabat} />}
+				/>
+				<Route
+					path={`/${pagesLinks.order}`}
+					element={<PlaceOrder rabat={rabat} />}
+				/>
 				{/*        <Route path={`/${pagesLinks.verify}`} element={<Verify />} /> */}
 				<Route path={`/${pagesLinks.myorders}`} element={<MyOrders />} />
 				{/*   <Route path={`/${pagesLinks.verifyOrder}/:_id`} element={<VerifyOrder />} /> */}
 
-								<Route
+				<Route
 					path='/panel'
 					element={
 						<ProtectedRoute>
@@ -140,26 +111,8 @@ function App() {
 					}
 				/>
 
+				<Route path='/not-admin' element={<NotAdminPage />} />
 
-					<Route
-					path='/not-admin'
-					element={
-						
-							<NotAdminPage />
-						
-					}
-				/>
-
-				{/* 				{Object.entries(authList).map(([item, i]) => (
-					<Route
-					path={`${replacePolishLetters(authList[item])}`}
-					element={
-						<ProtectedRoute>
-							<ListPage />
-						</ProtectedRoute>
-					}
-						/>
-					))} */}
 				<Route
 					path={replacePolishLetters(authList.add)}
 					element={
@@ -169,18 +122,16 @@ function App() {
 					}
 				/>
 
-			<Route
+				<Route
 					path={replacePolishLetters(authList.list)}
 					element={
 						<ProtectedRoute>
 							<ListPage />
-						</ProtectedRoute> 
-					
-					 
+						</ProtectedRoute>
 					}
 				/>
 
-			<Route
+				<Route
 					path={replacePolishLetters(authList.orders)}
 					element={
 						<ProtectedRoute>
@@ -188,7 +139,6 @@ function App() {
 						</ProtectedRoute>
 					}
 				/>
-
 
 				<Route
 					path={pagesLinks.signup}
@@ -230,7 +180,7 @@ function App() {
 				{/* catch all routes */}
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
-			<Footer setShowPopupPage={setShowPopupPage}/>
+			<Footer setShowPopupPage={setShowPopupPage} />
 			<ScrollToTop />
 			<Toaster />
 		</div>
