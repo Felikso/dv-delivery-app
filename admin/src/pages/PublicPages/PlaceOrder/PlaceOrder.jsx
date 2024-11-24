@@ -111,7 +111,7 @@ const PlaceOrder = ({ rabat }) => {
 				[name]: e.target.value.replace(/[^0-9]/g, ''),
 			}));
 		} else if (e.target.name === 'numberStreet') {
-			console.log('dsdf');
+
 
 			setData((data) => ({
 				...data,
@@ -206,8 +206,6 @@ const PlaceOrder = ({ rabat }) => {
 		};
 		let response = await axios.post(beUrl + orderPlaceUrl, orderData);
 
-		console.log(response);
-		
 
 		if (response.data.success) {
 			toast.success(customInfo.accpetPlaceOrder);

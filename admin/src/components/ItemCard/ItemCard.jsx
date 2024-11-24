@@ -41,7 +41,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
-		console.log(image);
+
 		if (window.confirm('czy na pewno chcesz edytować ten przedmiot?')) {
 			/**cloudinary */
 
@@ -77,8 +77,6 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 
 			const response = await updateAuthItem(_id, formData);
 
-			//const response = await axios.post(`${url}${newUrl}`, formData);
-			console.log(response);
 
 			if (response.data.success) {
 				if (!add) {
@@ -148,7 +146,7 @@ const ItemCard = ({ postData, fetchList, add = false }) => {
 					<input
 						className={`${disabled}`}
 						onChange={(e) => (
-							setImage(e.target.files[0]), console.log(e.target.files[0])
+							setImage(e.target.files[0])
 						)}
 						type='file'
 						id={imageId}

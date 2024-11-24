@@ -10,6 +10,6 @@ const replacePolishLetters = (str) => {
   // Example usage:
   const originalString = "Chrząszcz brzmi w trzcinie w Szczebrzeszynie";
   const replacedString = replacePolishLetters(originalString);
- // console.log(replacedString); 
+; 
 
   export {replacePolishLetters}

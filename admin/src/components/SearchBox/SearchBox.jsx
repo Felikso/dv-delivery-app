@@ -56,23 +56,6 @@ function SearchBox() {
 
 	const [rabatExpirest, setRabatExpirest] = useState('');
 
-	const handleSelectAllChange = () => {
-		const newSelectAll = !selectAll;
-		setSelectAll(newSelectAll);
-		setCheckedData(list);
-
-	  };
-
-	  const handleCheckboxChange = (index) => {
-		const newCheckboxes = [...checkedData];
-		//newCheckboxes[index].checked = !newCheckboxes[index].checked;
-		setCheckedData(newCheckboxes);
-		console.log('test');
-		console.log(checkedData);
-		
-		
-		setSelectAll(newCheckboxes.every(cb => cb.checked));
-	  };
 
 
 	const handleChangeSelect = (e) => {

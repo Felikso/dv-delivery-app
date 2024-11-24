@@ -1,24 +1,60 @@
-/* .codeInput{
-border-radius: 0.5rem; 
-border-width: 2px; 
-border-color: #4B5563; 
-width: 3rem; 
-height: 3rem; 
-font-size: 1.5rem;
-line-height: 2rem; 
-font-weight: 700; 
-text-align: center; 
-color: #ffffff; 
-background-color: #374151; 
+.animationLink {
+	overflow: hidden;
+	position: relative;
+	display: inline-block;
 }
 
-.codeBox{
-display: flex; 
-justify-content: space-between; 
+.animationLink::before,
+.animationLink::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	left: 0;
+}
+.animationLink::before {
+	background-color: var(--animation-link-color-hover);
+	height: 2px;
+	bottom: 0;
+	transform-origin: 100% 50%;
+	transform: scaleX(0);
+	transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.animationLink::after {
+	content: attr(data-replace);
+	height: 100%;
+	top: 0;
+	transform-origin: 100% 50%;
+	transform: translate3d(200%, 0, 0);
+	transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+	color: var(--animation-link-color-hover);
+}
 
-} */
+.animationLink:hover::before {
+	transform-origin: 0% 50%;
+	transform: scaleX(1);
+}
+.animationLink:hover::after {
+	transform: translate3d(0, 0, 0);
+}
+
+.animationLink span {
+	display: inline-block;
+	transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.animationLink:hover span {
+	transform: translate3d(-200%, 0, 0);
+}
+
+.animationLink {
+	text-decoration: none;
+	color: var(--animation-link-color);
+	font-weight: 700;
+	vertical-align: top;
+}
 
 .formBox form {
     display: grid;
     gap: 20px;
+    text-align: center;
 }

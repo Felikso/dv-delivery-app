@@ -133,22 +133,6 @@ hr {
     background: var(--gold);
  }
 
-.animatedIcons img {
-	width: 30px;
-
-	cursor: pointer;
-	transition: 0.5s;
-}
-
-.animatedIcons {
-	filter: invert(70%) sepia(55%) saturate(697%) hue-rotate(334deg)
-		brightness(109%) contrast(92%);
-	transition: filter 0.5s;
-}
-.animatedIcons img:hover {
-	filter: invert(70%) sepia(55%) saturate(697%) hue-rotate(334deg)
-		brightness(109%) contrast(92%) hue-rotate(30deg);
-}
 
 .cardContent {
 	padding: 2rem;
@@ -227,74 +211,7 @@ hr {
 	text-decoration: underline;
 }
 
-.animationLink {
-	overflow: hidden;
-	position: relative;
-	display: inline-block;
-}
 
-.animationLink::before,
-.animationLink::after {
-	content: '';
-	position: absolute;
-	width: 100%;
-	left: 0;
-}
-.animationLink::before {
-	background-color: var(--animation-link-color-hover);
-	height: 2px;
-	bottom: 0;
-	transform-origin: 100% 50%;
-	transform: scaleX(0);
-	transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
-}
-.animationLink::after {
-	content: attr(data-replace);
-	height: 100%;
-	top: 0;
-	transform-origin: 100% 50%;
-	transform: translate3d(200%, 0, 0);
-	transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
-	color: var(--animation-link-color-hover);
-}
-
-.animationLink:hover::before {
-	transform-origin: 0% 50%;
-	transform: scaleX(1);
-}
-.animationLink:hover::after {
-	transform: translate3d(0, 0, 0);
-}
-
-.animationLink span {
-	display: inline-block;
-	transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.animationLink:hover span {
-	transform: translate3d(-200%, 0, 0);
-}
-
-.animationLink {
-	text-decoration: none;
-	color: var(--animation-link-color);
-	font-weight: 700;
-	vertical-align: top;
-}
-
-/* https://codepen.io/team/css-tricks/pen/jOarVmy */
-
-.formBox {
-	text-align: center;
-}
-
-/*
-  https://codepen.io/ianfarb/pen/neEWbP
-  for navlinks + background change
-
-  https://codepen.io/shshaw/pen/wWQeEB
-  hover on card another have in this time opacity
-  */
 
 @keyframes fadeIn {
 	0% {

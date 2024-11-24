@@ -67,7 +67,22 @@
     align-items: center;
 }
 
+.animatedIcons img {
+	width: 30px;
 
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+.animatedIcons {
+	filter: invert(70%) sepia(55%) saturate(697%) hue-rotate(334deg)
+		brightness(109%) contrast(92%);
+	transition: filter 0.5s;
+}
+.animatedIcons img:hover {
+	filter: invert(70%) sepia(55%) saturate(697%) hue-rotate(334deg)
+		brightness(109%) contrast(92%) hue-rotate(30deg);
+}
 
   @media (max-width:750px){
     .footerContent{

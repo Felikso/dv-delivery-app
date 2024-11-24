@@ -5,7 +5,7 @@ import { customInfo, dashBoardData, contactMail } from '@/utils/variables'
 
 const DashboardPage = () => {
 	const { user, logout, checkAdmin } = useAuthStore();
-//console.log(checkAdmin)
+
 	const handleLogout = () => {
 		logout();
 	};

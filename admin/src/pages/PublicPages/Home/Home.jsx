@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 
+import Loader from '../../../components/Loader/Loader';
+
 const Header = React.lazy(() => import('@/components/Header/Header'));
 const ExploreMain = React.lazy(() =>
 	import('@/components/ExploreMain/ExplorerMain')
@@ -35,7 +37,7 @@ const Home = () => {
 			location.hash == '#exploreMain' &&
 			menuRef.current.getBoundingClientRect()
 		) {
-			console.log(menuRef);
+
 			const scrollPosY = 600;
 			menuRef.current.scrollIntoView();
 			window.scrollTo(0, scrollPosY);
@@ -48,7 +50,7 @@ const Home = () => {
 				FallbackComponent={ErrorFallback}
 				onReset={() => navigate('/')}
 			>
-				<Suspense fallback={<div>loading...</div>}>
+				<Suspense fallback={<Loader />}>
 					<Header />
 				</Suspense>
 			</ErrorBoundary>
@@ -57,7 +59,7 @@ const Home = () => {
 				FallbackComponent={ErrorFallback}
 				onReset={() => navigate('/')}
 			>
-				<Suspense fallback={<div>loading...</div>}>
+				<Suspense fallback={<Loader />}>
 					<ExploreMain
 						category={category}
 						setCategory={setCategory}
@@ -69,7 +71,7 @@ const Home = () => {
 				FallbackComponent={ErrorFallback}
 				onReset={() => navigate('/')}
 			>
-				<Suspense fallback={<div>loading...</div>}>
+				<Suspense fallback={<Loader />}>
 					<ItemsDisplay category={category} />
 				</Suspense>
 			</ErrorBoundary>
@@ -77,7 +79,7 @@ const Home = () => {
 				FallbackComponent={ErrorFallback}
 				onReset={() => navigate('/')}
 			>
-				<Suspense fallback={<div>loading...</div>}>
+				<Suspense fallback={<Loader />}>
 					<AppDownload contactRef={contactRef} />
 				</Suspense>
 			</ErrorBoundary>

@@ -5,6 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 import { pagesLinks, authList } from './utils/variables.jsx';
 import { replacePolishLetters } from './utils/functions.js';
+import Loader from './components/Loader/Loader';
 //public
 
 
@@ -105,7 +106,7 @@ function App() {
 					FallbackComponent={ErrorFallback}
 					onReset={() => navigate('/')}
 				>
-					<Suspense fallback={<div>LOADING...</div>}>
+					<Suspense fallback={<Loader />}>
 						<PopupPage
 							setShowPopupPage={setShowPopupPage}
 							showPopupPage={showPopupPage}
@@ -119,7 +120,7 @@ function App() {
 					FallbackComponent={ErrorFallback}
 					onReset={() => navigate('/')}
 				>
-					<Suspense fallback={<div>LOADING...</div>}>
+					<Suspense fallback={<Loader />}>
 					<Navbar />
 					</Suspense>
 				</ErrorBoundary>
@@ -132,7 +133,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<Home />
 							</Suspense>
 						</ErrorBoundary>
@@ -146,7 +147,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<Cart setRabat={setRabat} rabat={rabat} />
 							</Suspense>
 						</ErrorBoundary>
@@ -160,7 +161,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<PlaceOrder rabat={rabat} />
 							</Suspense>
 						</ErrorBoundary>
@@ -174,7 +175,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<MyOrders />
 							</Suspense>
 						</ErrorBoundary>
@@ -199,7 +200,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<NotAdminPage />
 							</Suspense>
 						</ErrorBoundary>
@@ -213,7 +214,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<ProtectedRoute>
 									<AddPage />
 								</ProtectedRoute>
@@ -229,7 +230,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<ProtectedRoute>
 									<ListPage />
 								</ProtectedRoute>
@@ -245,7 +246,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<ProtectedRoute>
 									<OrdersPage />
 								</ProtectedRoute>
@@ -261,7 +262,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<RedirectAuthenticatedUser>
 									<SignUpPage />
 								</RedirectAuthenticatedUser>
@@ -277,7 +278,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<RedirectAuthenticatedUser>
 									<LoginPage />
 								</RedirectAuthenticatedUser>
@@ -292,7 +293,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<EmailVerificationPage />
 							</Suspense>
 						</ErrorBoundary>
@@ -305,7 +306,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<RedirectAuthenticatedUser>
 									<ForgotPasswordPage />
 								</RedirectAuthenticatedUser>
@@ -320,7 +321,7 @@ function App() {
 							FallbackComponent={ErrorFallback}
 							onReset={() => navigate('/')}
 						>
-							<Suspense fallback={<div>LOADING...</div>}>
+							<Suspense fallback={<Loader />}>
 								<RedirectAuthenticatedUser>
 									<ResetPasswordPage />
 								</RedirectAuthenticatedUser>
@@ -337,7 +338,7 @@ function App() {
 					FallbackComponent={ErrorFallback}
 					onReset={() => navigate('/')}
 				>
-					<Suspense fallback={<div>LOADING...</div>}>
+					<Suspense fallback={<Loader />}>
 					<Footer setShowPopupPage={setShowPopupPage} />
 					</Suspense>
 				</ErrorBoundary>

@@ -55,12 +55,11 @@ function Cart({setRabat, rabat}) {
 			}
 			try {
 				const response = await verifyRabatCode(data.rabatCode, user.email);
-				console.log(response.data);
 
 				if (response.success) {
 					if (response.data) {
 						setRabat(response.data);
-						console.log(rabat);
+						
 					} else {
 						setRabat(0);
 					}
