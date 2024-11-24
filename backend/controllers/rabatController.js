@@ -78,7 +78,7 @@ const setRabat = async (req, res) => {
 				subject: 'Kod rabatowy',
 				html:
 					MAIL_HEADER.replace('{headTitle}', 'Nowy kod rabatowy') +
-					NEW_RABAT.replace('{rabat}', rabatValue * 100)
+					NEW_RABAT.replace('{rabat}', rabatValue * 100).replace('{rabatCode}', rabatCode)
 						.replace('{expires}', rabatExpires)
 						.replace('{mailPath}', process.env.REACT_APP_CLIENT_URL) +
 					MAIL_FOOTER,

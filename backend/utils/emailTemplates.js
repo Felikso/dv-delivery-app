@@ -49,9 +49,9 @@ export const MAIL_HEADER = `
     </style>
 </head>
 <body class="body">
-  <div class="mailBox">`
+  <div class="mailBox">`;
 
-  export const MAIL_FOOTER = `
+export const MAIL_FOOTER = `
   </div>
   <h4 class="logo">Ventus <br>Dev</h4>
 </div>
@@ -60,7 +60,7 @@ export const MAIL_HEADER = `
     <p>To wiadomość automatyczna. Proszę na nią nie odpowiadać.</p>
   </div>
 </body>
-</html>`
+</html>`;
 
 export const EMAIL_VERYFIKATION = `
 <h1 class="title">Zweryfikuj swoje zamówienie</h1>
@@ -77,7 +77,7 @@ export const EMAIL_VERYFIKATION = `
     <a href="{mailPath}" class="button">Potwierdzam</a>
     <p class="codeExpiried">Kod za godzinę wygaśnie!</p>
     <p>Pozdrowienia</p>
-`
+`;
 
 export const WELCOME_EMAIL = `
 <h1 class="title">Mail powitalny</h1>
@@ -90,7 +90,7 @@ export const WELCOME_EMAIL = `
     <div class="messageContent">
     <a href="{mailPath}" class="button">Odwiedź nas</a>
     <p>Pozdrowienia</p>
-`
+`;
 
 export const PASSWORD_RESET = `
 <h1 class="title">Resetowanie hasła</h1>
@@ -103,7 +103,7 @@ export const PASSWORD_RESET = `
     <div class="messageContent">
     <a href="{mailPath}" class="button">Resetuj hasło</a>
     <p>Pozdrowienia</p>
-`
+`;
 
 export const PASSWORD_RESET_SUCCESS = `
 <h1 class="title">Hasło zresetowane</h1>
@@ -116,7 +116,7 @@ export const PASSWORD_RESET_SUCCESS = `
     <div class="messageContent">
     <a href="{mailPath}" class="button">Zaloguj się</a>
     <p>Pozdrowienia</p>
-`
+`;
 
 export const ORDER_VERYFIKATION = `
 <h1 class="title">Zweryfikuj swoje zamówienie</h1>
@@ -136,7 +136,7 @@ export const ORDER_VERYFIKATION = `
     <a href="{mailPath}" class="button">Potwierdzam zamówienie</a>
     <p class="codeExpiried">Kod za godzinę wygaśnie!</p>
     <p>Pozdrowienia</p>
-`
+`;
 
 export const ADDRESS_CHANGED = `
 <h1 class="title">Zmiana adresu dostawy</h1>
@@ -149,7 +149,7 @@ export const ADDRESS_CHANGED = `
     <div class="messageContent">
     <a href="{mailPath}" class="button">Zamów ponownie</a>
     <p>Pozdrowienia</p>
-`
+`;
 
 export const NEW_RABAT = `
 <h1 class="title">Nowy kod rabatowy</h1>
@@ -157,9 +157,12 @@ export const NEW_RABAT = `
   <div class="mailContent">
     <p>Cześć,</p>
     <p>Właśnie przyznano Ci rabat w wysokości {rabat}%!</p> 
-    <p>Pamiętaj, że nie jest wieczny, ponieważ wygaśnie {expires}.</p>
+        <div class="codeBox">
+      <span class="code">{rabatCode}</span>
+    </div>
+    <p>Pamiętaj, że nie jest wieczny -  wygaśnie {expires}.</p>
     <div  class="messageBox">
     <div class="messageContent">
     <a href="{mailPath}" class="button">Wykorzystaj rabat</a>
     <p>Pozdrowienia</p>
-`
+`;
