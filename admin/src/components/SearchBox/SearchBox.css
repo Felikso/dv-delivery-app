@@ -105,7 +105,7 @@
 .listItem {
 	margin-bottom: 20px;
 	font-size: 12px;
-	color: #444;
+	color: var(--grayDark);
 	font-weight: 300;
 	display: flex;
 	word-break: break-all;
@@ -152,9 +152,9 @@
 	width: var(--size);
 	height: var(--size);
 	margin: 0 auto;
-	background-color: #f72414;
+	background-color: var(--red);
 	border-radius: 50%;
-	box-shadow: 0 var(--shadow) #ffbeb8;
+	box-shadow: 0 var(--shadow) var(--pink);
 	cursor: pointer;
 	transition: 0.2s ease transform, 0.2s ease background-color,
 		0.2s ease box-shadow;
@@ -171,17 +171,17 @@
 	width: calc(var(--size) * 0.7);
 	height: calc(var(--size) * 0.7);
 	margin: 0 auto;
-	background-color: #fff;
+	background-color: var(--white);
 	transform: translateY(-50%);
 	border-radius: 50%;
-	box-shadow: inset 0 var(--shadow) #ffbeb8;
+	box-shadow: inset 0 var(--shadow)  var(--pink);
 	transition: 0.2s ease width, 0.2s ease height;
 }
 
 .checkbox-wrapper label:hover:before {
 	width: calc(var(--size) * 0.55);
 	height: calc(var(--size) * 0.55);
-	box-shadow: inset 0 var(--shadow) #ff9d96;
+	box-shadow: inset 0 var(--shadow)  var(--pink);
 }
 
 .checkbox-wrapper label:active {
@@ -204,7 +204,7 @@
 .checkbox-wrapper .tick_mark:after {
 	content: '';
 	position: absolute;
-	background-color: #fff;
+	background-color:  var(--white);
 	border-radius: 2px;
 	opacity: 0;
 	transition: 0.2s ease transform, 0.2s ease opacity;
@@ -229,8 +229,8 @@
 }
 
 .checkbox-wrapper input[type='checkbox']:checked + label {
-	background-color: #07d410;
-	box-shadow: 0 var(--shadow) #92ff97;
+	background-color:  var(--green);
+	box-shadow: 0 var(--shadow)  var(--greenLight);
 }
 
 .checkbox-wrapper input[type='checkbox']:checked + label:before {

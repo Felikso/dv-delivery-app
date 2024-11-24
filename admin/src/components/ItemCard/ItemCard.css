@@ -172,4 +172,5 @@
     scrollbar-width: none;  /* Firefox */
     scroll-behavior: smooth;
     overflow-y: scroll;
+    padding: 0;
 }

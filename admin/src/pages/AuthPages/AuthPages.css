@@ -91,17 +91,16 @@
     gap: 30px;
     padding: 20px;
     width: 100%;
-   /*  margin: 30px 0px; */
+   line-height: 2;
     font-size: 14px;
     color: var(--black);
     border-bottom: 3px solid var( --white);
     background-color: var(--grayLight);
 }
 
- 
-
 .orderItem:nth-child(2n){ 
 background-color: var(--grayDark);
+color: var(--white);
 }
 
 

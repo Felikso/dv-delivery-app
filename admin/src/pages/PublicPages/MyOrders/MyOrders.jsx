@@ -1,11 +1,7 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MyOrders.css';
 
-import {
-	userOrdersUrl,
-	myOrdersData,
-	currency,
-} from '@/utils/variables.jsx';
+import { userOrdersUrl, myOrdersData, currency } from '@/utils/variables.jsx';
 import { assets } from '@/assets/assets.js';
 import axios from 'axios';
 import Button from '@/components/Button/Button.jsx';
@@ -15,20 +11,18 @@ import CodeVerifikator from '@/components/CodeVeryfikator/CodeVerifikator.jsx';
 import { useAuthStore } from '@/store/authStore.js';
 
 const MyOrders = () => {
-
-	const { isAuthenticated, error, isLoading, beUrl, netErr, user } = useAuthStore();
+	const { isAuthenticated, error, isLoading, beUrl, netErr, user } =
+		useAuthStore();
 
 	const [data, setData] = useState([]);
 	const [codeId, setCodeId] = useState(['', '', '', '', '', '']);
 
 	const fetchOrders = async () => {
-		const response = await axios.post(
-			beUrl + userOrdersUrl,
-			{ codeId: codeId.join(""),
-				userId: userOrdersUrl._id
-			 },
-		);
-		
+		const response = await axios.post(beUrl + userOrdersUrl, {
+			codeId: codeId.join(''),
+			userId: userOrdersUrl._id,
+		});
+
 		setData(response.data.data);
 
 		toast.success(myOrdersData.refreshInfo);
@@ -46,27 +40,22 @@ const MyOrders = () => {
 		return formattedDate;
 	};
 
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const verificationCode = codeId.join("");
+		const verificationCode = codeId.join('');
 		fetchOrders(verificationCode);
-
 	};
 
-
 	useEffect(() => {
-		
 		//if (isAuthenticated) {
-			fetchOrders();
+		fetchOrders();
 		//}
-		if (codeId.every((digit) => digit !== "")) {
-			handleSubmit(new Event("submit"));
+		if (codeId.every((digit) => digit !== '')) {
+			handleSubmit(new Event('submit'));
 		}
 	}, [codeId]);
 	let btn = 0;
 	let countBtn = 2; // the number by which the button will change color
-
 
 	return (
 		<div className='myOrders'>
@@ -114,17 +103,21 @@ const MyOrders = () => {
 											}
 										})}
 									</p>
-									<span>
-										{item.amount.toFixed(2)} {currency}
-										<br/>
-										<br/>
-										{item.rabat > 0 ? '( -' + Math.floor(item.rabat * 100) + '% )' : ''}
-									</span>
+									<div>
+										<span className='featuredText'>
+											{item.amount.toFixed(2)} {currency}
+										</span>
+										<span>
+											{item.rabat > 0
+												? '( -' + Math.floor(item.rabat * 100) + '% )'
+												: ''}
+										</span>
+									</div>
 									<span>{item.items.length}</span>
 									<div>
 										<p className='myOrdersDate'>{convertDate(item.date)}</p>
 										<p>
-											<b>{item.status}</b>
+											<b className='featuredText'>{item.status}</b>
 										</p>
 									</div>
 									<Button

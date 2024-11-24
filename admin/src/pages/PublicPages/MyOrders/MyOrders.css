@@ -33,6 +33,7 @@
     border: 1px solid var(--second-color);
     border-bottom: 3px solid var( --white);
     background-color: var(--grayLight);
+    line-height: 2;
 }
 
 .myOrdersOrder:nth-child(2n){ 

@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import {
 	url,
 	orderStatus,
-	itemsQuantity,
 	urlRemoveOrder,
 	ordersTitle,
 	myOrdersData,
 } from '@/utils/variables.jsx';
 import { assets } from '@/assets/assets.js';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
+import { currency } from '../../utils/variables';
 
 const OrdersPage = () => {
 
@@ -82,7 +82,7 @@ const OrdersPage = () => {
 								}
 							})}
 						</p>
-						<p>{item.amount},00 PLN</p>
+						<p className='featuredText'>{item.amount.toFixed(2)} {currency}</p>
 						<div>
 							<p className='orderItemName'>
 								{item.address.firstName + ' ' + item.address.lastName}
@@ -90,15 +90,15 @@ const OrdersPage = () => {
 							<p>
 								<a
 									href={`tel:${item.address.phone}`}
-									className='orderItemPhone'
+									className='orderItemPhone featuredText'
 								>
 									{item.address.phone}
 								</a>
 							</p>
 							<p>
-								<a
+								<a 
 									href={`mailto:${item.address.email}`}
-									className='orderItemPhone'
+									className='orderItemPhone featuredText'
 								>
 									{item.address.email}
 								</a>

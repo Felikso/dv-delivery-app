@@ -4,10 +4,13 @@
 	--red: rgb(179, 0, 0);
 	--redLight: #ff3a3a;
 
+	--pink: rgb(255, 125, 147);
+
 	--white: #fcfcfc;
 	--whiteDark: rgb(211, 211, 211);
 
 	--green: rgb(0, 100, 0);
+	--greenLight: rgb(0, 190, 0);
 
 	--gold: rgb(194, 164, 68);
 	--goldLight: rgb(224, 192, 85);
@@ -120,11 +123,15 @@ hr {
 	min-height: 100vh;
 	margin: 0 !important;
 	flex-direction: column;
-
-	/* background-image: linear-gradient(to bottom right); 
-background-color: #111827; 
-background-color: #064E3B;  */
 }
+
+.featuredText{
+    text-decoration: drop-shadow;
+    color: var(--brown);
+    padding: .25em;
+    border-radius: .50em;
+    background: var(--gold);
+ }
 
 .animatedIcons img {
 	width: 30px;

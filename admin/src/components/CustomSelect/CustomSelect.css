@@ -1,69 +1,45 @@
+select {
+	appearance: none;
+	outline: 10px var(--red);
+	flex: 1;
+	padding: 0 1em;
+	color: var(--gold);
+	background-color: var(--grayDark);
+	background-image: none;
+	cursor: pointer;
+}
 
-  select {
-    /* Reset Select */
-    appearance: none;
-    outline: 10px var(--red);
-   /*  border: 0; */
-   /*  box-shadow: none; */
-    /* Personalize */
-    flex: 1;
-    padding: 0 1em;
-    color: var(--grayLight);
-    background-color: var(--grayDark);
-    background-image: none;
-    cursor: pointer;
-  }
-  /* Remove IE arrow */
-  select::-ms-expand {
-    display: none;
-  }
-  /* Custom Select wrapper */
-  .select {
-    position: relative;
-    display: flex;
-    width: 20em;
-    height: 3em;
-    border-radius: .25em;
-    overflow: hidden;
-  }
-  /* Arrow */
-  .select::after {
-    content: '\25BC';
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 1em;
-    background-color: var(--gold);
-    transition: .25s all ease;
-    pointer-events: none;
-  }
-  /* Transition */
-  .select:hover::after {
-    color: var(--gold);
-  }
-  
- /*  a {
-    font-weight: bold;
-    color: var(--gray);
-    text-decoration: drop-shadow;
-    padding: .25em;
-    border-radius: .50em;
-    background: pink;
-  }
-  
+select::-ms-expand {
+	display: none;
+}
 
-  .container {
-    position : absolute;
-    top: 50%;
-    left : 50%;
-    transform :
-    translate(-50%,-50%); 
-  }
-  
+.select {
+	position: relative;
+	display: flex;
+	width: 20em;
+	height: 3em;
+	border-radius: 0.25em;
+	overflow: hidden;
+	border: solid 2px var(--gold);
+	background-color: var(--brown);
+}
 
-  
-  .down_note {
-      display: flex;
-      justify-content: center;
-  
-  } */
+.select option {
+	color: var(--brown);
+	background-color: var(--gold);
+}
+
+.select::after {
+	content: '\25BC';
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 1em;
+	background-color: var(--gold);
+	transition: 0.25s all ease;
+	pointer-events: none;
+}
+
+.select:hover::after {
+	color: var(--goldLight);
+}
