@@ -1,48 +1,54 @@
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
+import { pagesLinks, authList } from './utils/variables.jsx';
+import { replacePolishLetters } from './utils/functions.js';
 //public
-import Navbar from './components/Navbar/Navbar';
-
-/* import Home from '@/pages/PublicPages/Home/Home';
-import Cart from '@/pages/PublicPages/Cart/Cart';
-import PlaceOrder from '@/pages/PublicPages/PlaceOrder/PlaceOrder';
-import MyOrders from '@/pages/PublicPages/MyOrders/MyOrders'; */
-
-import Footer from '@/components/Footer/Footer';
-
-const Home = React.lazy(()=>import('@/pages/PublicPages/Home/Home'))
-const Cart = React.lazy(()=>import('@/pages/PublicPages/Cart/Cart'))
-const PlaceOrder = React.lazy(()=>import('@/pages/PublicPages/PlaceOrder/PlaceOrder'))
-const MyOrders = React.lazy(()=>import('@/pages/PublicPages/MyOrders/MyOrders'))
-
-import { ErrorBoundary } from "react-error-boundary"
-import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary'
 
 
+const Navbar = React.lazy(() => import('@/components/Navbar/Navbar'));
 
-import SignUpPage from './pages/LoginPages/SignUpPage';
-import LoginPage from './pages/LoginPages/LoginPage.jsx';
-import ForgotPasswordPage from './pages/LoginPages/ForgotPasswordPage.jsx';
-import EmailVerificationPage from './pages/LoginPages/EmailVerificationPage';
-import ResetPasswordPage from './pages/LoginPages/ResetPasswordPage';
+
+const Home = React.lazy(() => import('@/pages/PublicPages/Home/Home'));
+const Cart = React.lazy(() => import('@/pages/PublicPages/Cart/Cart'));
+const PlaceOrder = React.lazy(() =>
+	import('@/pages/PublicPages/PlaceOrder/PlaceOrder')
+);
+const MyOrders = React.lazy(() =>
+	import('@/pages/PublicPages/MyOrders/MyOrders')
+);
+
+const SignUpPage = React.lazy(() => import('@/pages/LoginPages/SignUpPage'));
+const LoginPage = React.lazy(() => import('@/pages/LoginPages/LoginPage'));
+const ForgotPasswordPage = React.lazy(() =>
+	import('@/pages/LoginPages/ForgotPasswordPage')
+);
+const EmailVerificationPage = React.lazy(() =>
+	import('@/pages/LoginPages/EmailVerificationPage')
+);
+const ResetPasswordPage = React.lazy(() =>
+	import('@/pages/LoginPages/ResetPasswordPage')
+);
 
 import DashboardPage from './pages/AuthPages/DashboardPage';
 
+const ListPage = React.lazy(() => import('@/pages/AuthPages/ListPage'));
+const AddPage = React.lazy(() => import('@/pages/AuthPages/AddPage'));
+const OrdersPage = React.lazy(() => import('@/pages/AuthPages/OrdersPage'));
+
+
+const NotAdminPage = React.lazy(() => import('@/pages/NotAdminPage'));
+
+
+const PopupPage = React.lazy(() => import('@/components/PopupPage/PopupPage'));
+const Footer = React.lazy(() => import('@/components/Footer/Footer'));
+
+import ScrollToTop from './components/ScrollTop/ScrollTop';
 import { Toaster } from 'react-hot-toast';
 
-import ListPage from './pages/AuthPages/ListPage';
-import AddPage from './pages/AuthPages/AddPage.jsx';
-import OrdersPage from './pages/AuthPages/OrdersPage.jsx';
-
-import { pagesLinks, authList } from './utils/variables.jsx';
-import { replacePolishLetters } from './utils/functions.js';
-import NotAdminPage from './pages/NotAdminPage.jsx';
-
-import PopupPage from '@/components/PopupPage/PopupPage';
-import ScrollToTop from './components/ScrollTop/ScrollTop';
-
-import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const ProtectedRoute = ({ children }) => {
 	const { isAuthenticated, user, checkAuth } = useAuthStore();
@@ -95,38 +101,86 @@ function App() {
 	return (
 		<div className='background'>
 			{showPopupPage && (
-				<PopupPage
-					setShowPopupPage={setShowPopupPage}
-					showPopupPage={showPopupPage}
-				/>
+				<ErrorBoundary
+					FallbackComponent={ErrorFallback}
+					onReset={() => navigate('/')}
+				>
+					<Suspense fallback={<div>LOADING...</div>}>
+						<PopupPage
+							setShowPopupPage={setShowPopupPage}
+							showPopupPage={showPopupPage}
+						/>
+					</Suspense>
+				</ErrorBoundary>
 			)}
-			<Navbar />
-			
-			
+
+
+			<ErrorBoundary
+					FallbackComponent={ErrorFallback}
+					onReset={() => navigate('/')}
+				>
+					<Suspense fallback={<div>LOADING...</div>}>
+					<Navbar />
+					</Suspense>
+				</ErrorBoundary>
+
 			<Routes>
-
-
-
-			<Route path='/' element={
-          <ErrorBoundary
-            FallbackComponent={ErrorFallback}
-            onReset={() => navigate('/')}
-          >
-            <Suspense fallback={<div>LOADING...</div>}>
-              <Home />
-            </Suspense>
-          </ErrorBoundary>}
-        />
-			
+				<Route
+					path='/'
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<Home />
+							</Suspense>
+						</ErrorBoundary>
+					}
+				/>
 
 				<Route
 					path={`/${pagesLinks.cart}`}
-					element={<Cart setRabat={setRabat} rabat={rabat} />}
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<Cart setRabat={setRabat} rabat={rabat} />
+							</Suspense>
+						</ErrorBoundary>
+					}
 				/>
+
 				<Route
 					path={`/${pagesLinks.order}`}
-					element={<PlaceOrder rabat={rabat} />}
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<PlaceOrder rabat={rabat} />
+							</Suspense>
+						</ErrorBoundary>
+					}
 				/>
+
+				<Route
+					path={`/${pagesLinks.myorders}`}
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<MyOrders />
+							</Suspense>
+						</ErrorBoundary>
+					}
+				/>
+
 				<Route path={`/${pagesLinks.myorders}`} element={<MyOrders />} />
 
 				<Route
@@ -138,76 +192,155 @@ function App() {
 					}
 				/>
 
-				<Route path='/not-admin' element={<NotAdminPage />} />
+				<Route
+					path='/not-admin'
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<NotAdminPage />
+							</Suspense>
+						</ErrorBoundary>
+					}
+				/>
 
 				<Route
 					path={replacePolishLetters(authList.add)}
 					element={
-						<ProtectedRoute>
-							<AddPage />
-						</ProtectedRoute>
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<ProtectedRoute>
+									<AddPage />
+								</ProtectedRoute>
+							</Suspense>
+						</ErrorBoundary>
 					}
 				/>
 
 				<Route
 					path={replacePolishLetters(authList.list)}
 					element={
-						<ProtectedRoute>
-							<ListPage />
-						</ProtectedRoute>
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<ProtectedRoute>
+									<ListPage />
+								</ProtectedRoute>
+							</Suspense>
+						</ErrorBoundary>
 					}
 				/>
 
 				<Route
 					path={replacePolishLetters(authList.orders)}
 					element={
-						<ProtectedRoute>
-							<OrdersPage />
-						</ProtectedRoute>
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<ProtectedRoute>
+									<OrdersPage />
+								</ProtectedRoute>
+							</Suspense>
+						</ErrorBoundary>
 					}
 				/>
 
 				<Route
 					path={pagesLinks.signup}
 					element={
-						<RedirectAuthenticatedUser>
-							<SignUpPage />
-						</RedirectAuthenticatedUser>
-					}
-				/>
-				<Route
-					path={pagesLinks.login}
-					element={
-						<RedirectAuthenticatedUser>
-							<LoginPage />
-						</RedirectAuthenticatedUser>
-					}
-				/>
-				<Route
-					path={pagesLinks.verifyEmail}
-					element={<EmailVerificationPage />}
-				/>
-				<Route
-					path={pagesLinks.forgotPass}
-					element={
-						<RedirectAuthenticatedUser>
-							<ForgotPasswordPage />
-						</RedirectAuthenticatedUser>
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<RedirectAuthenticatedUser>
+									<SignUpPage />
+								</RedirectAuthenticatedUser>
+							</Suspense>
+						</ErrorBoundary>
 					}
 				/>
 
 				<Route
-					path={`${pagesLinks.resetPass}/:token`}
+					path={pagesLinks.login}
 					element={
-						<RedirectAuthenticatedUser>
-							<ResetPasswordPage />
-						</RedirectAuthenticatedUser>
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<RedirectAuthenticatedUser>
+									<LoginPage />
+								</RedirectAuthenticatedUser>
+							</Suspense>
+						</ErrorBoundary>
 					}
 				/>
+				<Route
+					path={pagesLinks.verifyEmail}
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<EmailVerificationPage />
+							</Suspense>
+						</ErrorBoundary>
+					}
+				/>
+				<Route
+					path={pagesLinks.forgotPass}
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<RedirectAuthenticatedUser>
+									<ForgotPasswordPage />
+								</RedirectAuthenticatedUser>
+							</Suspense>
+						</ErrorBoundary>
+					}
+				/>
+				<Route
+					path={`${pagesLinks.resetPass}/:token`}
+					element={
+						<ErrorBoundary
+							FallbackComponent={ErrorFallback}
+							onReset={() => navigate('/')}
+						>
+							<Suspense fallback={<div>LOADING...</div>}>
+								<RedirectAuthenticatedUser>
+									<ResetPasswordPage />
+								</RedirectAuthenticatedUser>
+							</Suspense>
+						</ErrorBoundary>
+					}
+				/>
+
 				{/* catch all routes */}
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
-			<Footer setShowPopupPage={setShowPopupPage} />
+	
+			<ErrorBoundary
+					FallbackComponent={ErrorFallback}
+					onReset={() => navigate('/')}
+				>
+					<Suspense fallback={<div>LOADING...</div>}>
+					<Footer setShowPopupPage={setShowPopupPage} />
+					</Suspense>
+				</ErrorBoundary>
 			<ScrollToTop />
 			<Toaster />
 		</div>

@@ -14,10 +14,16 @@ const AppDownload = () => {
 					<img
 						src={assets.play_store}
 						alt={`${brandData.name} w Sklepie Play`}
+						height='130'
+						width='130'
+						loading='lazy'
 					/>
 				</a>
 				<a href={socialLinks.as}>
-					<img src={assets.app_store} alt={`${brandData.name} na AppStore`} />
+					<img src={assets.app_store} alt={`${brandData.name} na AppStore`} 
+													height='130'
+													width='130'
+													loading='lazy'/>
 				</a>
 			</div>
 		</div>

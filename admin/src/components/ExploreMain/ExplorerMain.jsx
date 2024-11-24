@@ -26,6 +26,8 @@ const ExploreMain = ({category, setCategory, menuRef}) => {
               src={item.main_image} 
               alt={item.main_name} 
               loading='lazy'
+              width='100'
+              height='100'
               />
               <p>{item.main_name}</p>
             </div>

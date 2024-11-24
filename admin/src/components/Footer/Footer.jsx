@@ -15,24 +15,33 @@ const Footer = ({ setShowPopupPage }) => {
 			<div className='footerContent'>
 				<div className='footerContentLeft'>
 					<div className='footexSocials'>
-					<img src={assets.logo} alt={`logo ${brandData.name}`} />
+					<img src={assets.logo} alt={`logo ${brandData.name}`} width='150' height='79' loading='lazy' />
 					<div className='flexRow socialsIconsBox'>
 						<a className='animatedIcons' target='_blank' href={socialLinks.fb}>
 							<img
 								src={assets.facebook_icon}
 								alt={`facebook ${brandData.name}`}
+								height='30'
+								width='30'
+								loading='lazy'
 							/>
 						</a>
 						<a className='animatedIcons' target='_blank' href={socialLinks.tw}>
 							<img
 								src={assets.twitter_icon}
 								alt={`twitter ${brandData.name}`}
+								height='30'
+								width='30'
+								loading='lazy'
 							/>
 						</a>
 						<a className='animatedIcons' target='_blank' href={socialLinks.ln}>
 							<img
 								src={assets.linkedin_icon}
 								alt={`linkedin ${brandData.name}`}
+								height='30'
+								width='30'
+								loading='lazy'
 							/>
 						</a>
 					</div>

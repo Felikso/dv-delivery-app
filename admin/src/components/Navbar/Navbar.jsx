@@ -15,7 +15,7 @@ import { replacePolishLetters } from '@/utils/functions.js';
 import BurgerMenu from '../BurgerMenu/BurgerMenu.jsx';
 import { useCartStore } from '../../store/cartStore';
 import { panelPath } from '../../utils/variables';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
 	const { user, logout, isAuthenticated } = useAuthStore();
@@ -69,7 +69,7 @@ const Navbar = () => {
 			localStorage.removeItem('cartData');
 			setOpenMenu(!openMenu);
 			logout();
-			Cookies.remove('token')
+			Cookies.remove('token');
 			navigate('/');
 			window.location.reload();
 		}
@@ -78,17 +78,17 @@ const Navbar = () => {
 	const renderMenuList = user?.isAdmin
 		? { ...authList, ...objPages }
 		: objPages;
-console.log(objPages);
-console.log(authList);
-
 
 	return (
 		<>
-			<Link to='/'>
+			<Link to='/' className='logoBox'>
 				<img
 					src={assets.logo}
 					alt={`logo ${brandData.name}`}
 					className='logo'
+					loading='lazy'
+					height='71'
+					width='135'
 				/>
 			</Link>
 			<div className='navbar'>
@@ -120,7 +120,13 @@ console.log(authList);
 									data-totalitems={sum}
 								>
 									{' '}
-									<img src={assets.cart} />
+									<img
+										src={assets.cart}
+										alt='koszyk'
+										loading='lazy'
+										height='40'
+										width='40'
+									/>
 								</span>
 							)}
 						</>
@@ -144,12 +150,18 @@ console.log(authList);
 								setOpenMenu();
 								navigate('/');
 							}}
+							loading='lazy'
+							height='57'
+							width='100'
 						/>
 						{isAuthenticated ? (
 							<img
 								src={assets.logout_icon}
 								alt='wyloguj'
 								onClick={handleLogout}
+								loading='lazy'
+								width='60'
+								height='60'
 							/>
 						) : (
 							<img
@@ -159,6 +171,9 @@ console.log(authList);
 									setOpenMenu();
 									navigate('/login');
 								}}
+								loading='lazy'
+								width='60'
+								height='60'
 							/>
 						)}
 					</div>
@@ -177,7 +192,7 @@ console.log(authList);
 					>
 						<img
 							src={assets.profile_image}
-							alt=''
+							alt='profile'
 							className='profile'
 							onClick={() => {
 								var width = window.innerWidth;
@@ -189,6 +204,9 @@ console.log(authList);
 									}
 								}
 							}}
+							loading='lazy'
+							width='32'
+							height='32'
 						/>
 						<p>{user ? userName : loginBtnText}</p>
 					</div>
@@ -198,6 +216,9 @@ console.log(authList);
 								src={assets.logout_icon}
 								alt='wyloguj'
 								onClick={handleLogout}
+								loading='lazy'
+								width='60'
+								height='60'
 							/>
 						) : (
 							<img
@@ -206,6 +227,9 @@ console.log(authList);
 								onClick={() => {
 									navigate('/login');
 								}}
+								loading='lazy'
+								width='60'
+								height='60'
 							/>
 						)}
 					</a>

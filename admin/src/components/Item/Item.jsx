@@ -36,6 +36,8 @@ const Item = ({ item }) => {
 					src={import.meta.env.VITE_BACKEND_URL + '/images/' + image}
 					alt={name}
 					className='itemImage'
+												height='200'
+							width='300'
 				/>
 				{!itemQuantity ? (
 					<div className='animatedIcons'>
@@ -44,6 +46,8 @@ const Item = ({ item }) => {
 							onClick={onAddToCart}
 							src={assets.add_icon_white}
 							alt='dodaj'
+							height='35'
+							width='35'
 						/>
 					</div>
 				) : (
@@ -52,6 +56,8 @@ const Item = ({ item }) => {
 							onClick={onDecreaseQuantity}
 							src={assets.remove_icon_red}
 							alt='usuń'
+														height='35'
+							width='35'
 						/>
 						<p>{itemQuantity}</p>
 
@@ -59,6 +65,8 @@ const Item = ({ item }) => {
 							onClick={onAddToCart}
 							src={assets.add_icon_green}
 							alt='dodaj'
+														height='35'
+							width='35'
 						/>
 					</div>
 				)}
@@ -66,7 +74,8 @@ const Item = ({ item }) => {
 			<div className='itemInfo'>
 				<div className='itemNameRating'>
 					<p>{name}</p>
-					<img src={assets.rating_stars} alt='ocena' />
+					<img src={assets.rating_stars} alt='ocena' 							height='12'
+							width='70' />
 				</div>
 				<p className='itemDesc'>{description}</p>
 				<p className='itemPrice'>
