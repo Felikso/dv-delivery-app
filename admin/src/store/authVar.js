@@ -28,7 +28,9 @@ export const api= {
     add: '/add',
     get: '/get',
     update: '/update',
-    delete: '/delete'
+    delete: '/delete',
+    list: '/list',
+    remove: '/remove'
 }
 
 export const urlAdd = '/api/items/add';

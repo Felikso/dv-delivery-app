@@ -4,7 +4,7 @@ import transporter from '../utils/transporter.js';
 import {
 	customErrors,
 	customInfo,
-	odrerSlug,
+	orderSlug,
 	errorMessage,
 } from '../utils/variables.js';
 
@@ -75,7 +75,7 @@ const placeOrder = async (req, res) => {
 			)
 			.replace(
 				'{mailPath}',
-				process.env.REACT_APP_CLIENT_URL+`/${odrerSlug}`
+				process.env.REACT_APP_CLIENT_URL+`/${orderSlug}`
 			)
 			.replace(
 				'{itemsForMail}',

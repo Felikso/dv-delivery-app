@@ -8,6 +8,7 @@ import { connectDB } from './db/connectDB.js';
 
 import userRoute from './routes/userRoute.js';
 import itemsRoute from './routes/itemsRoute.js';
+import categoryRoute from './routes/categoryRoute.js';
 import cartRoute from './routes/cartRoute.js';
 import orderRoute from './routes/orderRoute.js';
 import rabatRoute from './routes/rabatRoute.js'
@@ -41,6 +42,7 @@ app.use('/api/auth', userRoute);
 
 //api endpoints
 app.use('/api/items',itemsRoute)
+app.use('/api/category',categoryRoute)
 app.use('/images',express.static('uploads'))
 
 app.use('/api/rabat',rabatRoute)

@@ -1,5 +1,5 @@
 import itemsModel from '../models/itemsModel.js';
-//import fs from 'fs';
+import fs from 'fs';
 import { succesMessage, errorMessage, removedMessage } from '../variables.js';
 
 const addItems = async (req, res) => {
@@ -49,7 +49,7 @@ const removeItem = async (req, res) => {
 	try {
 		const item = await itemsModel.findById(req.body.id);
 		if (item.image !== 'default.png') {
-			//fs.unlink(`uploads/${item.image}`,()=>{})
+			fs.unlink(`uploads/${item.image}`,()=>{})
 		}
 
 		await itemsModel.findByIdAndDelete(req.body.id);
