@@ -17,7 +17,7 @@
     animation: rotationBreak 3s ease-in-out infinite alternate;
   }
   .loader::after {
-    border-color: #FF3D00;
+    border-color: #ff3c00bd;
     animation-direction: alternate-reverse;
   }
   
