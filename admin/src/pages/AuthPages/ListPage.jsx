@@ -7,14 +7,17 @@ import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 import './AuthPages.css';
 import Loader from '@/components/Loader/Loader';
 import DefaultCard from '../../components/defaultCard/DefaultCard';
+import { useItemStore } from '../../store/itemStore';
 
 const ListPage = () => {
 	const [list, setList] = useState([]);
 
-	const { fetchAuthList, updateAuthItem, removeAuthItem } = useAuthStore();
+	const { updateAuthItem, removeAuthItem } = useAuthStore();
+
+	const { fetchItemsList } = useItemStore();
 
 	const fetchList = async () => {
-		const response = await fetchAuthList();
+		const response = await fetchItemsList();
 		if (response.data.success) {
 			setList(response.data.data.reverse());
 		} else {

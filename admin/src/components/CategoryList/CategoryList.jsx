@@ -7,11 +7,13 @@ import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 import './CategoryList.css';
 import Loader from '@/components/Loader/Loader';
 import DefaultCard from '../defaultCard/DefaultCard';
+import { useItemStore } from '../../store/itemStore';
 
 const CategoryList = () => {
 	const [list, setList] = useState([]);
 
-	const { fetchCategoryList, delateFocus, updateCategory, removeCategory } = useAdminStore();
+	const { fetchCategoryList } = useItemStore();
+	const { delateFocus, updateCategory, removeCategory } = useAdminStore();
 
 	const fetchList = async () => {
 		const response = await fetchCategoryList();

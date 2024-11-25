@@ -53,20 +53,6 @@ export const useAdminStore = create((set) => ({
 			}
 		})
 	},
-
-
-
-	fetchCategoryList: async () => {
-		try {
-			const response = await axios.post(`${API_CATEGORY_URL}${api.list}`);
-			return response
-		} catch (error) {
-			set({
-				error: error.response?.data
-			});
-			throw error;
-		}
-	},
 	removeCategory: async (itemId) => {
 		try {
 			const response = await axios.post(`${API_CATEGORY_URL}${api.remove}`,{id:itemId});

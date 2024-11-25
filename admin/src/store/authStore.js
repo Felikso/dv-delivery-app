@@ -116,17 +116,6 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
-	fetchAuthList: async () => {
-		try {
-			const response = await axios.get(`${API_ITEMS_URL}${pagesLinks.list}`);
-			return response
-		} catch (error) {
-			set({
-				error: error.response?.data
-			});
-			throw error;
-		}
-	},
 	removeAuthItem: async (itemId) => {
 		try {
 			const response = await axios.post(`${API_ITEMS_URL}${api.remove}`,{id:itemId});

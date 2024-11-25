@@ -30,7 +30,9 @@ export const api= {
     update: '/update',
     delete: '/delete',
     list: '/list',
-    remove: '/remove'
+    remove: '/remove',
+    set: '/set',
+    emails: '/emails'
 }
 
 export const urlAdd = '/api/items/add';
