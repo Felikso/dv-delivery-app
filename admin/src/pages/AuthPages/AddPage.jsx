@@ -9,16 +9,14 @@ import { useAdminStore } from '../../store/adminStore';
 const AddPage = () => {
 
   const { imgState } = useAdminStore();
-  
-	const { removeAuthItem, updateAuthItem } = useAuthStore();
 
-	const { setItemTrue, setCatTrue, updateCategory, removeCategory } = useAdminStore();
+	const { setItemTrue, setCatTrue, updateCategory, removeCategory, updateItem, removeItem } = useAdminStore();
 
 
   return (
     <div className='addPage'>
       <div >
-      <DefaultCard  edit={imgState.item} add={true} updateDefaultItem={updateAuthItem} removeDefaultItem={removeAuthItem} setDefaultTrue={setItemTrue} allowedImputs={['name','description','category','price','image']} />
+      <DefaultCard  edit={imgState.item} add={true} updateDefaultItem={updateItem} removeDefaultItem={removeItem} setDefaultTrue={setItemTrue} allowedImputs={['name','description','category','price','image']} />
       <div>
       <DefaultCard  edit={imgState.cat}  add={true} updateDefaultItem={updateCategory} removeDefaultItem={removeCategory} setDefaultTrue={setCatTrue} allowedImputs={['name','image']}/>
       <CategoryList />

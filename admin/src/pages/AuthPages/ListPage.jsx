@@ -8,13 +8,14 @@ import './AuthPages.css';
 import Loader from '@/components/Loader/Loader';
 import DefaultCard from '../../components/defaultCard/DefaultCard';
 import { useItemStore } from '../../store/itemStore';
+import { useAdminStore } from '../../store/adminStore';
 
 const ListPage = () => {
 	const [list, setList] = useState([]);
 
-	const { updateAuthItem, removeAuthItem } = useAuthStore();
-
 	const { fetchItemsList } = useItemStore();
+
+	const { updateItem, removeItem } = useAdminStore();
 
 	const fetchList = async () => {
 		const response = await fetchItemsList();
@@ -42,7 +43,7 @@ const ListPage = () => {
 				<Suspense fallback={<Loader />}>
         <div className='listBox'>
         {list.map((item, i) => {
-					return <DefaultCard removeDefaultItem={removeAuthItem} fetchList={fetchList} key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl} updateDefaultItem={updateAuthItem} allowedImputs={['name','description','category','price','image']}/>
+					return <DefaultCard removeDefaultItem={removeItem} fetchList={fetchList} key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl} updateDefaultItem={updateItem} allowedImputs={['name','description','category','price','image']}/>
 		}
 
 				)}

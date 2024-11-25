@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import './SearchBox.css';
-import { useAuthStore } from '@/store/authStore';
+import { useAdminStore } from '@/store/adminStore';
 import loop_icon from './loop_icon.svg';
 import procent_icon from './procent_icon.svg';
 import toast from 'react-hot-toast';
 
 function SearchBox() {
-	const { setRabat } = useAuthStore();
+	const { setRabat, fetchMailList } = useAdminStore();
 	const [list, setList] = useState([]);
 
-	const { fetchMailList } = useAuthStore();
 
 	const fetchList = async () => {
 		const response = await fetchMailList();
-
+		console.log(response);
+		
 		if (response.data.success) {
 			setList(response.data.data.sort());
 		} else {
