@@ -26,9 +26,11 @@ const addCategory = async (req, res) => {
 	});
 	try {
 		await categories.save();
-		res.json({ success: true, message: succesMessage });
+		res.json({ success: true, message: customInfo.catSavedSuccess });
 	} catch (error) {
-		res.json({ success: false, message: errorMessage });
+        console.log(error);
+        
+		res.json({ success: false, message: customErrors.catDosentSaved });
 	}
 };
 
@@ -44,7 +46,7 @@ const listCategories = async (req, res) => {
 
 const removeCategory = async (req, res) => {
 	try {
-		const item = await itemsModel.findById(req.body.id);
+		const item = await categoryModel.findById(req.body.id);
 		if (item.image !== 'default.png') {
 			fs.unlink(`uploads/${item.image}`,()=>{})
 		}
@@ -58,14 +60,14 @@ const removeCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
 	try {
-		await itemsModel.findByIdAndUpdate(req.body.id, {
+		await categoryModel.findByIdAndUpdate(req.body.id, {
 			name: req.body.name,
 			description: req.body.description,
 			price: req.body.price,
 			category: req.body.category,
 		});
 		if (req.file) {
-			await itemsModel.findByIdAndUpdate(req.body.id, {
+			await categoryModel.findByIdAndUpdate(req.body.id, {
 				image: req.file.filename,
 				img: req.body.img,
 			});

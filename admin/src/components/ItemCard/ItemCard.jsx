@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import './ItemCard.css';
-import {
-	addData,
-	categories,
-	url,
-	urlImg,
-} from '@/utils/variables';
+import { addData, categories, url, urlImg } from '@/utils/variables';
 import { assets } from '@/assets/assets';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/store/authStore.js';
-const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdit, setImgState, delateFocus}) => {
-
+import { useAdminStore } from '../../store/adminStore';
+const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit }) => {
 	const { name, description, price, category, _id, img } = postData
 		? postData
 		: '';
 
 	const { removeAuthItem, updateAuthItem } = useAuthStore();
+
+	const { imgState, setItemTrue, delateFocus } = useAdminStore();
 
 	/* const [edit, setEdit] = useState(add); */
 	const [image, setImage] = useState(false);
@@ -34,60 +31,34 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdi
 	};
 
 	const handleEdit = (e) => {
-		if(setCurrentEl){
-			setCurrentEl(_id)
+
+		if (setCurrentEl) {
+			setCurrentEl(_id);
 		}else{
-			setEdit(!edit);
+			setItemTrue(!edit);
 		}
-		delateFocus();
-		setImgState((imgState) => ({ ...imgState, ['item']: !edit }))
-	
 	};
-
-
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 
 		if (window.confirm('czy na pewno chcesz edytować ten przedmiot?')) {
-			/**cloudinary */
-
-			/* const cloudData = new FormData();
-			cloudData.append('file', image);
-			cloudData.append('upload_preset', 'my_first_cloud');
-			cloudData.append('cloud_name', 'dwoh7xiks');
-
-			const res = await fetch(
-				'https://api.cloudinary.com/v1_1/dwoh7xiks/image/upload',
-				{
-					method: 'POST',
-					body: cloudData,
-				}
-			); */
-
-			//const uploadedImageURL = await res.json();
-
-			/**cloudinary */
-
 			const formData = new FormData();
 			formData.append('name', data.name);
 			formData.append('description', data.description);
 			formData.append('price', Number(data.price));
 			formData.append('category', data.category);
 			formData.append('image', image);
-			//formData.append('img', uploadedImageURL.url);
 			if (_id) {
 				formData.append('id', _id);
 			}
 
-
 			const response = await updateAuthItem(_id, formData);
-
 
 			if (response.data.success) {
 				if (!add) {
 					await fetchList();
-          setEdit(!edit);
+					setCurrentEl(false);
 				} else {
 					setData({
 						name: '',
@@ -97,7 +68,7 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdi
 					});
 					setImage(false);
 				}
-
+				setItemTrue(false);
 				toast.success(response.data.message);
 			} else {
 				toast.error(response.data.message);
@@ -107,7 +78,6 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdi
 
 	const removeItem = async (itemId) => {
 		const response = await removeAuthItem(itemId);
-		//const response = await axios.post(`${url}${urlRemove}`,{id:itemId});
 
 		if (response.data.success) {
 			toast.success(response.data.success);
@@ -126,23 +96,25 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdi
 		: img
 		? `${url}${urlImg}${postData.image}`
 		: assets.upload_area;
-		
+
 	return (
 		<form onSubmit={onSubmitHandler} className={`addForm ${allowEdit}`}>
-			{!edit&&<p
-				onClick={(e) => {
-					if (window.confirm('na pewno chcesz usunąć przedmiot?')) {
-						removeItem(_id);
-						e.target.parentElement.classList.add('hidden');
-					}
-				}}
-				className='itemDelete'
-			>
-				x
-			</p>}
+			{!edit && (
+				<p
+					onClick={(e) => {
+						if (window.confirm('na pewno chcesz usunąć przedmiot?')) {
+							removeItem(_id);
+							e.target.parentElement.classList.add('hidden');
+						}
+					}}
+					className='itemDelete'
+				>
+					x
+				</p>
+			)}
 			<div className='addDataBox'>
-				<div 			className={`addImgUpload flexCol ${disabled}`}>
-					<p>{edit&&(img ? 'zmień' : addData.addPhoto)}</p>
+				<div className={`addImgUpload flexCol ${disabled}`}>
+					<p>{edit && (img ? 'zmień' : addData.addPhoto)}</p>
 					<label htmlFor='image'>
 						<img
 							src={image ? URL.createObjectURL(image) : placeholderImage}
@@ -151,9 +123,7 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdi
 					</label>
 					<input
 						className={`${disabled}`}
-						onChange={(e) => (
-							setImage(e.target.files[0])
-						)}
+						onChange={(e) => setImage(e.target.files[0])}
 						type='file'
 						id={imageId}
 						hidden
@@ -210,15 +180,22 @@ const ItemCard = ({ postData, fetchList, add = false, setCurrentEl, edit, setEdi
 								placeholder={addData.typeItemPrice}
 							/>
 						</div>
-            {!(edit=='unique')?<>
-              <button onClick={handleEdit} className='addBtn' type='button'>
-							{edit?addData.breakEdit:addData.editBtn}
+						{!(edit == 'unique') ? (
+							<>
+								<button onClick={handleEdit} className='addBtn' type='button'>
+									{edit ? addData.breakEdit : addData.editBtn}
+								</button>
+							</>
+						) : (
+							<div></div>
+						)}
+						<button className={`addBtn ${disabled}`} type='submit'>
+							{edit
+								? edit == 'unique'
+									? addData.addBtn
+									: addData.acceptEdit
+								: addData.addBtn}
 						</button>
-            </>:<div></div>}
-            <button className={`addBtn ${disabled}`} type='submit'>
-            {edit?((edit=='unique')?addData.addBtn:addData.acceptEdit):addData.addBtn}
-						</button>
-
 					</div>
 				</div>
 			</div>

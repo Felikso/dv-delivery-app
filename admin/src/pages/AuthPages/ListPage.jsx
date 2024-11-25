@@ -11,10 +11,6 @@ import Loader from '@/components/Loader/Loader';
 const ListPage = () => {
 	const [list, setList] = useState([]);
 
-
-
-	
-
 	const { fetchAuthList } = useAuthStore();
 
 	const fetchList = async () => {
@@ -30,8 +26,7 @@ const ListPage = () => {
 		fetchList();
 	}, []);
 	const [currentEl, setCurrentEl] = useState('')
-	const [edit, setEdit] = useState(false);
-	console.log(currentEl);
+
 	
 
 	return (
@@ -44,7 +39,7 @@ const ListPage = () => {
 				<Suspense fallback={<Loader />}>
         <div className='listBox'>
         {list.map((item, i) => {
-					return <ItemCard key={i} postData={item} fetchList={fetchList}  edit={currentEl===item._id?true:false} setEdit={setEdit} setCurrentEl={setCurrentEl}/>
+					return <ItemCard key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl}/>
 		}
 
 				)}

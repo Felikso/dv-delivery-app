@@ -58,7 +58,8 @@ export const customErrors = {
     verifyOrderField: 'weryfikacja zamówienia się nie powiodła',
     statusUpdateFiled: 'aktualizacja statusu zamówienia sie nie powiodła',
 
-    categoryAlreadyExists: 'kategoria o tej nazwie już istnieje'
+    categoryAlreadyExists: 'kategoria o tej nazwie już istnieje',
+    catDosentSaved: 'wystapił błąd poczas zapisywania kategorii'
 
 
 
@@ -77,7 +78,9 @@ export const customInfo = {
     rabatDeleted: 'rabat został usunięty',
     orderSuccess: 'zamówienie złożone pomyślnie',
     statusUpdated: 'status zamówienia zaktualizowany',
-    orderRemoved: 'zamówienie zostało usunięte'
+    orderRemoved: 'zamówienie zostało usunięte',
+    catSavedSuccess: 'kategoria zapisana pomyślnie',
+
 
 
 }

@@ -5,35 +5,29 @@ import SearchBox from '@/components/SearchBox/SearchBox'
 import './AuthPages.css'
 import CategoryCard from '../../components/ItemCard/CategoryCard';
 import CategoryList from '../../components/CategoryList/CategoryList';
+import { useAdminStore } from '../../store/adminStore';
 
 const AddPage = () => {
 
-	const [edit, setEdit] = useState(false);
+  const { imgState, setImgState } = useAdminStore();
+
+	const [edit, setEdit] = useState(0);
+
+
+  useEffect(()=>{
+    console.log(imgState);
+    
+  },[imgState])
   
 
 
-  const [imgState, setImgState] = useState({
-    item: false,
-    card: false,
-    items: false
-  })
-
-  const delateFocus = (e) =>{
-    console.log(e);
-    setImgState({
-      item: false,
-      card: false,
-      items: false
-    })
-    
-  }
 
   return (
     <div className='addPage'>
       <div >
-      <ItemCard delateFocus={delateFocus} edit={imgState.item} setImgState={setImgState} setEdit={setEdit} />
+      <ItemCard  edit={imgState.item} setEdit={setEdit} add={true} />
       <div>
-      <CategoryCard   delateFocus={delateFocus} edit={imgState.card} setImgState={setImgState}  setEdit={setEdit}/>
+      <CategoryCard  edit={imgState.cat} setEdit={setEdit} add={true}/>
       <CategoryList />
       </div>
       </div>

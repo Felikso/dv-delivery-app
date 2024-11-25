@@ -21,6 +21,9 @@ const storage = multer.diskStorage({
 
         let imageName = file.originalname
 
+        console.log(file);
+        
+
         const imgAlreadyExists = await categoryModel.findOne({ image: file.originalname });
 
         if (imgAlreadyExists) {

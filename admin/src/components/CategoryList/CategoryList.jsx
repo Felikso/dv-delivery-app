@@ -25,6 +25,9 @@ const CategoryList = () => {
 	useEffect(() => {
 		fetchList();
 	}, []);
+
+    const [currentEl, setCurrentEl] = useState('')
+
 	return (
 		<>
 
@@ -35,7 +38,7 @@ const CategoryList = () => {
 				<Suspense fallback={<Loader />}>
         <div className='listBox'>
         {list.map((item, i) => (
-					<CategoryCard postData={item} key={i}/>
+					<CategoryCard  key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl} />
 				))}
         			</div>
 				</Suspense>

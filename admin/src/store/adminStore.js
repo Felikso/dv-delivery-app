@@ -15,6 +15,45 @@ const API_CATEGORY_URL = import.meta.env.MODE === "development" ? beUrl+"/api/ca
 axios.defaults.withCredentials = true;
 
 export const useAdminStore = create((set) => ({
+	imgState: {
+		item: false,
+		cat: false,
+		items: false
+	},
+	setImgState: (state) => ({
+		item: state.item,
+		cat: state.cat,
+		items: state.items
+	}),
+	delateFocus: () =>{
+		set({
+			imgState: {
+				item: false,
+				cat: false,
+				items: false
+			}
+		})
+		
+	  },
+	  setItemTrue: (itemData) =>{
+		set({
+			imgState: {
+				item: itemData,
+				cat: false,
+				items: false
+			}
+		})
+	},
+	setCatTrue: (catData) =>{
+		set({
+			imgState: {
+				item: false,
+				cat: catData,
+				items: false
+			}
+		})
+	},
+
 
 
 	fetchCategoryList: async () => {
@@ -45,6 +84,7 @@ export const useAdminStore = create((set) => ({
 
 			let activity = itemId?'update':'add';
 			const response = await axios.post(`${API_CATEGORY_URL}/${activity}`,formData);
+
 
 			set({ message: response.data.message });
 			return response

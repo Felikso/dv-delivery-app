@@ -8,13 +8,14 @@ import {
 import { assets } from '@/assets/assets';
 import { toast } from 'react-toastify';
 import { useAdminStore } from '@/store/adminStore.js';
-const CategoryCard = ({ postData, add = false, edit, setEdit, setCurrentEl, setImgState, delateFocus}) => {
+
+const CategoryCard = ({ postData, add = false, edit,  setCurrentEl }) => {
 	const { name, img, _id } = postData
 		? postData
 		: '';
 
 	const { removeCategory, fetchCategoryList, updateCategory } = useAdminStore();
-
+	const { imgState, setCatTrue } = useAdminStore();
 	
 	const [image, setImage] = useState(false);
 	const [data, setData] = useState({
@@ -28,13 +29,12 @@ const CategoryCard = ({ postData, add = false, edit, setEdit, setCurrentEl, setI
 	};
 
 	const handleEdit = (e) => {
-		if(setCurrentEl){
+        if(setCurrentEl){
 			setCurrentEl(_id)
 		}else{
-			setEdit(!edit);
-		}
-		delateFocus();
-		setImgState((imgState) => ({ ...imgState, ['card']: !edit }))
+            setCatTrue(!edit)
+        }
+
 	
 	};
 
@@ -51,22 +51,22 @@ const CategoryCard = ({ postData, add = false, edit, setEdit, setCurrentEl, setI
 			if (_id) {
 				formData.append('id', _id);
 			}
-
-
 			const response = await updateCategory(_id, formData);
-
+            console.log(response);
+            
 
 			if (response.data.success) {
 				if (!add) {
 					await fetchCategoryList();
-          setEdit(!edit);
+
 				} else {
 					setData({
 						name: '',
 					});
 					setImage(false);
+                    await fetchCategoryList();
 				}
-
+				setCatTrue(false);
 				toast.success(response.data.message);
 			} else {
 				toast.error(response.data.message);
@@ -76,11 +76,15 @@ const CategoryCard = ({ postData, add = false, edit, setEdit, setCurrentEl, setI
 
 	const removeCat = async (categoryId) => {
 		const response = await removeCategory(categoryId);
+        console.log(categoryId);
+        console.log(response);
+        
+        
 
 		if (response.data.success) {
-			toast.success(response.data.success);
+			toast.success(response.data.message);
 		} else {
-			toast.error(errorMessage);
+			toast.error(response.data.message);
 		}
 		await fetchCategoryList();
 	};
