@@ -17,7 +17,14 @@ import { useCartStore } from '../../store/cartStore';
 import { panelPath } from '../../utils/variables';
 import Cookies from 'js-cookie';
 
-const Navbar = () => {
+const Navbar = ({time}) => {
+
+	const [mounted, setMounted] = useState(false)
+
+	useEffect(()=>{
+		setTimeout(()=>setMounted(true), time)
+	})
+
 	const { user, logout, isAuthenticated } = useAuthStore();
 
 	const { cartItems } = useCartStore();
@@ -80,8 +87,10 @@ const Navbar = () => {
 		: objPages;
 
 	return (
+
+		mounted &&
 		<>
-			<Link to='/' className='logoBox'>
+			<Link to='/' className='logoBox FIAnim'>
 				<img
 					src={assets.logo}
 					alt={`logo ${brandData.name}`}
@@ -91,7 +100,7 @@ const Navbar = () => {
 					width='135'
 				/>
 			</Link>
-			<div className='navbar'>
+			<div className='navbar FIAnim'>
 				<ul className={`navbarMenu ${activeClass}`}>
 					{Object.entries(renderMenuList).map(([item, i]) => (
 						<>

@@ -81,7 +81,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
 function App() {
 	const [showPopupPage, setShowPopupPage] = useState(false);
-	const { checkAuth, user } = useAuthStore();
+	const { checkAuth, user, isCheckingAuth } = useAuthStore();
 
 	useEffect(() => {
 		checkAuth();
@@ -97,8 +97,16 @@ function App() {
 		}
 	}, [user]);
 
-	/* 	if (isCheckingAuth) return <LoadSpinner />; */
 	const navigate = useNavigate();
+
+	const delayComponents = {
+		nav: 1500,
+		footer: 5000
+	}
+
+	
+		if (isCheckingAuth) return <Loader />;
+
 	return (
 		<div className='background'>
 			{showPopupPage && (
@@ -121,7 +129,7 @@ function App() {
 					onReset={() => navigate('/')}
 				>
 					<Suspense fallback={<Loader />}>
-					<Navbar />
+					<Navbar time={delayComponents.nav}/>
 					</Suspense>
 				</ErrorBoundary>
 
@@ -339,7 +347,7 @@ function App() {
 					onReset={() => navigate('/')}
 				>
 					<Suspense fallback={<Loader />}>
-					<Footer setShowPopupPage={setShowPopupPage} />
+					<Footer setShowPopupPage={setShowPopupPage} time={delayComponents.footer} />
 					</Suspense>
 				</ErrorBoundary>
 			<ScrollToTop />

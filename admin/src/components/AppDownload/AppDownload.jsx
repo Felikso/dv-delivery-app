@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import './AppDownload.css';
 import { appData, brandData, socialLinks } from '@/utils/variables';
 import { assets } from '@/assets/assets';
 
-const AppDownload = () => {
+const AppDownload = ({time}) => {
+	const [mounted, setMounted] = useState(false)
+
+	useEffect(()=>{
+		setTimeout(()=>setMounted(true), time)
+	})
 	return (
-		<div className='appDownload' id='appDownload'>
+		mounted && <div className='appDownload FIAnim' id='appDownload'>
 			<p>
 				{appData.p} <br /> {brandData.name} App
 			</p>

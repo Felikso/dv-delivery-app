@@ -5,7 +5,12 @@ import { currency, customInfo } from '@/utils/variables';
 import toast from 'react-hot-toast';
 import { useCartStore } from '../../store/cartStore';
 
-const Item = ({ item }) => {
+const Item = ({ item, time }) => {
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setTimeout(() => setMounted(true), time);
+	});
 	const [itemQuantity, setItemQuantity] = useState(0);
 	const { _id, name, image, description, price } = item;
 
@@ -30,8 +35,8 @@ const Item = ({ item }) => {
 	}, [cartItems]);
 
 	return (
-		<div className='item'>
-			<div className='itemImageContainer'>
+		mounted && <div className='item FIAnim'>
+			<div className='itemImageContainer FIAnim'>
 				<img
 					src={import.meta.env.VITE_BACKEND_URL + '/images/' + image}
 					alt={name}
@@ -51,7 +56,7 @@ const Item = ({ item }) => {
 						/>
 					</div>
 				) : (
-					<div className='itemCounter'>
+					<div className='itemCounter FIAnim'>
 						<img
 							onClick={onDecreaseQuantity}
 							src={assets.remove_icon_red}
@@ -71,7 +76,7 @@ const Item = ({ item }) => {
 					</div>
 				)}
 			</div>
-			<div className='itemInfo'>
+			<div className='itemInfo FIAnim'>
 				<div className='itemNameRating'>
 					<p>{name}</p>
 					<img src={assets.rating_stars} alt='ocena' 							height='12'

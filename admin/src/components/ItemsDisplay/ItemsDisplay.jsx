@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ItemsDisplay.css';
 import Item from '../Item/Item';
 
@@ -8,7 +8,14 @@ import { useItemStore } from '@/store/itemStore';
 /* import BackgroundAnimation from '../BackgroundAnimation/BackgroundAnimation'; */
 import NetworkErrorText from '../NetworkErrorText/NetworkErrorText.jsx';
 import ItemSkeleton from '../Item/ItemSkeleton';
-const ItemsDisplay = ({ category }) => {
+const ItemsDisplay = ({ category, time }) => {
+
+	const [mounted, setMounted] = useState(false)
+
+	useEffect(()=>{
+		setTimeout(()=>setMounted(true), time)
+	})
+
 	const { netErr, dataLoading } = useAuthStore();
 
   const { fetchItemsList, items_list } = useItemStore();
@@ -22,7 +29,7 @@ const ItemsDisplay = ({ category }) => {
 	}, []);
 
 	return (
-		<div className='itemsDisplay' id='itemsDisplay'>
+		mounted && <div className='itemsDisplay FIAnim' id='itemsDisplay'>
 			{netErr && <NetworkErrorText />}
 			<div className='itemsDisplayList'>
 
@@ -33,7 +40,7 @@ const ItemsDisplay = ({ category }) => {
 					items_list?.length > 0 &&
 					items_list.map((item, i) => {
 						if (category === allCategoriesName || category === item.category) {
-							return <Item key={i} item={item} />;
+							return <Item key={i} item={item} time={500*i}/>;
 						}
 					})
 				)}

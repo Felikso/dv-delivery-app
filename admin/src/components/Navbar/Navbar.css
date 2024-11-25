@@ -10,7 +10,6 @@
 	border-top: 3px var(--goldLight) solid;
 	border-bottom: 5px var(--goldLight) solid;
 }
-
 .logoBox {
 	position: fixed;
 	top: 0;
@@ -196,6 +195,9 @@ img.logoMenu {
 }
 
 @media (max-width: 1050px) {
+	.logoBox{
+		display: none;
+	}
 	.navbar .logo {
 		width: 140px;
 	}

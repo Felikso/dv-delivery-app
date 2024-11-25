@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Itim&family=Outfit:wght@100..900&display=swap');
 
 :root {
 	--red: rgb(179, 0, 0);
@@ -64,7 +63,6 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	font-family: Outfit;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -211,6 +209,10 @@ hr {
 	text-decoration: underline;
 }
 
+.FIAnim{
+	animation-name: fadeIn;
+	animation-duration: 1.5s;
+}
 
 
 @keyframes fadeIn {

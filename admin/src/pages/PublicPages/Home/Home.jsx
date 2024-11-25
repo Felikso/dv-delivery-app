@@ -26,6 +26,13 @@ const Home = () => {
 
 	const navigate = useNavigate();
 
+	const delayComponents = {
+		header: 500,
+		category: 500,
+		menu: 2000,
+		app: 4000,
+	};
+
 	return (
 		<>
 			<ErrorBoundary
@@ -33,7 +40,7 @@ const Home = () => {
 				onReset={() => navigate('/')}
 			>
 				<Suspense fallback={<Loader />}>
-					<Header />
+					<Header time={delayComponents.header} />
 				</Suspense>
 			</ErrorBoundary>
 
@@ -45,6 +52,7 @@ const Home = () => {
 					<ExploreMain
 						category={category}
 						setCategory={setCategory}
+						time={delayComponents.category}
 					/>
 				</Suspense>
 			</ErrorBoundary>
@@ -53,7 +61,7 @@ const Home = () => {
 				onReset={() => navigate('/')}
 			>
 				<Suspense fallback={<Loader />}>
-					<ItemsDisplay category={category} />
+					<ItemsDisplay category={category} time={delayComponents.menu} />
 				</Suspense>
 			</ErrorBoundary>
 			<ErrorBoundary
@@ -61,7 +69,7 @@ const Home = () => {
 				onReset={() => navigate('/')}
 			>
 				<Suspense fallback={<Loader />}>
-					<AppDownload />
+					<AppDownload time={delayComponents.app} />
 				</Suspense>
 			</ErrorBoundary>
 		</>

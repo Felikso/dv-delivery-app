@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import './ExploreMain.css'
-import { main_list } from '@/assets/assets' 
-
 import { allCategoriesName, itemsMainData } from '@/utils/variables'
 import { useItemStore } from '../../store/itemStore'
 
 
-const ExploreMain = ({category, setCategory}) => {
+const ExploreMain = ({category, setCategory, time}) => {
+
+  const [mounted, setMounted] = useState(false)
+
+	useEffect(()=>{
+		setTimeout(()=>setMounted(true), time)
+	})
 
 /*   if(Math.random() > 0.5){
     return new Error('Test error boundary')
@@ -30,7 +34,7 @@ const ExploreMain = ({category, setCategory}) => {
     }, []);
 
   return (
-    <div className='exploreMain' id='exploreMain'>
+    mounted && <div className='exploreMain FIAnim' id='exploreMain'>
       <h1>{itemsMainData.h1}</h1>
       <p className='exploreMainList'>{itemsMainData.p}</p>
       <div className='exploreMainList'>

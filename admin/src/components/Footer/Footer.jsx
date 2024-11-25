@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Footer.css';
 import { assets } from '../../assets/assets';
 import {
@@ -9,9 +9,16 @@ import {
 	socialLinks,
 } from '../../utils/variables';
 
-const Footer = ({ setShowPopupPage }) => {
+const Footer = ({ setShowPopupPage, time }) => {
+
+	const [mounted, setMounted] = useState(false)
+
+	useEffect(()=>{
+		setTimeout(()=>setMounted(true), time)
+	})
+
 	return (
-		<div className='footer' id='footer'>
+		mounted && <div className='footer FIAnim' id='footer'>
 			<div className='footerContent'>
 				<div className='footerContentLeft'>
 					<div className='footexSocials'>
