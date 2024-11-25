@@ -7,11 +7,12 @@ import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 import './AuthPages.css';
 import ItemCard from '@/components/ItemCard/ItemCard';
 import Loader from '@/components/Loader/Loader';
+import DefaultCard from '../../components/defaultCard/DefaultCard';
 
 const ListPage = () => {
 	const [list, setList] = useState([]);
 
-	const { fetchAuthList } = useAuthStore();
+	const { fetchAuthList, updateAuthItem } = useAuthStore();
 
 	const fetchList = async () => {
 		const response = await fetchAuthList();
@@ -39,7 +40,7 @@ const ListPage = () => {
 				<Suspense fallback={<Loader />}>
         <div className='listBox'>
         {list.map((item, i) => {
-					return <ItemCard key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl}/>
+					return <DefaultCard key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl} updateDefaultItem={updateAuthItem} allowedImputs={['name','description','category','price','image']}/>
 		}
 
 				)}

@@ -7,11 +7,12 @@ import ErrorFallback from '@/components/ErrorBoundary/ErrorBoundary';
 import './CategoryList.css';
 import Loader from '@/components/Loader/Loader';
 import CategoryCard from '../ItemCard/CategoryCard';
+import DefaultCard from '../defaultCard/DefaultCard';
 
 const CategoryList = () => {
 	const [list, setList] = useState([]);
 
-	const { fetchCategoryList } = useAdminStore();
+	const { fetchCategoryList, delateFocus, updateCategory } = useAdminStore();
 
 	const fetchList = async () => {
 		const response = await fetchCategoryList();
@@ -38,7 +39,7 @@ const CategoryList = () => {
 				<Suspense fallback={<Loader />}>
         <div className='listBox'>
         {list.map((item, i) => (
-					<CategoryCard  key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl} />
+					<DefaultCard  key={i} postData={item} edit={currentEl===item._id?true:false} setCurrentEl={setCurrentEl} setDefaultTrue={delateFocus} updateDefaultItem={updateCategory} allowedImputs={['name','image']} />
 				))}
         			</div>
 				</Suspense>

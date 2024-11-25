@@ -5,29 +5,32 @@ import SearchBox from '@/components/SearchBox/SearchBox'
 import './AuthPages.css'
 import CategoryCard from '../../components/ItemCard/CategoryCard';
 import CategoryList from '../../components/CategoryList/CategoryList';
+
+import DefaultCard from '../../components/defaultCard/DefaultCard';
+
+import { useAuthStore } from '@/store/authStore.js';
 import { useAdminStore } from '../../store/adminStore';
 
 const AddPage = () => {
 
   const { imgState, setImgState } = useAdminStore();
 
-	const [edit, setEdit] = useState(0);
-
-
   useEffect(()=>{
     console.log(imgState);
     
   },[imgState])
   
+	const { removeAuthItem, updateAuthItem } = useAuthStore();
 
+	const {  setItemTrue, setCatTrue, updateCategory, removeCategory,  } = useAdminStore();
 
 
   return (
     <div className='addPage'>
       <div >
-      <ItemCard  edit={imgState.item} setEdit={setEdit} add={true} />
+      <DefaultCard  edit={imgState.item} add={true} updateDefaultItem={updateAuthItem} removeDefaultItem={removeAuthItem} setDefaultTrue={setItemTrue} allowedImputs={['name','description','category','price','image']} />
       <div>
-      <CategoryCard  edit={imgState.cat} setEdit={setEdit} add={true}/>
+      <DefaultCard  edit={imgState.cat}  add={true} updateDefaultItem={updateCategory} removeDefaultItem={removeCategory} setDefaultTrue={setCatTrue} allowedImputs={['name','image']}/>
       <CategoryList />
       </div>
       </div>
