@@ -79,6 +79,8 @@ export const customInfo = {
     orderSuccess: 'zamówienie złożone pomyślnie',
     statusUpdated: 'status zamówienia zaktualizowany',
     orderRemoved: 'zamówienie zostało usunięte',
+    categoryRemoved: 'kategoria została usunięta',
+    itemRemoved: 'przedmiot został usunięty',
     catSavedSuccess: 'kategoria zapisana pomyślnie',
 
 

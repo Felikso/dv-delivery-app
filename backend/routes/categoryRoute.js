@@ -7,27 +7,14 @@ import {
 } from '../controllers/categoryController.js';
 import multer from 'multer'
 import { adminMiddleware } from '../middleware/auth.js';
-import { customErrors } from '../utils/variables.js';
 import categoryModel from '../models/categoryModel.js';
-
-
-
 
 const storage = multer.diskStorage({
     destination: 'uploads',
     filename: async(req,file,cb)=>{ 
-
-
-
         let imageName = file.originalname
-
-        console.log(file);
-        
-
         const imgAlreadyExists = await categoryModel.findOne({ image: file.originalname });
-
         if (imgAlreadyExists) {
-
             const slug = Math.floor(
                 100 + Math.random() * 900
             ).toString();
@@ -41,9 +28,9 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage});
 
 const categoryRoute = express.Router();
-categoryRoute.post('/add',upload.single('image'),addCategory)
+categoryRoute.post('/add',adminMiddleware,upload.single('image'),addCategory)
 categoryRoute.post('/remove', adminMiddleware, removeCategory);
-categoryRoute.post('/list', adminMiddleware, listCategories);
-categoryRoute.post('/update',upload.single('image'),updateCategory)
+categoryRoute.post('/list', listCategories);
+categoryRoute.post('/update',adminMiddleware,upload.single('image'),updateCategory)
 
 export default categoryRoute;

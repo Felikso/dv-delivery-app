@@ -70,11 +70,15 @@ const DefaultCard = ({ postData, fetchList, add = false, setCurrentEl, edit, upd
 
 	const removeItem = async (itemId) => {
 		const response = await removeDefaultItem(itemId);
+		console.log(response);
+		console.log(itemId);
+		
+		
 
 		if (response.data.success) {
 			toast.success(response.data.success);
 		} else {
-			toast.error(errorMessage);
+			toast.error(response.data.message);
 		}
 		await fetchList();
 	};

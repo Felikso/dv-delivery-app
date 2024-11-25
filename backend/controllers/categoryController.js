@@ -1,5 +1,5 @@
 import categoryModel from '../models/categoryModel.js';
-
+import fs from 'fs';
 import {
 	customErrors,
 	customInfo,
@@ -45,14 +45,19 @@ const listCategories = async (req, res) => {
 
 
 const removeCategory = async (req, res) => {
+	console.log(req.body);
 	try {
 		const item = await categoryModel.findById(req.body.id);
 		if (item.image !== 'default.png') {
 			fs.unlink(`uploads/${item.image}`,()=>{})
 		}
 
-		await categoryModel.findByIdAndDelete(req.body.id);
-		res.json({ success: true, message: removedMessage });
+
+
+		const cat = await categoryModel.findByIdAndDelete(req.body.id);
+		console.log(cat);
+		
+		res.json({ success: true, message: customInfo.categoryRemoved });
 	} catch {
 		res.json({ success: false, message: errorMessage });
 	}

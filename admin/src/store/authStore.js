@@ -85,8 +85,6 @@ export const useAuthStore = create((set) => ({
 		try {
 			const response = await axios.get(`${API_URL}${pagesLinks.checkAuth}`);
 			set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
-/* 			const admin = await response.data.user.isAdmin;
-			return admin */
 		} catch (error) {
 			set({ error: null, isCheckingAuth: false, isAuthenticated: false });
 		}
@@ -131,7 +129,7 @@ export const useAuthStore = create((set) => ({
 	},
 	removeAuthItem: async (itemId) => {
 		try {
-			const response = await axios.post(`${API_ITEMS_URL}/remove`,{id:itemId});
+			const response = await axios.post(`${API_ITEMS_URL}${api.remove}`,{id:itemId});
 			set({ message: response.data.message });
 			return response 
 		} catch (error) {

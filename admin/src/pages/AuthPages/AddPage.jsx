@@ -1,28 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react'
-import ItemCard from '@/components/ItemCard/ItemCard'
-
+import React, { useEffect } from 'react'
 import SearchBox from '@/components/SearchBox/SearchBox'
 import './AuthPages.css'
-import CategoryCard from '../../components/ItemCard/CategoryCard';
 import CategoryList from '../../components/CategoryList/CategoryList';
-
 import DefaultCard from '../../components/defaultCard/DefaultCard';
-
 import { useAuthStore } from '@/store/authStore.js';
 import { useAdminStore } from '../../store/adminStore';
 
 const AddPage = () => {
 
-  const { imgState, setImgState } = useAdminStore();
-
-  useEffect(()=>{
-    console.log(imgState);
-    
-  },[imgState])
+  const { imgState } = useAdminStore();
   
 	const { removeAuthItem, updateAuthItem } = useAuthStore();
 
-	const {  setItemTrue, setCatTrue, updateCategory, removeCategory,  } = useAdminStore();
+	const { setItemTrue, setCatTrue, updateCategory, removeCategory } = useAdminStore();
 
 
   return (

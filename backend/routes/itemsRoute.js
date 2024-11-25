@@ -1,6 +1,8 @@
 import express from 'express'
 import { addItems,itemsList,removeItem, updateItem, itemsCat } from '../controllers/itemsController.js'
+import { adminMiddleware } from '../middleware/auth.js';
 import multer from 'multer'
+
 
 const itemsRoute = express.Router();
 
@@ -20,11 +22,11 @@ const upload = multer({storage:storage});
 
 /* const upload = multer({storage:storage,limits: { fieldSize: 10 * 1024 * 1024 } }); */
 
-itemsRoute.post('/add',upload.single('image'),addItems)
+itemsRoute.post('/add',adminMiddleware,upload.single('image'),addItems)
 itemsRoute.get('/list',itemsList)
 itemsRoute.get('/categories',itemsCat)
-itemsRoute.post('/remove',removeItem)
-itemsRoute.post('/update',upload.single('image'),updateItem)
+itemsRoute.post('/remove',adminMiddleware,removeItem)
+itemsRoute.post('/update',adminMiddleware,upload.single('image'),updateItem)
 
 
 
